@@ -2259,3 +2259,47 @@ that turned a latent always-false check into a same-day find. The verified
 window now spans a full difficulty adjustment — rewriting any block in it
 means redoing the work of an entire epoch, which is the strongest provenance
 statement the clock has made yet.
+
+---
+
+# Ten thousand headers, five retargets, one rule checked five times
+
+With the epoch-edge fix in place the window was pushed to 10,004 headers — back
+to block 965,095, about seventy days of chain. Every flag verified. But the
+output showed `retarget: None` for a window that must cross ~5 boundaries:
+`_verify_retarget` only ever checked the NEWEST boundary. The other four were
+"verified" by local PoW against each header's own declared target — which is
+exactly the thing a liar controls. An inflated bits field on a historical
+header passes pow_ok, keeps hash linkage intact (the hash commits to the lying
+bits consistently), and is never challenged. Checking one of five boundaries
+was theater.
+
+`_verify_retarget` now loops every bits change in the window and validates each
+against consensus, with the span measured across the completed epoch:
+
+```
+edge 973728 span 1146119 ok True
+edge 971712 span 1141962 ok True
+edge 969696 span 1209975 ok True
+edge 967680 span 1161260 ok True
+edge 965664 span 1194005 ok True
+```
+
+(Closure on the earlier mystery: the 1141962 span that made the first deepen
+run look broken was epoch 482's real span, correctly measured at its own
+boundary — the single-boundary check was simply aimed at the wrong edge.)
+
+The ledger cap also moved from hardcoded 2000 to `OKF_BTC_LEDGER_CAP`
+(default 20000), so the daily deepen keeps earning depth instead of trimming
+it. What the clock now claims: 70 days of proof-of-work with every difficulty
+transition proven against the consensus rule — a claim that costs roughly
+5 epochs of chain work to forge.
+
+## Standing shape of the limits, updated
+
+- Depth ~10k and growing ~144/day; cap 20k (~4.5 months of chain). Genesis
+  (~975k headers) remains a project, not a cron job.
+- The root is still 3-operator corroboration + local PoW + burial — now with
+  multi-epoch difficulty continuity behind it.
+- Uncertainty still opens to ~10 min between blocks and closes to ~0 after
+  one; that is the honest shape of a chain-anchored clock.
