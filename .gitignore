@@ -1,0 +1,33 @@
+# OKF security pipeline — whitelist repo.
+# /opt/ares is the deployed runtime: nested project clones, runtime state,
+# evidence dirs and key files all live here and all stay OUT of git.
+# Everything is ignored except the pipeline modules and their documentation.
+/*
+
+# pipeline modules (this repo's entire scope)
+!/.gitignore
+!/okf_agent_stamp.py
+!/okf_anchor.py
+!/okf_btc_chain.py
+!/okf_clock_mcp.py
+!/okf_evasion.py
+!/okf_memory.py
+!/okf_now.py
+!/okf_ots_upgrade.sh
+!/okf_ots_verify.py
+!/okf_outbox.py
+!/okf_pipeline.py
+!/okf_pin.py
+!/okf_receipt.py
+!/okf_time_attest.py
+!/koodu_clock.py
+!/koodu_time.py
+!/strix_pipeline_v4.py
+!/stix_webhook.py
+!/stix_ingester.py
+!/stix_scanner.py
+!/strix_scan.sh
+!/betterleaks_scan.sh
+
+# documentation
+!/docs
