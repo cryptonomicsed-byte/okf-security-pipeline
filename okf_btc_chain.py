@@ -469,12 +469,20 @@ def _verify_retarget(headers, tip_height, cache, out):
                 break
         if boundary is None:
             return False
-        start_height = ((boundary) // RETARGET) * RETARGET
-        first, _ = header_at_height(start_height, cache)
-        prev_epoch, _ = header_at_height(start_height - 1, cache)
-        actual = first["time"] - prev_epoch["time"]
+        # boundary = the LAST block of the completed epoch (first header, walking
+        # back from the tip, whose bits differ). The new epoch starts one above
+        # it — boundary+1 — and consensus only permits a bits change AT an epoch
+        # edge, so assert alignment instead of flooring (the old floor silently
+        # slid the window one epoch down and validated the wrong epoch's span).
+        start_height = boundary + 1
+        if start_height % RETARGET != 0:
+            out["retarget_error"] = f"bits change at {boundary} is not at an epoch edge"
+            return False
+        old_last, _ = header_at_height(start_height - 1, cache)
+        old_first, _ = header_at_height(start_height - RETARGET, cache)
+        actual = old_last["time"] - old_first["time"]
         bounded = max(TARGET_TIMESPAN // 4, min(TARGET_TIMESPAN * 4, actual))
-        old_target = target_from_bits(prev_epoch["bits"])
+        old_target = target_from_bits(old_last["bits"])
         new_target = min(old_target * bounded // TARGET_TIMESPAN, target_from_bits(0x1D00FFFF))
         expected_bits = _bits_from_target(new_target)
         out["retarget"] = {"boundary": boundary, "actual_span": actual,
