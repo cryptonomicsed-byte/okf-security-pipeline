@@ -2224,3 +2224,38 @@ reach it. No code change, no widened attack surface, no new trust boundary.
 **Decision:** stdio MCP stays off. Agents use the HTTP endpoint. If a future agent
 *needs* stdio for a specific capability, that capability gets its own binary with
 its own explicit allowlist entry and a deliberate, documented exception.
+
+---
+
+# The retarget check validated the wrong epoch — and only depth exposed it
+
+The first window long enough to cross a difficulty boundary (the 2000-header
+deepen pass) broke the clock: `bits_ok: false`, chain unverified. Two stacked
+bugs in `_verify_retarget`, both invisible for weeks because a 40-header window
+never straddles a boundary:
+
+1. **Wrong span endpoints.** `actual = t(new-epoch first) - t(old-epoch last)` —
+   the gap between two consecutive blocks: a 493-second "epoch". Bitcoin's rule
+   (GetNextWorkRequired) measures the COMPLETED epoch: `t(last block) -
+   t(first block)`, 2015 blocks apart.
+2. **Off-by-one epoch.** The differing-bits header is the old epoch's *last*
+   block. `floor(boundary/2016)*2016` floors below it — landing on the old
+   epoch's own start — so the check compared the *previous* epoch's span against
+   the new epoch's bits. Failed by construction, forever.
+
+The fix: new epoch starts at `boundary + 1`; assert `boundary + 1 % 2016 == 0`
+(a bits change anywhere else is not a retarget — explicit `retarget_error`,
+fail-closed) and measure the completed epoch's own span.
+
+```
+retarget: {'boundary': 973727, 'actual_span': 1146119,
+           'expected_bits': 386000300, 'observed_bits': 386000300}   # equal → ok
+```
+
+Why this matters more than the diff size suggests: the daily 900-header deepen
+*would have* started failing the clock at the first epoch boundary it slid
+across (~twice per retarget as the window slides). Depth is exactly the thing
+that turned a latent always-false check into a same-day find. The verified
+window now spans a full difficulty adjustment — rewriting any block in it
+means redoing the work of an entire epoch, which is the strongest provenance
+statement the clock has made yet.
