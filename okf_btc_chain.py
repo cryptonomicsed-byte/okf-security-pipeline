@@ -295,8 +295,9 @@ def _continuity(headers, tip_height, cache, out, save=True):
     seen = dict((st.get("verified_heights") or {}))
     for h, hd in by_height.items():
         seen[str(h)] = hd["hash"]
-    if len(seen) > 2000:
-        for k in sorted(seen, key=int)[:-2000]:
+    ledger_cap = int(os.environ.get("OKF_BTC_LEDGER_CAP", "20000"))
+    if len(seen) > ledger_cap:
+        for k in sorted(seen, key=int)[:-ledger_cap]:
             seen.pop(k, None)
 
     if not st.get("height"):
@@ -458,36 +459,46 @@ def verify_chain(n=CHAIN_N, save_cache=True):
 
 
 def _verify_retarget(headers, tip_height, cache, out):
-    """Check a difficulty change against the rule, using the epoch's own times."""
+    """Check EVERY difficulty change in the window against consensus.
+
+    A header's PoW is checked against its own declared target, so a historical
+    header carrying an inflated (easier) bits field would pass pow_ok and keep
+    hash linkage intact. The only defence is the retarget rule itself — so it
+    must be validated at EVERY epoch edge the window crosses, not just the
+    newest one. Checking one of five boundaries was theater, not verification.
+    """
     try:
-        newest_bits = headers[0]["bits"]
-        # find the boundary: the lowest height in the window whose bits differ
-        boundary = None
-        for i, h in enumerate(headers):
-            if h["bits"] != newest_bits:
-                boundary = tip_height - i
-                break
-        if boundary is None:
-            return False
-        # boundary = the LAST block of the completed epoch (first header, walking
-        # back from the tip, whose bits differ). The new epoch starts one above
-        # it — boundary+1 — and consensus only permits a bits change AT an epoch
-        # edge, so assert alignment instead of flooring (the old floor silently
-        # slid the window one epoch down and validated the wrong epoch's span).
-        start_height = boundary + 1
-        if start_height % RETARGET != 0:
-            out["retarget_error"] = f"bits change at {boundary} is not at an epoch edge"
-            return False
-        old_last, _ = header_at_height(start_height - 1, cache)
-        old_first, _ = header_at_height(start_height - RETARGET, cache)
-        actual = old_last["time"] - old_first["time"]
-        bounded = max(TARGET_TIMESPAN // 4, min(TARGET_TIMESPAN * 4, actual))
-        old_target = target_from_bits(old_last["bits"])
-        new_target = min(old_target * bounded // TARGET_TIMESPAN, target_from_bits(0x1D00FFFF))
-        expected_bits = _bits_from_target(new_target)
-        out["retarget"] = {"boundary": boundary, "actual_span": actual,
-                           "expected_bits": expected_bits, "observed_bits": newest_bits}
-        return expected_bits == newest_bits
+        results = []
+        ok_all = True
+        # headers[] is newest-first. A boundary sits between i and i-1 wherever
+        # bits differ; the header at i is the completed epoch's last block, and
+        # the header at i-1 is the new epoch's first (height tip-i+1, which
+        # consensus requires to be an exact epoch multiple).
+        for i in range(1, len(headers)):
+            if headers[i]["bits"] == headers[i - 1]["bits"]:
+                continue
+            edge = tip_height - i + 1                      # first block of new epoch
+            if edge % RETARGET != 0:
+                out["retarget_error"] = f"bits change below {edge} is not at an epoch edge"
+                return False
+            old_last = headers[i]                          # completed epoch's last block
+            old_first, _ = header_at_height(edge - RETARGET, cache)
+            actual = old_last["time"] - old_first["time"]
+            bounded = max(TARGET_TIMESPAN // 4, min(TARGET_TIMESPAN * 4, actual))
+            old_target = target_from_bits(old_last["bits"])
+            new_target = min(old_target * bounded // TARGET_TIMESPAN, target_from_bits(0x1D00FFFF))
+            expected_bits = _bits_from_target(new_target)
+            good = expected_bits == headers[i - 1]["bits"]
+            results.append({"edge": edge, "actual_span": actual,
+                            "expected_bits": expected_bits,
+                            "observed_bits": headers[i - 1]["bits"], "ok": good})
+            ok_all = ok_all and good
+        if not results:
+            # no boundary in the window: single-epoch window, nothing to recheck
+            return True
+        out["retargets"] = results
+        out["retarget"] = results[0]          # newest boundary, kept for the UI shape
+        return ok_all
     except Exception as e:  # noqa: BLE001
         out["retarget_error"] = str(e)[:120]
         return False
