@@ -7,7 +7,7 @@ REPO_PATH="$1"
 SCAN_MODE="${2:---scan-mode quick}"
 # Model: DeepSeek is dead; the live free-pool model on litellm :8300 is
 # gemini-flash-lite (same default as strix_pipeline_v4.py). Override via env.
-STRIX_LLM="${STRIX_LLM:-openai/gemini-flash-lite}"
+STRIX_LLM="${STRIX_LLM:-openai/strix-paid}"
 # Keys are never hardcoded: env first, then the on-box key files. A missing
 # litellm key file means the caller must export LLM_API_KEY themselves.
 if [ -z "${LLM_API_KEY:-}" ] && [ -r /opt/ares/.litellm_key ]; then

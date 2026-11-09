@@ -53,7 +53,7 @@ STRIX_RUNS = Path("/opt/ares/strix/strix_runs")
 STRIX_BIN = "/opt/ares/strix-venv/bin/strix"
 # free-pool 400s on Strix's tool schemas (provider "oneOf" rejection, no fallback
 # group), so Strix uses the single free model that completed a full scan.
-STRIX_MODEL = os.environ.get("STRIX_MODEL", "gemini-flash-lite")
+STRIX_MODEL = os.environ.get("STRIX_MODEL", "strix-paid")  # DeepSeek (only this call site); falls back to free models
 STRIX_RC = None  # set by run_strix(); a failed agent must not report complete
 LLM_BASE = os.environ.get("LLM_API_BASE", "http://localhost:8300/v1")
 VENV_PY = "/opt/ares/venv/bin/python"
@@ -192,8 +192,10 @@ def run_strix(path, run_name, mode, timeout):
         except Exception as e:  # noqa: BLE001
             print(f"  ⚠️ vulnerabilities.json: {e}")
 
+    # SARIF repeats the same findings (and labels some as "error" severity).
+    # Use it only when vulnerabilities.json produced nothing, so nothing is counted twice.
     sarif = run_dir / "findings.sarif"
-    if sarif.exists():
+    if sarif.exists() and not findings:
         try:
             data = json.load(open(sarif))
             for r in data.get("runs", []):
@@ -1290,7 +1292,10 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
            + (f" · post={sqlmap_post.get('injectable')}" if sqlmap_post else "")
            + f" · sstimap={sstimap.get('vulnerable')}"
            if target_url else "dynamic=not run (static-only)")
-    if STRIX_RC not in (0, None):
+    # Strix exits 2 in headless mode when it filed any finding (no --fail-on
+    # threshold = any finding fails the build). That is a result, not a crash.
+    # Only 0 (clean) and 2 (findings) count as a completed agent.
+    if STRIX_RC not in (0, 2, None):
         print(f"\n  ❌ v4 FAILED · AI scan exit={STRIX_RC} (agent did not complete) · evidence={ev}")
         sys.exit(1)
     print(f"\n  ✅ v4 complete · AI findings={len(findings)} · {dyn} · evidence={ev}")
