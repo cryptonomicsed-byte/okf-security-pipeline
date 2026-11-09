@@ -139,7 +139,32 @@ def _load_anchor():
         return {}
 
 
-def _save_anchor(a):
+def _save_anchor(a, seen=None):
+    """Atomic anchor write that can never drop the verified ledger.
+
+    Every path that writes the anchor must carry `verified_heights`. Before
+    writing, re-read the current file and UNION its ledger with ours: two
+    writers (a tick and a pipeline stamp) otherwise lose each other's heights
+    — last-writer-wins is what silently rolled a 10k ledger back to 2000.
+    """
+    try:
+        with open(ANCHOR_PATH) as f:
+            disk = json.load(f)
+        if seen is not None:
+            merged = dict(disk.get("verified_heights") or {})
+            merged.update(seen or {})
+            ledger_cap = int(os.environ.get("OKF_BTC_LEDGER_CAP", "20000"))
+            if len(merged) > ledger_cap:
+                for k in sorted(merged, key=int)[:-ledger_cap]:
+                    merged.pop(k, None)
+            a["verified_heights"] = merged
+        elif "verified_heights" not in a and disk.get("verified_heights"):
+            a["verified_heights"] = disk["verified_heights"]
+    except FileNotFoundError:
+        if seen is not None:
+            a["verified_heights"] = dict(seen)
+    except Exception:
+        pass
     tmp = ANCHOR_PATH + ".tmp"
     with open(tmp, "w") as f:
         json.dump(a, f, indent=2)
@@ -359,8 +384,7 @@ def _continuity(headers, tip_height, cache, out, save=True):
                 {"height": anchor_h, "hash": anchor_hash, "time": st.get("time")}]
             _save_anchor({"height": target_h, "hash": hd["hash"], "time": hd["time"],
                           "adopted_at": int(time.time()), "history": hist,
-                          "verified_heights": seen,
-                          "seeded": st.get("seeded")})
+                          "seeded": st.get("seeded")}, seen=seen)
             res.update({"anchor_height": target_h, "anchor_hash": hd["hash"],
                         "advanced_from": anchor_h, "verified_against": anchor_hash,
                         "seeded": st.get("seeded")})
