@@ -51,7 +51,10 @@ SCAN_DIR = "/tmp/strix-pipeline"
 EVIDENCE_ROOT = Path("/opt/ares/security_reports")
 STRIX_RUNS = Path("/opt/ares/strix/strix_runs")
 STRIX_BIN = "/opt/ares/strix-venv/bin/strix"
-STRIX_MODEL = os.environ.get("STRIX_MODEL", "free-pool")
+# free-pool 400s on Strix's tool schemas (provider "oneOf" rejection, no fallback
+# group), so Strix uses the single free model that completed a full scan.
+STRIX_MODEL = os.environ.get("STRIX_MODEL", "gemini-flash-lite")
+STRIX_RC = None  # set by run_strix(); a failed agent must not report complete
 LLM_BASE = os.environ.get("LLM_API_BASE", "http://localhost:8300/v1")
 VENV_PY = "/opt/ares/venv/bin/python"
 ONIUX_BIN = None if os.environ.get("DISABLE_ONIUX") else (
@@ -148,12 +151,18 @@ def run_strix(path, run_name, mode, timeout):
                   timeout, env, cwd="/opt/ares/strix")
     dur = int(time.time() - t0)
     print(f"  exit={rc} elapsed={dur}s")
+    global STRIX_RC
+    STRIX_RC = rc
 
     new = [d for d in STRIX_RUNS.iterdir() if d.is_dir() and d not in before] \
         if STRIX_RUNS.exists() else []
     if not new:
+        # Fallback only for dirs written DURING this scan. Taking the newest
+        # matching dir regardless of time attributed a failed run to an
+        # earlier run's findings.
         base = Path(path).name
-        new = sorted([d for d in STRIX_RUNS.glob(f"{base}*") if d.is_dir()],
+        new = sorted([d for d in STRIX_RUNS.glob(f"{base}*")
+                      if d.is_dir() and d.stat().st_mtime >= t0],
                      key=lambda p: p.stat().st_mtime, reverse=True)[:1]
     if not new:
         print(f"  ⚠️ no new run dir under {STRIX_RUNS}")
@@ -1281,6 +1290,9 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
            + (f" · post={sqlmap_post.get('injectable')}" if sqlmap_post else "")
            + f" · sstimap={sstimap.get('vulnerable')}"
            if target_url else "dynamic=not run (static-only)")
+    if STRIX_RC not in (0, None):
+        print(f"\n  ❌ v4 FAILED · AI scan exit={STRIX_RC} (agent did not complete) · evidence={ev}")
+        sys.exit(1)
     print(f"\n  ✅ v4 complete · AI findings={len(findings)} · {dyn} · evidence={ev}")
     return payload
 
