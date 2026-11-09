@@ -2303,3 +2303,45 @@ transition proven against the consensus rule — a claim that costs roughly
   multi-epoch difficulty continuity behind it.
 - Uncertainty still opens to ~10 min between blocks and closes to ~0 after
   one; that is the honest shape of a chain-anchored clock.
+
+---
+
+# The e2e run that caught the ledger killer
+
+The first full-pipeline run on the deep clock (clock-deep-e2e) finished green —
+broadcast 76582, receipt 9f92abb8 — but its receipt stamped **depth 2000**, ten
+minutes after a verify at 10004. The tick journal pinned it:
+
+```
+21:58  10004   (deepen save lands)
+23:13  10011   (ticks accumulating normally)
+23:33   2000   ← the drop
+00:03  10003   (manual deep verify restores)
+```
+
+Two stacked defects, found because a full pipeline ran against a clock that had
+just grown teeth:
+
+1. **The shallow-reorg re-base dropped the ledger.** `_save_anchor` in the
+   re-base path wrote the anchor without `verified_heights` — and the anchor's
+   own `history` field shows it fired **50 times**. A loop: something fed a
+   wrong header hash (source flake; unreproducible from the evidence left —
+   every recorded hash matches the chain now), each mismatch re-based the
+   anchor and silently discarded ~10k verified heights.
+2. **Last-writer-wins between concurrent writers.** The 5-min tick and a
+   pipeline stamp (N=2000) both load-modify-save the anchor. A writer that
+   loaded pre-deepen state clobbered the deep ledger.
+
+Fix: `_save_anchor` re-reads the anchor at write time and **unions** its
+`verified_heights` with the caller's — advance, re-base and seed all preserve
+and merge; the cap still applies. Verified: deep verify (10004, 5 retarget
+edges) followed by a 12-header tick leaves the ledger at 10004.
+
+Honest notes on the e2e itself: Strix returned zero findings this round (LLM
+variance — betterleaks still caught all planted secrets), so the dynamic
+shapes had nothing named to prove and the run proves none; `chain_index: 0` is
+correct (the receipt chain is per-repo and this was the repo's first run);
+`anchors.btc_ots: null` because a manual invocation without `--anchor --ots`
+does not anchor — the webhook launcher does. A green exit with zero findings is
+exactly the "silent zero" shape this document exists to catch; the receipt
+records it honestly and the run cost ~45 min to say so.
