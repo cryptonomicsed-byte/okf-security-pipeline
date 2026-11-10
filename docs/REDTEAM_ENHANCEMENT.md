@@ -2345,3 +2345,49 @@ correct (the receipt chain is per-repo and this was the repo's first run);
 does not anchor — the webhook launcher does. A green exit with zero findings is
 exactly the "silent zero" shape this document exists to catch; the receipt
 records it honestly and the run cost ~45 min to say so.
+
+---
+
+# A probe that invents the parameter name proves nothing
+
+The pipeline's POST probe fired on every run of the lab target and reported
+"not injectable". It was sending:
+
+    POST /orders/by-sku   {"id": "1"}
+
+The handler is `sku = body.get("sku", "alpha")`. A missing `sku` takes the
+default, so the query still ran, still returned the same benign row, and
+sqlmap correctly saw no variation. The sink was one field away from the
+request we sent, and the reported verdict was a true statement about a
+request nobody had asked for.
+
+Root cause: the derivation understood exactly one phrase, `<word> parameter`.
+The finding says "SQL Injection in POST /orders/by-sku sku JSON field (WHERE
+clause)" — no such phrase — so it fell back to the literal `id`.
+
+The failure mode to remember: a wrong parameter against a handler with a
+default is indistinguishable from a safe endpoint. Nothing errors, nothing
+looks odd, and the probe is confident. It is the same class as a green build
+that tested nothing.
+
+Fix in three parts:
+
+1. Prose naming is authoritative: `<word> [JSON] field|parameter|param`.
+   JSON-key and `<word>=` heuristics apply only when prose names nothing, and
+   camelCase identifiers from code snippets are filtered out.
+2. Candidates are tried in order until one reproduces injection, and the ones
+   tried are recorded in the result (`params_tried`).
+3. The probe is tested against a target that is known to be injectable. A
+   probe that has never been positive is not evidence of absence.
+
+Verified standalone, then in the full pipeline:
+
+    Parameter: JSON sku ((custom) POST)
+    Type: boolean-based blind, UNION query; DBMS SQLite
+    dumped: 1,3,alpha,flag{orderby_ok}
+
+    ✅ v4 complete · AI findings=3 · sqlmap=True · post=True · sstimap=True
+
+Every dynamic probe in the pipeline now has a positive control it has
+actually passed. That is the only thing that lets a "not injectable" verdict
+carry any weight.
