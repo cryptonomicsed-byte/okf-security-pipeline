@@ -948,7 +948,9 @@ def post_to_vantage(repo, payload, ev):
 def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
              findings_from=None, strix_timeout=2700, skip_surface=False,
              do_sweep=True, msf_check=False, do_evasion=True, do_anchor=False,
-             do_ots=False, do_clock=True, sabbath_gate=False):
+             do_ots=True, do_clock=True, sabbath_gate=False):
+    # Proof is the default: a receipt without an OTS proof is a claim; with one it
+    # is checkable. Opt out with --no-ots, never by forgetting a flag.
     if not target_url:
         print("  (no --target-url: static-only mode — Strix + betterleaks, no dynamic proof)")
         target_url = ""
@@ -1365,7 +1367,9 @@ if __name__ == "__main__":
     ap.add_argument("--anchor", action="store_true",
                     help="publish the receipt root to the Nostr relays")
     ap.add_argument("--ots", action="store_true",
-                    help="OpenTimestamps the merkle root (Bitcoin-anchored time proof)")
+                    help="(default) OpenTimestamps the merkle root — kept for compatibility")
+    ap.add_argument("--no-ots", action="store_true",
+                    help="skip OpenTimestamps; a receipt with no proof is a weaker claim")
     ap.add_argument("--no-clock", action="store_true",
                     help="skip the block clock (no height/domain recorded)")
     ap.add_argument("--sabbath-gate", action="store_true",
@@ -1373,7 +1377,7 @@ if __name__ == "__main__":
     a = ap.parse_args()
     out = pipeline(a.repo_url, a.repo_name, a.target_url, a.mode,
                    a.findings_from, a.strix_timeout, a.skip_surface, not a.no_sweep,
-                   a.msf_check, not a.no_evasion, a.anchor, a.ots,
+                   a.msf_check, not a.no_evasion, a.anchor, (not a.no_ots),
                    not a.no_clock, a.sabbath_gate)
     print(json.dumps({k: out[k] for k in ("repo", "target_class", "sqlmap", "sstimap",
                                           "xsstrike", "nuclei", "ffuf", "metasploit",
