@@ -281,8 +281,47 @@ def tables_from_sqlmap(out):
     return [t for t in dict.fromkeys(tabs) if t.lower() not in ("table", "tables")]
 
 
+_NOT_PARAMS = {"sql", "post", "get", "json", "the", "and", "of", "to", "in",
+               "body", "form", "request", "application", "content", "type",
+               "http", "https", "http", "payload", "value", "data"}
+
+
+def _post_param_candidates(f):
+    """Parameter names for a POST sink, most specific first.
+
+    Strix names the sink in prose ("sku JSON field", "sort parameter"). The
+    old single regex only understood "<word> parameter" and otherwise fell
+    back to "id". On /orders/by-sku that sent {"id": "1"}, whose handler does
+    body.get("sku", "alpha") -- the default sku ran, every response was the
+    same benign row, and a real injection read as "not injectable".
+    """
+    blobs = " ".join(str(f.get(k) or "") for k in
+                     ("title", "description", "technical_analysis"))
+    def _collect(pat, lower_only=False):
+        out = []
+        for m in re.finditer(pat, blobs, re.I):
+            name = m.group(1)
+            if len(name) > 40 or name.lower() in _NOT_PARAMS or name in out:
+                continue
+            if lower_only and not name.islower():
+                continue          # "startLineNumber" is code, not a request field
+            out.append(name)
+        return out
+
+    # The prose naming ("sku JSON field", "sort parameter") is authoritative.
+    # Only fall through to code-snippet heuristics when prose names nothing.
+    for pat, lower_only in ((r"\b(\w+)\s+(?:JSON\s+)?(?:parameter|field|param)\b", False),
+                            (r"""["'](\w+)["']\s*:""", True),
+                            (r"\b(\w+)=", True)):
+        cands = _collect(pat, lower_only)
+        if cands:
+            return cands
+    return ["id"]
+
+
 def probe_post_sqlmap(findings, target_url, outdir, tclass):
     """Send the POST body a finding describes, instead of a GET query string."""
+    tried = []
     for f in findings:
         if (f.get("method") or "").upper() != "POST":
             continue
@@ -297,17 +336,20 @@ def probe_post_sqlmap(findings, target_url, outdir, tclass):
         if not ep.startswith("/"):
             continue
         url = target_url.rstrip("/") + ep
-        m = re.search(r"\b(\w+)\s+parameter", blob, re.I)
-        param = m.group(1) if m else "id"
         is_json = bool(re.search(r"\bjson\b", blob, re.I))
-        data = json.dumps({param: "1"}) if is_json else f"{param}=1"
-        ct = "application/json" if is_json else "application/x-www-form-urlencoded"
-        print(f"  POST probe: {url} · param={param} · json={is_json}")
-        res, raw = run_sqlmap(url, outdir, tclass, data=data, content_type=ct)
-        if res.get("injectable"):
-            return res, raw
+        cands = _post_param_candidates(f)
+        for param in cands[:4]:
+            data = json.dumps({param: "1"}) if is_json else f"{param}=1"
+            ct = "application/json" if is_json else "application/x-www-form-urlencoded"
+            print(f"  POST probe: {url} · param={param} · json={is_json} "
+                  f"(candidates: {', '.join(cands[:4])})")
+            res, raw = run_sqlmap(url, outdir, tclass, data=data, content_type=ct)
+            tried.append(param)
+            if res.get("injectable"):
+                return res, raw
     return ({"injectable": False, "method": "POST",
-             "skipped": "no POST body injection reproduced"}, "")
+             "skipped": "no POST body injection reproduced",
+             "params_tried": tried}, "")
 
 
 def run_sqlmap(url, outdir, tclass, data=None, content_type=None):
