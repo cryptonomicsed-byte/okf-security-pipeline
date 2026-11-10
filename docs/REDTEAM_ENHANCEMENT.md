@@ -2391,3 +2391,40 @@ Verified standalone, then in the full pipeline:
 Every dynamic probe in the pipeline now has a positive control it has
 actually passed. That is the only thing that lets a "not injectable" verdict
 carry any weight.
+
+---
+
+# The receipt with no proof said nothing about having no proof
+
+Auditing the full receipt set (65 real receipts, sidecars excluded) turned up
+two claims that had never been tested together:
+
+- 52 receipts carry no `created_at_btc` at all. Every one predates the clock
+  (oldest 11-07 07:14, newest 11-07 23:02; the clock landed 23:25). Every
+  receipt created since is stamped. No bug — but the honest statement is
+  "every receipt since the clock exists", not "every receipt".
+- Of the newest 22, **17 had no OpenTimestamps proof at all**, only
+  `links.json`. `--ots` was an opt-in flag, and a plain run therefore wrote a
+  receipt whose proof did not exist and did not say so anywhere.
+
+That is the same shape as every other failure in this document: the artifact
+looked complete. A receipt without a proof is a claim; with one it is
+checkable. Anchoring is now the default (`--no-ots` opts out), so forgetting a
+flag can no longer silently downgrade a result.
+
+Backfilled the 39 that were missing: 39 stamped, 0 failed. Coverage is now
+65/65 — 25 VERIFIED against a Bitcoin block with pow and merkle both checked
+locally, 40 PENDING calendar attestation (the hourly upgrade timer completes
+them).
+
+The verifier itself was lying in a different way. `okf_ots_verify.py` needs the
+`opentimestamps` package; run under an interpreter without it, it printed
+`UNAVAILABLE` for 65 proofs. That message is correct and deliberately not a
+verdict — but the box *did* have a working verifier, in `/opt/ares/venv`, so the
+honest status was "you ran me with the wrong python". It now re-execs itself
+into an interpreter that has the package, and only falls back to
+`UNAVAILABLE` when none does.
+
+Verified after both fixes, with plain `python3`:
+
+    VERIFIED 25 · PENDING 40 · UNAVAILABLE 0 · BAD 0

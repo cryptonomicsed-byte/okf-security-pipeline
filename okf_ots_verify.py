@@ -43,12 +43,34 @@ def _target_from_bits(bits: int) -> int:
     return mantissa * (1 << (8 * (exponent - 3)))
 
 
+_OTS_INTERPRETERS = ("/opt/ares/venv/bin/python", "/opt/ots-venv/bin/python")
+
+
 def _ots_available():
     try:
         import opentimestamps  # noqa: F401
         return True
     except Exception:  # noqa: BLE001
         return False
+
+
+def _reexec_with_verifier():
+    """Run under an interpreter that has opentimestamps, if this one does not.
+
+    A missing dependency must never read as a bad proof, and it must not sit
+    there reporting 'unavailable' on a box that has a working verifier one
+    directory away. Re-exec once; if no candidate has the package, the caller
+    still gets the honest 'unavailable' verdict.
+    """
+    import os
+    import sys
+    if _ots_available() or os.environ.get("OKF_OTS_REEXEC"):
+        return
+    for py in _OTS_INTERPRETERS:
+        if not os.path.exists(py) or os.path.realpath(py) == os.path.realpath(sys.executable):
+            continue
+        os.environ["OKF_OTS_REEXEC"] = "1"
+        os.execv(py, [py, os.path.abspath(__file__)] + sys.argv[1:])
 
 
 OTS_MISSING_MSG = ("verifier unavailable: the `opentimestamps` package is not installed "
@@ -190,4 +212,5 @@ def main():
 
 
 if __name__ == "__main__":
+    _reexec_with_verifier()
     sys.exit(main())
