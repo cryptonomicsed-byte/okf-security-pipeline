@@ -346,6 +346,10 @@ def probe_post_sqlmap(findings, target_url, outdir, tclass):
             res, raw = run_sqlmap(url, outdir, tclass, data=data, content_type=ct)
             tried.append(param)
             if res.get("injectable"):
+                # name the parameter that actually reproduced, so the receipt
+                # says which request was tested rather than only that one was
+                res["post_param"] = param
+                res["params_tried"] = list(tried)
                 return res, raw
     return ({"injectable": False, "method": "POST",
              "skipped": "no POST body injection reproduced",
