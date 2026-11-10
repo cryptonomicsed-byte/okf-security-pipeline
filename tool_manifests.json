@@ -1,0 +1,786 @@
+{
+  "manifest_version": "1.0",
+  "note": "Doctrine \u00a79: every exposed action declares input/output schemas, required capabilities, side effects, timeout and cancellation, idempotency, and audit. Doctrine \u00a712.5: versioned schemas. One entry per executable this repo invokes. Adding a tool to strix_pipeline_v4.py without adding it here fails the startup gate and okf_tool_manifests.py --check.",
+  "tools": [
+    {
+      "name": "betterleaks",
+      "exec": [
+        "docker",
+        "run",
+        "--rm",
+        "-v",
+        "<path>:/repo",
+        "ghcr.io/betterleaks/betterleaks:latest",
+        "dir",
+        "/repo"
+      ],
+      "version_probe": "docker image inspect ghcr.io/betterleaks/betterleaks:latest",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "path"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "filesystem path mounted read-only into the scanner"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "hits",
+          "rc"
+        ],
+        "properties": {
+          "hits": {
+            "type": "integer"
+          },
+          "rc": {
+            "type": "integer"
+          },
+          "findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rule": {
+                  "type": "string"
+                },
+                "file": {
+                  "type": "string"
+                },
+                "line": {
+                  "type": "integer"
+                },
+                "match_prefix": {
+                  "type": "string",
+                  "maxLength": 3
+                }
+              }
+            }
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "container_run",
+        "read_local_files"
+      ],
+      "side_effects": [
+        "pulls/uses a container image",
+        "reads the mounted path",
+        "writes nothing outside stdout"
+      ],
+      "timeout_s": 600,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "read-only scan of a path; same input yields the same hits",
+      "audit": [
+        "stdout captured",
+        "hit count and rc recorded in the receipt diagnostics"
+      ],
+      "secret_handling": "match values are never persisted; only rule, file, line and a 3-char match_prefix"
+    },
+    {
+      "name": "strix",
+      "exec": [
+        "/opt/ares/strix-venv/bin/strix"
+      ],
+      "version_probe": "/opt/ares/strix-venv/bin/strix --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "target_url",
+          "timeout_s"
+        ],
+        "properties": {
+          "target_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "timeout_s": {
+            "type": "integer",
+            "minimum": 60
+          },
+          "model": {
+            "type": "string"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "vulnerabilities"
+        ],
+        "properties": {
+          "vulnerabilities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "title",
+                "severity"
+              ]
+            }
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_target",
+        "network_egress_llm_gateway",
+        "write_local_files"
+      ],
+      "side_effects": [
+        "sends HTTP requests to the target",
+        "calls the LLM gateway",
+        "writes a run directory with reports and SARIF"
+      ],
+      "timeout_s": 2700,
+      "cancellable": true,
+      "idempotent": false,
+      "idempotency_note": "an LLM-driven scan is non-deterministic; findings can differ between runs of the same target",
+      "audit": [
+        "strix.log, vulnerabilities.json, findings.sarif retained per run",
+        "receipt records run dir, exit code and finding count"
+      ],
+      "authority_note": "docx \u00a710: permissions are not enforced outside the model for this tool; it is the known gap recorded in \u00a712 item 4"
+    },
+    {
+      "name": "sqlmap",
+      "exec": [
+        "sqlmap"
+      ],
+      "version_probe": "sqlmap --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "data": {
+            "type": "string",
+            "description": "POST body; may carry a JSON payload"
+          },
+          "content_type": {
+            "type": "string"
+          },
+          "extra": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "injectable",
+          "rc"
+        ],
+        "properties": {
+          "injectable": {
+            "type": "boolean"
+          },
+          "dbms": {
+            "type": "string"
+          },
+          "techniques": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dumped_table": {
+            "type": "string"
+          },
+          "dump_rows": {
+            "type": "integer"
+          },
+          "sensitive_exposed": {
+            "type": "boolean"
+          },
+          "params_tried": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_target",
+        "write_local_files"
+      ],
+      "side_effects": [
+        "sends attack traffic to the target",
+        "with --dump, extracts table rows into the evidence dir"
+      ],
+      "timeout_s": 240,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "re-running against an unchanged target yields the same injectable verdict; the dump content may change if the data does",
+      "audit": [
+        "output dir, log and dumped rows kept under the evidence directory",
+        "injectable/dbms/techniques recorded in the receipt"
+      ]
+    },
+    {
+      "name": "sstimap",
+      "exec": [
+        "/opt/ares/venv/bin/python",
+        "/opt/ares/SSTImap/sstimap.py"
+      ],
+      "version_probe": "/opt/ares/venv/bin/python /opt/ares/SSTImap/sstimap.py --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "vulnerable",
+          "rc"
+        ],
+        "properties": {
+          "vulnerable": {
+            "type": "boolean"
+          },
+          "engine": {
+            "type": "string"
+          },
+          "rc": {
+            "type": "integer"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_target"
+      ],
+      "side_effects": [
+        "sends template-payload probes to the target"
+      ],
+      "timeout_s": 300,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "same target and payload set yields the same verdict",
+      "audit": [
+        "stdout retained",
+        "verdict recorded in the receipt"
+      ]
+    },
+    {
+      "name": "xsstrike",
+      "exec": [
+        "/opt/ares/venv/bin/python",
+        "/opt/ares/XSStrike/xsstrike.py"
+      ],
+      "version_probe": "/opt/ares/venv/bin/python /opt/ares/XSStrike/xsstrike.py --help",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "vulnerable",
+          "rc"
+        ],
+        "properties": {
+          "vulnerable": {
+            "type": "boolean"
+          },
+          "rc": {
+            "type": "integer"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_target"
+      ],
+      "side_effects": [
+        "sends XSS payloads to the target"
+      ],
+      "timeout_s": 300,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "same target yields the same reflected/stored verdict",
+      "audit": [
+        "stdout retained",
+        "verdict recorded in the receipt"
+      ]
+    },
+    {
+      "name": "nuclei",
+      "exec": [
+        "nuclei"
+      ],
+      "version_probe": "nuclei -version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "severity": {
+            "type": "string"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "matches",
+          "rc"
+        ],
+        "properties": {
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "rc": {
+            "type": "integer"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_target",
+        "write_local_files"
+      ],
+      "side_effects": [
+        "runs the template set against the target",
+        "writes a JSONL result file"
+      ],
+      "timeout_s": 600,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "template-based matching over the same target is stable; template updates change results",
+      "audit": [
+        "/tmp/nuclei_v4.jsonl and matches recorded in the receipt"
+      ]
+    },
+    {
+      "name": "ffuf",
+      "exec": [
+        "ffuf"
+      ],
+      "version_probe": "ffuf -V",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "url",
+          "wordlist"
+        ],
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "wordlist": {
+            "type": "string"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "paths",
+          "rc"
+        ],
+        "properties": {
+          "paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rc": {
+            "type": "integer"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_target",
+        "read_local_files"
+      ],
+      "side_effects": [
+        "many HTTP requests to the target (one per word)"
+      ],
+      "timeout_s": 300,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "same wordlist and target yield the same path set",
+      "audit": [
+        "discovered paths recorded in the receipt"
+      ]
+    },
+    {
+      "name": "nmap",
+      "exec": [
+        "nmap"
+      ],
+      "version_probe": "nmap --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "host"
+        ],
+        "properties": {
+          "host": {
+            "type": "string"
+          },
+          "ports": {
+            "type": "string"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "rc"
+        ],
+        "properties": {
+          "open_ports": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "services": {
+            "type": "object"
+          },
+          "rc": {
+            "type": "integer"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_target",
+        "raw_sockets"
+      ],
+      "side_effects": [
+        "service/version probes against the target host"
+      ],
+      "timeout_s": 420,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "same host and flags yield the same open-port set at that moment",
+      "audit": [
+        "service/version lines recorded in the receipt"
+      ]
+    },
+    {
+      "name": "ots",
+      "exec": [
+        "/opt/ares/venv/bin/ots"
+      ],
+      "version_probe": "/opt/ares/venv/bin/ots --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "merkle_root"
+        ],
+        "properties": {
+          "merkle_root": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "stamped"
+        ],
+        "properties": {
+          "stamped": {
+            "type": "boolean"
+          },
+          "ots_file": {
+            "type": "string"
+          },
+          "attestations": {
+            "type": "array"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_calendar",
+        "write_local_files"
+      ],
+      "side_effects": [
+        "submits a 32-byte digest to public OpenTimestamps calendars",
+        "writes a .merkle.txt.ots sidecar"
+      ],
+      "timeout_s": 180,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "stamping the same digest again produces another proof for the same bytes; neither invalidates the other",
+      "audit": [
+        "proof sidecar stored beside the receipt",
+        "verification result recorded by okf_ots_verify.py"
+      ],
+      "privacy_note": "only a hash leaves the host; no receipt content is published to a calendar"
+    },
+    {
+      "name": "msfconsole",
+      "exec": [
+        "msfconsole",
+        "-q",
+        "-r",
+        "<rc_file>"
+      ],
+      "version_probe": "msfconsole --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "rc_file"
+        ],
+        "properties": {
+          "rc_file": {
+            "type": "string"
+          },
+          "keyword": {
+            "type": "string"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "rc"
+        ],
+        "properties": {
+          "rc": {
+            "type": "integer"
+          },
+          "matched_modules": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "check_output": {
+            "type": "string"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "write_local_files",
+        "network_egress_target"
+      ],
+      "side_effects": [
+        "loads Metasploit and its database",
+        "writes an rc resource file",
+        "optionally contacts the target for a check"
+      ],
+      "timeout_s": 300,
+      "cancellable": true,
+      "idempotent": false,
+      "idempotency_note": "module search is stable, but a check run contacts the target and its answer can change with target state",
+      "audit": [
+        "rc file and stdout retained",
+        "matched modules recorded in the receipt"
+      ]
+    },
+    {
+      "name": "curl",
+      "exec": [
+        "curl",
+        "-s",
+        "-X",
+        "POST",
+        "<vantage>/api/agents/posts/text"
+      ],
+      "version_probe": "curl --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "url",
+          "body"
+        ],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "body": {
+            "type": "string"
+          },
+          "headers": {
+            "type": "object"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "rc"
+        ],
+        "properties": {
+          "rc": {
+            "type": "integer"
+          },
+          "post_id": {
+            "type": "string"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_vantage",
+        "read_secret_env"
+      ],
+      "side_effects": [
+        "publishes a post to the Vantage API as this agent",
+        "retries with backoff on failure"
+      ],
+      "timeout_s": 90,
+      "cancellable": true,
+      "idempotent": false,
+      "idempotency_note": "a retried POST can publish the broadcast twice; the pipeline treats the returned id as authoritative and does not dedupe server-side",
+      "audit": [
+        "broadcast id recorded in the receipt and printed"
+      ],
+      "secret_handling": "the agent key is read from the on-box key file and passed as a header, never logged"
+    },
+    {
+      "name": "git",
+      "exec": [
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "<repo_url>",
+        "<target>"
+      ],
+      "version_probe": "git --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "repo_url",
+          "target"
+        ],
+        "properties": {
+          "repo_url": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "rc"
+        ],
+        "properties": {
+          "rc": {
+            "type": "integer"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_repo",
+        "write_local_files"
+      ],
+      "side_effects": [
+        "fetches a remote repository into the scan directory",
+        "runs clone hooks defined by the remote (no hook execution beyond git's own)"
+      ],
+      "timeout_s": 120,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "a shallow clone of the same commit yields the same tree; a moving branch does not",
+      "audit": [
+        "clone rc and resulting path recorded"
+      ]
+    },
+    {
+      "name": "rm",
+      "exec": [
+        "rm",
+        "-rf",
+        "<target>"
+      ],
+      "version_probe": "rm --version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "target"
+        ],
+        "properties": {
+          "target": {
+            "type": "string",
+            "description": "must resolve inside SCAN_DIR"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "rc"
+        ],
+        "properties": {
+          "rc": {
+            "type": "integer"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "delete_local_files"
+      ],
+      "side_effects": [
+        "recursively deletes the previous clone of the target repo"
+      ],
+      "timeout_s": 60,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "deleting an already-deleted path is a no-op with rc 0",
+      "audit": [
+        "the resolved path is printed before deletion"
+      ],
+      "destructive": true,
+      "destructive_note": "blast radius is exactly SCAN_DIR/<safe repo name>; the name is now slugged and the resolved path asserted inside /tmp/strix-pipeline before any deletion. Before this guard, a crafted repo_name argument reached outside the scan directory."
+    }
+  ]
+}

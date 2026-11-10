@@ -20,6 +20,8 @@
 !/okf_pin.py
 !/okf_receipt.py
 !/okf_time_attest.py
+!/okf_tool_manifests.py
+!/tool_manifests.json
 !/koodu_clock.py
 !/koodu_time.py
 !/strix_pipeline_v4.py

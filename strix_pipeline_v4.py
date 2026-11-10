@@ -48,6 +48,32 @@ VANTAGE_KEY = os.environ.get("VANTAGE_KEY") or (
     if os.path.exists("/opt/ares/.vantage_key") else "")
 DB_PATH = "/opt/ares/Vantage/data/vantage.db"
 SCAN_DIR = "/tmp/strix-pipeline"
+
+_SAFE_NAME = re.compile(r"[^A-Za-z0-9._-]+")
+
+
+def _safe_name(name):
+    """Slug a repo name so it cannot address a path outside SCAN_DIR.
+
+    repo_name is a positional argument. It used to be interpolated straight
+    into `rm -rf {SCAN_DIR}/{repo_name}`, so a name like "../../etc/x" deleted
+    outside the scan directory. A name is a label, not a path.
+    """
+    raw = (name or "").strip().rstrip("/")
+    base = os.path.basename(raw)
+    slug = _SAFE_NAME.sub("-", base).strip("-.")
+    if not slug or slug in (".", ".."):
+        raise ValueError(f"unsafe repo name: {name!r}")
+    return slug[:80]
+
+
+def _scan_target(repo_name):
+    """Absolute clone path for a repo name, asserted to sit inside SCAN_DIR."""
+    base = os.path.abspath(SCAN_DIR)
+    target = os.path.abspath(os.path.join(base, _safe_name(repo_name)))
+    if os.path.commonpath([target, base]) != base or target == base:
+        raise ValueError(f"refusing target outside {base}: {target}")
+    return target
 EVIDENCE_ROOT = Path("/opt/ares/security_reports")
 STRIX_RUNS = Path("/opt/ares/strix/strix_runs")
 STRIX_BIN = "/opt/ares/strix-venv/bin/strix"
@@ -954,7 +980,12 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
     if not target_url:
         print("  (no --target-url: static-only mode — Strix + betterleaks, no dynamic proof)")
         target_url = ""
-    repo_name = repo_name or repo_url.rstrip("/").split("/")[-1].replace(".git", "")
+    # Doctrine §9/§12.5: refuse to run a tool that has no declared manifest.
+    # This is a gate, not a warning: an undeclared action is an unreviewed one.
+    import okf_tool_manifests
+    okf_tool_manifests.require_coverage()
+
+    repo_name = _safe_name(repo_name or repo_url.rstrip("/").split("/")[-1].replace(".git", ""))
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     started, t0 = now_utc(), time.time()
     tclass = classify_target(target_url) if target_url else None
@@ -987,8 +1018,9 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
           f"{'#'*66}")
 
     raws = {}
-    target = f"{SCAN_DIR}/{repo_name}"
+    target = _scan_target(repo_name)
     if repo_url.startswith(("http", "git@", "/", "file://")):
+        print(f"  rm -rf {target}")
         run(["rm", "-rf", target])
         rc, _ = run(["git", "clone", "--depth", "1", repo_url, target], 120)
         print(f"  clone rc={rc} -> {target}")
