@@ -1,0 +1,54 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 167,
+      "sha256": "7085d3711d93192d256f85be263620b39a854644ed012e5bee51c32f55b28817"
+    }
+  },
+  "chain_index": 1,
+  "created_at": "2026-11-07T21:47:27Z",
+  "diagnostics": [],
+  "evidence_dir": "/opt/ares/security_reports/tiny-root_20261107T214725Z",
+  "merkle_root": "7085d3711d93192d256f85be263620b39a854644ed012e5bee51c32f55b28817",
+  "prev_receipt": "61b5bfa1fccb8efb308d004703d5bd865fdc965dbebb3a252f02ffadfe20e954",
+  "receipt_id": "514f855babd9cd1c1bddbb5381d8f080aac0fc321c4030906ab821e4c24db201",
+  "receipt_version": "1.0",
+  "repo": "tiny-root",
+  "run": {
+    "btc": {
+      "anchor_height": 974984,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974990,
+      "pin": {
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+      "verified": true,
+      "verified_depth": 40,
+      "verified_lowest": 974951
+    },
+    "duration_s": 2,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/tmp"
+  },
+  "signature": "8f3fa10c00ef6db27357c2492d88f84e16cdad0da913c926b5f791eec0b25d76",
+  "target": ""
+}

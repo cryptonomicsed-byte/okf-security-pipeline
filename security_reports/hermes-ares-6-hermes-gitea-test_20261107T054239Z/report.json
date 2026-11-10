@@ -1,0 +1,43 @@
+{
+  "repo": "hermes-ares-6-hermes-gitea-test",
+  "repo_url": "http://127.0.0.1:3001/hermes-ares-6/hermes-gitea-test.git",
+  "target_url": "",
+  "target_class": null,
+  "stealth": "n/a (static-only)",
+  "started": "2026-11-07T05:42:39Z",
+  "duration_s": 252,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/hermes-ares-6-hermes-gitea-test_73b1",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 246,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "Application Source Code Review \u2014 Not applicable: /workspace/hermes-ares-6-hermes-gitea-test\n\nRepository contains only README",
+      "severity": "none",
+      "description": "Application Source Code Review \u2014 Not applicable: /workspace/hermes-ares-6-hermes-gitea-test\n\nRepository contains only README.md and TRIGGER_TEST.md with no application code or vulnerability surface.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    }
+  ],
+  "endpoints": [],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {}
+}

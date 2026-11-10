@@ -1,0 +1,394 @@
+{
+  "repo": "scan-canary",
+  "repo_url": "/tmp/scan-canary",
+  "target_url": "",
+  "target_class": null,
+  "stealth": "n/a (static-only)",
+  "started": "2026-11-07T20:22:56Z",
+  "duration_s": 644,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/scan-canary_7f28",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 641,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 1
+  },
+  "strix_findings": [
+    {
+      "title": "Path Traversal in /file route",
+      "severity": "high",
+      "description": "A path traversal vulnerability in the `/file` route of the Flask application allows unauthenticated attackers to read arbitrary files from the server filesystem via the `name` parameter.",
+      "poc": "1. Send a GET request to `/file?name=../../etc/passwd`.\n2. Observe the contents of `/etc/passwd` returned in the response.",
+      "target": "/workspace/scan-canary",
+      "endpoint": "/file",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "Command Injection in /run Route",
+      "severity": "critical",
+      "description": "The /run endpoint executes arbitrary shell commands supplied via the cmd query parameter, enabling remote code execution.",
+      "poc": "1. Send a request to /run with a custom cmd parameter.\\n2. The server executes the command and returns output.",
+      "target": "/workspace/scan-canary",
+      "endpoint": "/run",
+      "method": "GET",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in /user endpoint via id parameter",
+      "severity": "high",
+      "description": "The /user endpoint constructs an SQL query using string formatting with user-supplied input, allowing attackers to inject arbitrary SQL commands and access or manipulate the database.",
+      "poc": "1. Start the Flask application.\n2. Send a GET request to /user?id=1 OR 1=1.\n3. Observe that the response contains all rows from the users table instead of just the row with id=1.",
+      "target": "/workspace/scan-canary",
+      "endpoint": "",
+      "method": "GET",
+      "cvss": 8.2,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "Hardcoded Database Password in app.py",
+      "severity": "high",
+      "description": "A hardcoded database password was found in the source code of the application.",
+      "poc": "1. Open the source file app.py.\n2. Locate line 24.\n3. Observe the hardcoded password.",
+      "target": "/workspace/scan-canary",
+      "endpoint": "",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "Path Traversal in /file route\n\nA path traversal vulnerability in the `/file` route of the Flask application allows unauthenticated attackers to read arbitrary f",
+      "severity": "error",
+      "description": "Path Traversal in /file route\n\nA path traversal vulnerability in the `/file` route of the Flask application allows unauthenticated attackers to read arbitrary files from the server filesystem via the `name` parameter.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "Command Injection in /run Route\n\nThe /run endpoint executes arbitrary shell commands supplied via the cmd query parameter, enabling remote code execution",
+      "severity": "error",
+      "description": "Command Injection in /run Route\n\nThe /run endpoint executes arbitrary shell commands supplied via the cmd query parameter, enabling remote code execution.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "SQL Injection in /user endpoint via id parameter\n\nThe /user endpoint constructs an SQL query using string formatting with user-supplied input, allowing attacker",
+      "severity": "error",
+      "description": "SQL Injection in /user endpoint via id parameter\n\nThe /user endpoint constructs an SQL query using string formatting with user-supplied input, allowing attackers to inject arbitrary SQL commands and access or manipulate the database.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "Hardcoded Database Password in app",
+      "severity": "error",
+      "description": "Hardcoded Database Password in app.py\n\nA hardcoded database password was found in the source code of the application.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    }
+  ],
+  "endpoints": [
+    "/file?name=1",
+    "/run?cmd=1",
+    "/user?id=1"
+  ],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974979,
+      "tip_time": 1794081924,
+      "mediantime": 1794080238,
+      "now_est": 1794082975,
+      "interval": [
+        1794081924,
+        1794082976
+      ],
+      "uncertainty_s": 526,
+      "elapsed_since_tip_s": 34,
+      "next_block_eta_s": 0,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794082941.113398,
+      "ref_spread_s": 1,
+      "chain_lag_s": 1052,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 974979,
+        "tip_hash": "00000000000000000000195e2e8a56593ee8374f6a221b9933255af41b46d638",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794079917,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 974973,
+          "anchor_hash": "000000000000000000013812691237e0e2a4a3ad89d3b78bbdd80805dde9373b",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "advanced_from": 974973,
+          "verified_against": "000000000000000000013812691237e0e2a4a3ad89d3b78bbdd80805dde9373b",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true
+        },
+        "source": "mempool.space",
+        "errors": []
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 34,
+      "wall_now": 1794082976
+    },
+    "calendar": {
+      "block_height": 974979,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75021,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 99,
+      "supply_mined": 95.7586,
+      "timestamp": "2026-11-07T20:22:56.984Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "requests": 0
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/scan-canary_20261107T202256Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [
+      {
+        "fp": "b50115c561e1ed21",
+        "title": "Path Traversal in /file route"
+      },
+      {
+        "fp": "9600feafc4177410",
+        "title": "Command Injection in /run Route"
+      },
+      {
+        "fp": "2e0fc0f2d98df099",
+        "title": "SQL Injection in /user endpoint via id parameter"
+      },
+      {
+        "fp": "6ee136515c3944fa",
+        "title": "Hardcoded Database Password in app.py"
+      },
+      {
+        "fp": "fc1b1ca95c514120",
+        "title": "Path Traversal in /file route\n\nA path traversal vulnerability in the `/file` route of the Flask application allows unauthenticated attackers to read arbitrary f"
+      },
+      {
+        "fp": "bf8066ded43cb06e",
+        "title": "Command Injection in /run Route\n\nThe /run endpoint executes arbitrary shell commands supplied via the cmd query parameter, enabling remote code execution"
+      },
+      {
+        "fp": "ff712053c7caeff0",
+        "title": "SQL Injection in /user endpoint via id parameter\n\nThe /user endpoint constructs an SQL query using string formatting with user-supplied input, allowing attacker"
+      },
+      {
+        "fp": "333011e32b7cb994",
+        "title": "Hardcoded Database Password in app"
+      }
+    ],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 8,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 8,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T20:22:56Z"
+  },
+  "receipt": {
+    "receipt_id": "c0cc5694f87e61ca5ef0a9f1bb492b1a37a4de7f650148e8f05e688c6349a70e",
+    "path": "/opt/ares/security_receipts/scan-canary/c0cc5694f87e61ca.json",
+    "merkle_root": "a522546cf6eb9ded42aa2420a424c03ee2731b20358a5d1e9158446de7ba2078",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 2,
+    "diagnostics": 8
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76481,
+  "vantage_response": {
+    "broadcast_id": 76481,
+    "status": "ready"
+  }
+}

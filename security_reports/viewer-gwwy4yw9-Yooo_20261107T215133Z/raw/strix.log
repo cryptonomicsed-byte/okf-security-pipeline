@@ -1,0 +1,84 @@
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test initiated                                                  │
+│                                                                              │
+│  Target  /tmp/strix-pipeline/viewer-gwwy4yw9-Yooo                            │
+│  Output  strix_runs/viewer-gwwy4yw9-yooo_2042                                │
+│                                                                              │
+│  Vulnerabilities will be displayed in real-time.                             │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test in progress                                                │
+│                                                                              │
+│  Model openai/gemini-flash-lite                                              │
+│  Vulnerabilities 0                                                           │
+│                                                                              │
+│  Input Tokens 699.8K  ·  Cached Tokens 443.8K                                │
+│  Output Tokens 1.4K  ·  Cost $0.0000                                         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test summary                                                    │
+│                                                                              │
+│  # Executive Summary                                                         │
+│                                                                              │
+│  The repository "viewer-gwwy4yw9-Yooo" contains only placeholder             │
+│  documentation files and no executable or source code. No attack surface or  │
+│  vulnerability was identified during the assessment. The threat model        │
+│  indicates no active application or endpoints. Overall risk posture is low   │
+│  with no actionable findings.                                                │
+│                                                                              │
+│  # Methodology                                                               │
+│                                                                              │
+│  · Root‑agent orchestrated a single‑step assessment, determining that the    │
+│  repository contains no runtime code.                                        │
+│  · A threat model was created to establish trust boundaries and confirm the  │
+│  absence of an attack surface.                                               │
+│  · White‑box static triage tools were run, confirming no code beyond the     │
+│  README and a small probe file.                                              │
+│                                                                              │
+│  The scan adhered to the mandatory white‑box steps—saving a threat model,    │
+│  performing static analysis, and concluding no further testing was           │
+│  required.                                                                   │
+│                                                                              │
+│  # Technical Analysis                                                        │
+│                                                                              │
+│  No vulnerabilities or code issues were discovered. The repository consists  │
+│  of placeholder files (`README.md`, `HOOK_PROBE.md`). No application         │
+│  endpoints, services, or configuration files were present to test for        │
+│  common web or API security issues. Accordingly, the global risk posture     │
+│  for this target is minimal.                                                 │
+│                                                                              │
+│  # Recommendations                                                           │
+│                                                                              │
+│  None                                                                        │
+│                                                                              │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test completed                                                  │
+│                                                                              │
+│  Target  /tmp/strix-pipeline/viewer-gwwy4yw9-Yooo                            │
+│  Vulnerabilities  0 (No exploitable vulnerabilities detected)                │
+│                                                                              │
+│  Input Tokens 699.8K  ·  Cached Tokens 443.8K  ·  Output Tokens 1.4K         │
+│                                                                              │
+│  Output  /opt/ares/strix/strix_runs/viewer-gwwy4yw9-yooo_2042                │
+│                                                                              │
+│  View    strix view viewer-gwwy4yw9-yooo_2042                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+strix.ai  ·  docs.strix.ai  ·  discord.gg/strix-ai
+

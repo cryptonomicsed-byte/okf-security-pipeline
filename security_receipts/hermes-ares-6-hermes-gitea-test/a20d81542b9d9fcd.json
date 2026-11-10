@@ -1,0 +1,49 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 164,
+      "sha256": "fc1bae6d450f2af906bbbafd22e69a021dfc7b437b2833f70a2f2f19748e4f49"
+    },
+    "raw/strix.log": {
+      "bytes": 8568,
+      "sha256": "020e8cbd763a5016ff740eb3fb0bdd3b123108995a00a4bfe51b64ccb687ec8c"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-07T20:06:32Z",
+  "diagnostics": [],
+  "evidence_dir": "/opt/ares/security_reports/hermes-ares-6-hermes-gitea-test_20261107T200333Z",
+  "merkle_root": "fe5800fd4aa9d888ed19c26786f74f85a3e006c7b71a72911bbdaedbdc2bc4f5",
+  "prev_receipt": null,
+  "receipt_id": "a20d81542b9d9fcdb504911b38652fd97f67b0960bdcf0f35cebae1e4b02b301",
+  "receipt_version": "1.0",
+  "repo": "hermes-ares-6-hermes-gitea-test",
+  "run": {
+    "btc": {
+      "anchor_height": 974973,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974979,
+      "pow_ok": true,
+      "tip_hash": "00000000000000000000195e2e8a56593ee8374f6a221b9933255af41b46d638",
+      "verified": true
+    },
+    "duration_s": 179,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/hermes-ares-6-hermes-gitea-test_2e2c"
+  },
+  "signature": "00e21323b4ed051a0c8790900a6cd3efa801da32bd772e7a8b6ba4a3ee02898f",
+  "target": ""
+}

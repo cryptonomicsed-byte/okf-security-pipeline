@@ -1,0 +1,93 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 114598,
+      "sha256": "6343aebc26b0f10dd9a5adad8f8fb06bf46c725aab7a48ef20abef7848acd247"
+    },
+    "raw/ffuf.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/nmap.log": {
+      "bytes": 2851,
+      "sha256": "a42a7ffb85ad124a3034ea51fe59757b4aaa91b2ac1b9bd9bbb5eebf9b9700fa"
+    },
+    "raw/nuclei.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/strix.log": {
+      "bytes": 18935,
+      "sha256": "423b3000e4d6712b7269488e60cbe2d4f3a2b0463d4f091fc683c92bb2dd9e8a"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-09T03:11:11Z",
+  "created_at_btc": {
+    "block": {
+      "hash": "000000000000000000004c6910eb3158382ebda33586a044b73b08f50fb4655e",
+      "height": 975123,
+      "time": 1794193646
+    },
+    "depth": 10013,
+    "rooted": true,
+    "verdict": "verified_rooted",
+    "verified": true,
+    "window": {
+      "hi": 1794193871,
+      "hi_utc": "2026-11-09T03:11:11Z",
+      "lo": 1794193646,
+      "lo_utc": "2026-11-09T03:07:26Z"
+    }
+  },
+  "diagnostics": [],
+  "evidence_dir": "/opt/ares/security_reports/e2e-freepool-final_20261109T030311Z",
+  "merkle_root": "e8ab0eecf35eb18c8ca6a2228fb38451860d6145e2c8b3fd85972b0d954aa417",
+  "prev_receipt": null,
+  "receipt_id": "b782048a107e8ce548b1feee627b402b8cc5355f5f3f96c3408a8b50ad978813",
+  "receipt_version": "1.0",
+  "repo": "e2e-freepool-final",
+  "run": {
+    "btc": {
+      "anchor_height": 975116,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 975122,
+      "pin": {
+        "class": "self_recorded",
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "rooted_by": {
+          "class": "buried_multi_source",
+          "height": 974985,
+          "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+        },
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "0000000000000000000128a16027d3adbdd69ec1e1bc7b6bb085a220d3447593",
+      "verified": true,
+      "verified_depth": 10012,
+      "verified_lowest": 965111
+    },
+    "duration_s": 478,
+    "strix_model": "free-pool",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-hard_a4a7"
+  },
+  "signature": "a2af68ea55138dd7de23d2eb13662ed899b8098a756c07f37186fb2b10eb74df",
+  "target": "http://127.0.0.1:8098"
+}

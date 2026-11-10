@@ -1,0 +1,29 @@
+{
+  "attest_version": "1.0",
+  "attestation_id": "cede9cff10c57f15af6f09121072de89924ebdb2955708074effa52cef2797b0",
+  "bitcoin": {
+    "block_hash": "00000000000000000001e421b6ab2cfc40c1aed1babd2c21196875f6694b0763",
+    "block_time": 1794329927,
+    "height": 975325,
+    "merkle_root": "e85f5eb66050b86b83a4b9c28c52d44a3dedae268ddec75262cc10857024be8e",
+    "source": "mempool.space"
+  },
+  "checks": {
+    "block_buried": true,
+    "blocks_behind": 6,
+    "header_hashes_to_block": true,
+    "merkle_in_block": true,
+    "pow_meets_target": true
+  },
+  "created_at": "2026-11-10T19:10:05Z",
+  "kind": "time-attestation",
+  "prev_attestation": null,
+  "proof_file": "5e348c3ee4617521.merkle.txt.ots",
+  "repo": "hermes-ares-6-owner-check",
+  "signature": "6163c6a3af0ea98e32bae2952ac46ffd14129acb775580e303396ec11c0722b7",
+  "stamped_digest": "50775b4d3ffce6deb6f5f1f3bbf6fffdb78a6b77ff5edeb21b75f31a86bb75e1",
+  "target_chain_index": 0,
+  "target_created_at": "2026-11-07T21:51:25Z",
+  "target_merkle_root": "783985dca93a5e9f11989221dd56bd202ac4755758cd10e1cceb3afedc7114c6",
+  "target_receipt_id": "5e348c3ee4617521cdaae684298a35e124296260d5b718f69e9c4cf72a3c4c11"
+}

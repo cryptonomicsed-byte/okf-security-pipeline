@@ -1,0 +1,493 @@
+{
+  "repo": "test-vuln-node",
+  "repo_url": "/tmp/test-vuln-node",
+  "target_url": "http://127.0.0.1:8097",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T19:56:47Z",
+  "duration_s": 121,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "Broken Function Level Authorization via Client-Supplied Header on /admin",
+      "severity": "medium",
+      "description": "The `/admin` endpoint relies solely on a client-supplied HTTP header (`x-admin`) to authorize administrative access. An unauthenticated attacker can supply `x-admin: 1` to bypass authorization checks and access the restricted admin panel.",
+      "poc": "1. Send a GET request to `/admin` without headers and observe a 403 Forbidden response.\n2. Send a GET request to `/admin` with the header `x-admin: 1` and observe a 200 OK response with administrative panel content.",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/admin",
+      "method": "GET",
+      "cvss": 5.3,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7/vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in /item endpoint",
+      "severity": "critical",
+      "description": "The `/item` endpoint uses f-string interpolation to construct SQL queries, allowing attackers to inject arbitrary SQL via the `id` parameter.",
+      "poc": "1. Send a request to `/item` with a valid ID to establish a baseline.\n2. Send a request with `id=1%20AND%201=1` to confirm boolean-based injection.\n3. Send a request with `id=1%20AND%201=2` to confirm the negative case.\n4. Use a `UNION SELECT` payload to extract arbitrary data.",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/item",
+      "method": "GET",
+      "cvss": 9.1,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7/vulnerabilities.json"
+    },
+    {
+      "title": "Path Traversal in /file endpoint via name parameter",
+      "severity": "high",
+      "description": "The /file endpoint in the FastAPI application is vulnerable to path traversal due to improper validation of user-supplied input in the 'name' parameter. An attacker can use '../' sequences to read arbitrary files on the server.",
+      "poc": "1. Send a GET request to /file?name=../../../../etc/passwd\n2. Observe that the server returns the contents of /etc/passwd",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/file",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8097/admin",
+    "http://127.0.0.1:8097/item?id=1",
+    "http://127.0.0.1:8097/file?name=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8097/item?id=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "UNION query",
+      "boolean-based blind"
+    ],
+    "tables": [
+      "items"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 2,
+    "dumped_table": "items",
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | alpha | flag{fapi_sql_ok} |",
+      "| 2  | beta  | nothing           |"
+    ],
+    "columns": "| id | name  | secret            |"
+  },
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8097,
+    "services": [
+      [
+        "sac?",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 5,
+    "found": [
+      "http://127.0.0.1:8097/admin",
+      "http://127.0.0.1:8097/docs",
+      "http://127.0.0.1:8097/file",
+      "http://127.0.0.1:8097/item",
+      "http://127.0.0.1:8097/run"
+    ]
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": "uvicorn",
+    "module": null,
+    "rc": 0,
+    "candidates": []
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974977,
+      "tip_time": 1794081039,
+      "mediantime": 1794079815,
+      "now_est": 1794081406,
+      "interval": [
+        1794081039,
+        1794081407
+      ],
+      "uncertainty_s": 184,
+      "elapsed_since_tip_s": 31,
+      "next_block_eta_s": 233,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794081375.1337624,
+      "ref_spread_s": 1,
+      "chain_lag_s": 368,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 974977,
+        "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794079669,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 974971,
+          "anchor_hash": "0000000000000000000097e4304d500ab90d6f52c87fe62416cf323892be299e",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "advanced_from": 974971,
+          "verified_against": "0000000000000000000097e4304d500ab90d6f52c87fe62416cf323892be299e",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true
+        },
+        "source": "mempool.space",
+        "errors": []
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 31,
+      "wall_now": 1794081407
+    },
+    "calendar": {
+      "block_height": 974977,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75023,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 97,
+      "supply_mined": 95.7586,
+      "timestamp": "2026-11-07T19:56:47.797Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [
+      {
+        "url": "http://127.0.0.1:8097/run",
+        "param": "cmd",
+        "payload": "1;echo OKFCANARY36735",
+        "evidence": "canary OKFCANARY36735 executed",
+        "via": "echo-canary"
+      }
+    ],
+    "traversal": [
+      {
+        "url": "http://127.0.0.1:8097/file?name=1",
+        "param": "name",
+        "payload": "../../../../etc/passwd",
+        "evidence": "root:x:0:0:root:/root:/bin/bash"
+      }
+    ],
+    "default_exec": [
+      {
+        "url": "http://127.0.0.1:8097/run",
+        "evidence": "uid=0(root) gid=0(root) groups=0(root)"
+      }
+    ],
+    "requests": 55
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-node_20261107T195647Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/ffuf.log",
+    "raw/metasploit.log",
+    "raw/nmap.log",
+    "raw/nuclei.log",
+    "raw/sqlmap.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/items.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11072026_0858pm.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [],
+    "persisting": [
+      {
+        "fp": "9ae90dbbbf3c9364",
+        "title": "Broken Function Level Authorization via Client-Supplied Header on /admin",
+        "first_seen": "2026-11-07T19:54:20Z",
+        "severity": "medium"
+      },
+      {
+        "fp": "b02c6517edff529f",
+        "title": "SQL Injection in /item endpoint",
+        "first_seen": "2026-11-07T19:54:20Z",
+        "severity": "critical"
+      },
+      {
+        "fp": "5eebe7c2ed76d8f9",
+        "title": "Path Traversal in /file endpoint via name parameter",
+        "first_seen": "2026-11-07T19:54:20Z",
+        "severity": "high"
+      }
+    ],
+    "resolved": [],
+    "counts": {
+      "new": 0,
+      "persisting": 3,
+      "resolved": 0,
+      "active": 3,
+      "age_of_oldest_active": "2026-11-07T19:54:20Z"
+    },
+    "run": "2026-11-07T19:56:47Z"
+  },
+  "receipt": {
+    "receipt_id": "cee820129c0eb39042e40e03f327202ab7e94bb0d690d5387c69f8bac910c9aa",
+    "path": "/opt/ares/security_receipts/test-vuln-node/cee820129c0eb390.json",
+    "merkle_root": "ed8d52528063728ca1a32d7180a2ee8fce0f32d0bedf23f455ec4731af7c87a3",
+    "chain_index": 14,
+    "prev_receipt": "af76abd575af278b91527de6ddbabf90aeaf904fe374c1dedc1b7823cb73e33f",
+    "artifacts": 11,
+    "diagnostics": 3
+  },
+  "ots": {
+    "merkle_root": "ed8d52528063728ca1a32d7180a2ee8fce0f32d0bedf23f455ec4731af7c87a3",
+    "merkle_file": "/opt/ares/security_receipts/test-vuln-node/cee820129c0eb390.merkle.txt",
+    "ots_file": "/opt/ares/security_receipts/test-vuln-node/cee820129c0eb390.merkle.txt.ots",
+    "stamped": true,
+    "stamp_rc": 0,
+    "stamp_out": "Submitting to remote calendar https://a.pool.opentimestamps.org\nSubmitting to remote calendar https://b.pool.opentimestamps.org\nSubmitting to remote calendar https://a.pool.eternitywall.com\nSubmitting to remote calendar https://ots.btc.catallaxy.com",
+    "info": "File sha256 hash: 9c159d371f3120cbbf4eadadffc4a4bfc6358612fe3bee4754ce874bca76659e\nTimestamp:\nappend 9ba36032734b45f9ca680c02abf7de3a\nsha256\n -> append 04469a9e628b2b2f\n    sha256\n    append f1e26de2c6bb8531a6129197012349fa\n    sha256\n    append 4664ebb396d3fbf3150f698b6cee262ef1883242eb5a9c8cb7d80870460973f2\n    sha256\n    prepend 724e517b62e64c79c06576a5ecf638b085f99c74967a5e1eb7eccdb055990cda\n    sha256\n    prepend 6aef82fa\n    append 44db43087e309329\n    verify PendingAttestation('https://alice.btc.calendar.opentimestamps.org')\n -> append 3392ab90d9a3c5f5470d9077f9fa6690\n    sha256\n    append 4135b0e05658c750a96456e104980267d6de0e71d19f7b34ce1b00dec21d1212\n    sha256\n    prepend 7c909513af0d2e51730eaec831b07fa2b9abb2bc8fb7e5412e3f51f56f5c13c0\n    sha256\n    append 8b8900de426c72304afaa3930a5c36c7e859fee423b62b9e274d8dc445743b8e\n    sha256\n    prepend 6aef82fa\n    append bfeeee8927a53"
+  },
+  "time": {
+    "ots_file": "/opt/ares/security_receipts/test-vuln-node/cee820129c0eb390.merkle.txt.ots",
+    "pending": true,
+    "error": "pending calendar attestation \u2014 no Bitcoin height yet"
+  },
+  "anchor": {
+    "ok": true,
+    "relays_ok": 5,
+    "relays_total": 6,
+    "per_relay": {
+      "ws://127.0.0.1:7788": {
+        "role": "vantage-local",
+        "profile": "full",
+        "event_id": "5fa0d51ecbb231ca612e066d6394f53ee32cd97338db65d384e9fda1317f7e11",
+        "ok": true,
+        "message": "5fa0d51ecbb231ca612e066d6394f53ee32cd97338db65d384e9fda1317f7e11",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/vantage-relay": {
+        "role": "vantage-public",
+        "profile": "full",
+        "event_id": "5fa0d51ecbb231ca612e066d6394f53ee32cd97338db65d384e9fda1317f7e11",
+        "ok": true,
+        "message": "5fa0d51ecbb231ca612e066d6394f53ee32cd97338db65d384e9fda1317f7e11",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/relay": {
+        "role": "buzz",
+        "profile": "full",
+        "event_id": "5fa0d51ecbb231ca612e066d6394f53ee32cd97338db65d384e9fda1317f7e11",
+        "ok": true,
+        "message": "3fe7c190764eee7a53fcb21055f68bba8176b3b755da33bf9e1f2b73b4264798",
+        "auth": true,
+        "auth_result": [
+          "OK",
+          "5fa0d51ecbb231ca612e066d6394f53ee32cd97338db65d384e9fda1317f7e11",
+          false,
+          "auth-required: not authenticated"
+        ]
+      },
+      "wss://relay.damus.io": {
+        "role": "damus",
+        "profile": "public",
+        "event_id": "bc0713fd2b98f364f0326fe7e8887a8b728f2be4595d9984fecce945e4479a0f",
+        "ok": false,
+        "error": "server rejected WebSocket connection: HTTP 503",
+        "queued": {
+          "queued": true,
+          "relay": "wss://relay.damus.io",
+          "event_id": "bc0713fd2b98f364f0326fe7e8887a8b728f2be4595d9984fecce945e4479a0f"
+        }
+      },
+      "wss://relay.primal.net": {
+        "role": "primal",
+        "profile": "public",
+        "event_id": "055727c7f3f26f766f246fa669f2dfe7d39418fa58fb16be8fe11fb1b5193a82",
+        "ok": true,
+        "message": "055727c7f3f26f766f246fa669f2dfe7d39418fa58fb16be8fe11fb1b5193a82",
+        "auth": false,
+        "note": {
+          "event_id": "a6f99f8a4e3af0e6922e7457556bdb1b3b5de7b566d611117210e8f437a781f4",
+          "ok": true,
+          "message": "a6f99f8a4e3af0e6922e7457556bdb1b3b5de7b566d611117210e8f437a781f4",
+          "auth": false
+        }
+      },
+      "wss://relay.snort.social": {
+        "role": "snort",
+        "profile": "public",
+        "event_id": "e292b1ec4a6b6d7e725a1f92d3c2d09a1901d69e7644cdc18dc101fabdd71d64",
+        "ok": true,
+        "message": "e292b1ec4a6b6d7e725a1f92d3c2d09a1901d69e7644cdc18dc101fabdd71d64",
+        "auth": false,
+        "note": {
+          "event_id": "a9cc1c63cf197f4679aedf9f6c092b4429e8a5226f1c866e452f4a364efe4b61",
+          "ok": true,
+          "message": "a9cc1c63cf197f4679aedf9f6c092b4429e8a5226f1c866e452f4a364efe4b61",
+          "auth": false
+        }
+      }
+    }
+  },
+  "vantage_broadcast_id": 76470,
+  "vantage_response": {
+    "broadcast_id": 76470,
+    "status": "ready"
+  }
+}

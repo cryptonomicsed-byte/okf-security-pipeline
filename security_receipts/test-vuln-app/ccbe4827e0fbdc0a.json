@@ -1,0 +1,84 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 164,
+      "sha256": "c8483d48984b40dd4b2773c21ad6418781aad4a99a90bf6c528241e217479c52"
+    },
+    "raw/metasploit.log": {
+      "bytes": 452,
+      "sha256": "bfe5bd5191165266eaef5f7a3b1e02d01bb255137bffbe8820d62f4270b379ba"
+    },
+    "raw/sqlmap.log": {
+      "bytes": 4042,
+      "sha256": "abe9f38d7f93aa135a17174b177748dee923e532f8773bec6fbacef0ea612cde"
+    },
+    "raw/sstimap.log": {
+      "bytes": 4019,
+      "sha256": "b77b822058621f6c16d654ffbd6355d83ffea05537cf1937d2f629d2d5143830"
+    },
+    "report.json": {
+      "bytes": 3372,
+      "sha256": "997f01f55d2a0310b474eaa824b2952fd9c5a3eee618c99c002b85f0c170a95b"
+    },
+    "report.md": {
+      "bytes": 1814,
+      "sha256": "d677286c5d586734421abd6a55efa6eeba38ecb00a88633bd142dea55f0c3bdd"
+    },
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/users.csv": {
+      "bytes": 47,
+      "sha256": "37fc600303f5c1b660599c672c6f573a7cc9518f1e6e171608a895dc51713707"
+    },
+    "sqlmap/127.0.0.1/log": {
+      "bytes": 1433,
+      "sha256": "ccae6078ceb66d35e199c730ec5006effd20086b4bc8fbaf816529bba9dd8590"
+    },
+    "sqlmap/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "556b1a2c33579090800662060f0d81e241dded07aaa71e718f5f125f4dc58db8"
+    },
+    "sqlmap/127.0.0.1/target.txt": {
+      "bytes": 226,
+      "sha256": "c2ac9c74a1c41732eebf212dc5dc3302583fc0653ccffb9535ef5e81ffe44f41"
+    },
+    "sqlmap/results-11072026_0648am.csv": {
+      "bytes": 134,
+      "sha256": "55f8e7496a8aa937c70d5166381429a9b6c8adb21c7942f3cfc5d5775a91ec1d"
+    }
+  },
+  "chain_index": 1,
+  "created_at": "2026-11-07T06:14:25Z",
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 9.8,
+      "endpoint": "/user",
+      "message": "SQL Injection in /user endpoint id parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-102",
+      "cvss": 9.8,
+      "endpoint": "/hello",
+      "message": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-verify2_20261107T054837Z",
+  "merkle_root": "e4b703cd74424058395b4e3f75a78ad9771d2d15520a677a8b26a19b03789563",
+  "prev_receipt": "3bb46f15d38ed147cc254d40e032ed8b878eb55ec61b21881d8dbcdc58dd101d",
+  "receipt_id": "ccbe4827e0fbdc0a59ea1f6692372219276206390066f482253843ca83c4cb71",
+  "receipt_version": "1.0",
+  "repo": "test-vuln-app",
+  "run": {
+    "duration_s": 29
+  },
+  "signature": "465a85a4c08ec721267e8fb36c2d6ea7ead0603ad5ed973c20b84e30c45283c8",
+  "target": "http://127.0.0.1:8099"
+}

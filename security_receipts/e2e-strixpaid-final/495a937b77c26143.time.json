@@ -1,0 +1,38 @@
+{
+  "ots_file": "/opt/ares/security_receipts/e2e-strixpaid-final/495a937b77c26143.merkle.txt.ots",
+  "bitcoin": {
+    "height": 975324,
+    "pending": false,
+    "raw": "File sha256 hash: b240fba7468ea50a175f647458c20fb330bee8af208501f57959c4fe318a4748\nTimestamp:\nappend 5f15c0fc5e2cac7ca62e28e500c4e971\nsha256\n -> append 0ee53d3b90dcd939b18f03b1546fdefd\n    sha256\n    prepend 2fc16db8709d917f344f6b230db648de5745409abc1a2396955720c867538bac\n    sha256\n    append 036afea3a48d45d6dbffc0ca43fb794cabe969aff38e8835da9de25e11eef11d\n    sha256\n    append 7a387b0be045998b939455ba500c4b2c733b9d15669acce5e124c75de975869e\n    sha256\n    prepend 6af347d7\n    append 912982e403a90622\n    verify PendingAttestation('https://finney.calendar.eternitywall.com')\n -> append 53b02137",
+    "pending_branches": 1,
+    "verification": {
+      "ok": true,
+      "source": "mempool.space",
+      "block_hash": "0000000000000000000013c6b2caa227ce41634a42f14c9e8441cdc2c8c849e4",
+      "merkle_match": true,
+      "pow_ok": true,
+      "errors": []
+    }
+  },
+  "sacred_time": {
+    "block_height": 975324,
+    "btc_day": 6773,
+    "btc_week": 967,
+    "btc_weekday": 4,
+    "btc_domain": "Sync",
+    "is_sabbath": false,
+    "halving_era": 4,
+    "blocks_until_halving": 74676,
+    "block_reward": 3.125,
+    "epoch": {
+      "era": 4,
+      "name": "Fourth Reduction",
+      "reward": 3.125,
+      "alchemy": "Fermentation",
+      "element": "Ether"
+    },
+    "minute_slot": 444,
+    "supply_mined": 95.7638,
+    "timestamp": "2026-11-10T22:06:57.513Z"
+  }
+}

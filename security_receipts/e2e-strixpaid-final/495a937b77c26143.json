@@ -1,0 +1,202 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 268656,
+      "sha256": "012300069d13eb10e7cb0720edcca51d107d59c16ef6393d105da50886a25949"
+    },
+    "raw/ffuf.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/metasploit.log": {
+      "bytes": 452,
+      "sha256": "f5fc5c1ef365ef2f378935cc942adbce3faac1c3784b090542c6cf4e4a4a6092"
+    },
+    "raw/nmap.log": {
+      "bytes": 2851,
+      "sha256": "543d1dc747125ee5ccbcd762feaf22012214628a0a709e35fd8519d9d1f66595"
+    },
+    "raw/nuclei.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/sqlmap.log": {
+      "bytes": 4879,
+      "sha256": "49f117cffa48828807de8b9b1b969e3bdf3dd4d85539ac6ecb2ef49018413ef5"
+    },
+    "raw/sqlmap_post.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/sstimap.log": {
+      "bytes": 11559,
+      "sha256": "9eb1dbb264b48174e7db35e3954604dbba5d274bac2e2441bf1a08790c80297d"
+    },
+    "raw/sstimap_post.log": {
+      "bytes": 4047,
+      "sha256": "f9fa90bab18c3f3c84348c768bc73ebaa38c440b765ceffbf9bbaa21db19d938"
+    },
+    "raw/strix.log": {
+      "bytes": 100412,
+      "sha256": "5dc2263126df5f71e06090703bbb78b3ab514a7f179eb1e37a9e446c9d6420f2"
+    },
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv": {
+      "bytes": 73,
+      "sha256": "c647f73a986318da88f69a4ffe693be0bdc731eab7d7d5f0c51496cf53184d5e"
+    },
+    "sqlmap/127.0.0.1/log": {
+      "bytes": 1065,
+      "sha256": "034c9bd2db5e4c135938afc2e5caf7291e4aca235b61f1c44cbbb20e0d37c104"
+    },
+    "sqlmap/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "309c82e6dc90e4095180ef6468d06a57e82527086a0db9a2e3e8b299d550113e"
+    },
+    "sqlmap/127.0.0.1/target.txt": {
+      "bytes": 237,
+      "sha256": "0015d1636999f4e803c7863775e7fceed3881caf545370f0fdd4beb53ff3923f"
+    },
+    "sqlmap/results-11092026_0915pm.csv": {
+      "bytes": 48,
+      "sha256": "0f1334bd8b18642561ee73db8e851ce84831b3476bb5e0fb8d4ded44008bfa29"
+    },
+    "sqlmap/results-11092026_0916pm.csv": {
+      "bytes": 144,
+      "sha256": "726e133e78c9d166cc078741d1f42d919567c12c8f66c712bb112c790d216a55"
+    },
+    "sqlmap_post/127.0.0.1/log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "sqlmap_post/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "b5a4be38b53a0564c4db06ec691a9b8b3f5994b9faf2b2a5bbcb0375ca1f686b"
+    },
+    "sqlmap_post/127.0.0.1/target.txt": {
+      "bytes": 377,
+      "sha256": "a3df634be8df337a80a187f3a22f08f4a295a43869e3167ca7fafb019fe77ab1"
+    },
+    "sqlmap_post/results-11092026_0916pm.csv": {
+      "bytes": 48,
+      "sha256": "0f1334bd8b18642561ee73db8e851ce84831b3476bb5e0fb8d4ded44008bfa29"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-09T20:18:44Z",
+  "created_at_btc": {
+    "block": {
+      "hash": "000000000000000000013919c63197af6079db7cdce98e9c70f33310a6ecd858",
+      "height": 975212,
+      "time": 1794254484
+    },
+    "depth": 10102,
+    "rooted": true,
+    "verdict": "verified_rooted",
+    "verified": true,
+    "window": {
+      "hi": 1794255524,
+      "hi_utc": "2026-11-09T20:18:44Z",
+      "lo": 1794254484,
+      "lo_utc": "2026-11-09T20:01:24Z"
+    }
+  },
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-102",
+      "cvss": 9.8,
+      "endpoint": "/render",
+      "message": "Server-Side Template Injection (Jinja2) to Remote Code Execution in POST /render `tpl` form field",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 7.5,
+      "endpoint": "/orders?sort=",
+      "message": "SQL Injection via ORDER BY clause in GET /orders sort parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 7.5,
+      "endpoint": "/orders/by-sku",
+      "message": "SQL Injection in POST /orders/by-sku JSON sku field (UNION-based data and schema disclosure)",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-102",
+      "cvss": null,
+      "endpoint": "",
+      "message": "Server-Side Template Injection (Jinja2) to Remote Code Execution in POST /render `tpl` form field\n\nThe `POST /render` endpoint passes the user-supplied form fie",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": null,
+      "endpoint": "",
+      "message": "SQL Injection via ORDER BY clause in GET /orders sort parameter\n\nThe `sort` query parameter of `GET /orders` is interpolated directly into the `ORDER BY` clause",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": null,
+      "endpoint": "",
+      "message": "SQL Injection in POST /orders/by-sku JSON sku field (UNION-based data and schema disclosure)\n\nThe `sku` field of the JSON body posted to `POST /orders/by-sku` i",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/e2e-strixpaid-final_20261109T200426Z",
+  "merkle_root": "b0acd9c2fa1c846678138238874570d28ba1315a83530455f1e632470975400d",
+  "prev_receipt": null,
+  "receipt_id": "495a937b77c261432c0db1fc8aa00ce49c7ee218371b8771c0e20de0430053c7",
+  "receipt_version": "1.0",
+  "repo": "e2e-strixpaid-final",
+  "run": {
+    "btc": {
+      "anchor_height": 975206,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 975212,
+      "pin": {
+        "class": "self_recorded",
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "rooted_by": {
+          "class": "buried_multi_source",
+          "height": 974985,
+          "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+        },
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "000000000000000000013919c63197af6079db7cdce98e9c70f33310a6ecd858",
+      "verified": true,
+      "verified_depth": 10102,
+      "verified_lowest": 965111
+    },
+    "duration_s": 854,
+    "strix_model": "strix-paid",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-hard_7c9b"
+  },
+  "signature": "638b93ab82ec5374bca8efa5bd4b5fe49bb378ef183cd99c2b6fbf11e4eb1509",
+  "target": "http://127.0.0.1:8098"
+}

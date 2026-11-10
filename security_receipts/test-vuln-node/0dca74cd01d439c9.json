@@ -1,0 +1,190 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 163,
+      "sha256": "c82f95f1a9455dbe83b3e729bc543284c0b2020f6984a16e30d072b0bc20d535"
+    },
+    "raw/ffuf.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/metasploit.log": {
+      "bytes": 431,
+      "sha256": "ed155d12ac0baa5d16a272658a6c9bcb31bb2c63d1d2b9dc5af7b0f16b966476"
+    },
+    "raw/nmap.log": {
+      "bytes": 1463,
+      "sha256": "1a0d9cc85672bb932b70d77c5fbc2009d218d97cf302d114f302bc0222f2085a"
+    },
+    "raw/nuclei.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/sqlmap.log": {
+      "bytes": 4038,
+      "sha256": "3c39b5c0a2a59712be78e9923882056b278d59a7d7b92ecbe581b43ed9e20478"
+    },
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/items.csv": {
+      "bytes": 57,
+      "sha256": "cca84052dafc836284ea23d87f2ead15a43e19813b4b9b5ed9686686183622b3"
+    },
+    "sqlmap/127.0.0.1/log": {
+      "bytes": 1460,
+      "sha256": "ef2ce182af48f2a6e427bd1a81d6f553ad59d26f6f7adbec1a883623a188d03c"
+    },
+    "sqlmap/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "3f368e30b1173431108f57ed6ca2b58d4344db1117be5d95ada72c9aaa03e15d"
+    },
+    "sqlmap/127.0.0.1/target.txt": {
+      "bytes": 223,
+      "sha256": "8dee4b734a63eecd8e9e183b657a190e5d19e3cc0d5fbc2cf1e37354c99535cf"
+    },
+    "sqlmap/results-11072026_0748pm.csv": {
+      "bytes": 134,
+      "sha256": "60664ba2dec230fd65460a8564446bdda220b0705604905780b5915552b3a207"
+    }
+  },
+  "chain_index": 4,
+  "created_at": "2026-11-07T18:50:22Z",
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": 5.3,
+      "endpoint": "/admin",
+      "message": "Broken Function Level Authorization via Client-Supplied Header on /admin",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 9.1,
+      "endpoint": "/item",
+      "message": "SQL Injection in /item endpoint",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-104",
+      "cvss": 7.5,
+      "endpoint": "/file",
+      "message": "Path Traversal in /file endpoint via name parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/identity",
+      "message": "Detector gap: identity obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/rot13",
+      "message": "Detector gap: rot13 obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/hex_escape",
+      "message": "Detector gap: hex_escape obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/unicode_escape",
+      "message": "Detector gap: unicode_escape obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/spaced",
+      "message": "Detector gap: spaced obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/fullwidth",
+      "message": "Detector gap: fullwidth obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/leet",
+      "message": "Detector gap: leet obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/reversed",
+      "message": "Detector gap: reversed obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/zero_width",
+      "message": "Detector gap: zero_width obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/base64",
+      "message": "Detector gap: base64 obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/base64x2",
+      "message": "Detector gap: base64x2 obfuscation is not flagged",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "tripwire:tiers/mixed",
+      "message": "Detector gap: mixed obfuscation is not flagged",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-node_20261107T184625Z",
+  "merkle_root": "0c6559273e4b6237068d333a82e198e8e2210a848a0f88230a311c02f0c0a582",
+  "prev_receipt": "12347a8aa7dfd018219fdebb571759f67b5680960a9467108033da2a120c88fd",
+  "receipt_id": "0dca74cd01d439c963791cff1d62d9e89713b934ec0642eefd5f6d0c1a60e428",
+  "receipt_version": "1.0",
+  "repo": "test-vuln-node",
+  "run": {
+    "duration_s": 236,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7"
+  },
+  "signature": "7af8620896ec0db6804b23742407bf7217e620435656881a3f9f0ec0d062ac7a",
+  "target": "http://127.0.0.1:8097"
+}

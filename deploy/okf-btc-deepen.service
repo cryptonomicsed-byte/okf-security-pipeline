@@ -1,0 +1,13 @@
+[Unit]
+Description=OKF Bitcoin clock — deepen the verified-header ledger
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/ares
+Environment=OKF_BTC_CHAIN_N=900
+ExecStart=/opt/ares/venv/bin/python /opt/ares/koodu_clock.py refresh
+StandardOutput=journal
+StandardError=journal
+TimeoutStartSec=1800

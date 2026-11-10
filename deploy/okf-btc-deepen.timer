@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily deepening of the OKF Bitcoin verified-header ledger
+
+[Timer]
+OnCalendar=*-*-* 04:17:00
+Persistent=true
+RandomizedDelaySec=900
+
+[Install]
+WantedBy=timers.target

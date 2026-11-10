@@ -1,0 +1,282 @@
+{
+  "repo": "viewer-gwwy4yw9-Yooo",
+  "repo_url": "http://127.0.0.1:3001/viewer-gwwy4yw9/Yooo.git",
+  "target_url": "",
+  "target_class": null,
+  "stealth": "n/a (static-only)",
+  "started": "2026-11-07T21:51:33Z",
+  "duration_s": 121,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/viewer-gwwy4yw9-yooo_2042",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 117,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0,
+    "leaks": []
+  },
+  "strix_findings": [],
+  "endpoints": [],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sqlmap_post": {},
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974991,
+      "tip_time": 1794088126,
+      "mediantime": 1794085983,
+      "now_est": 1794088293,
+      "interval": [
+        1794088126,
+        1794088294
+      ],
+      "uncertainty_s": 84,
+      "elapsed_since_tip_s": 1,
+      "next_block_eta_s": 433,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794088293.1002626,
+      "ref_spread_s": 0,
+      "chain_lag_s": 168,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 974991,
+        "tip_hash": "0000000000000000000138a8c0aa6c2148c65dfffed0e9252648d11c930f9b11",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794085791,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 974985,
+          "anchor_hash": "0000000000000000000159d41e23cc4ba1b2ddc7d8678337347fe9d16ceeb572",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "rooted": true,
+          "pin": {
+            "height": 974990,
+            "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+            "status": "matched",
+            "source": "self-recorded lockdown 2026-11-07"
+          },
+          "advanced_from": 974985,
+          "verified_against": "0000000000000000000159d41e23cc4ba1b2ddc7d8678337347fe9d16ceeb572",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true,
+          "verified_depth": {
+            "count": 41,
+            "lowest": 974951,
+            "highest": 974991,
+            "span": 41
+          }
+        },
+        "source": "mempool.space",
+        "errors": [],
+        "rooted": true
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 0,
+      "wall_now": 1794088294
+    },
+    "calendar": {
+      "block_height": 974991,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75009,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 111,
+      "supply_mined": 95.7588,
+      "timestamp": "2026-11-07T21:51:34.166Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "requests": 0
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/viewer-gwwy4yw9-Yooo_20261107T215133Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "error": "invalid memory namespace: 'findings-viewer-gwwy4yw9-Yooo'"
+  },
+  "receipt": {
+    "receipt_id": "016e538de0fb57cffcec9806b309c1311ccad52f0810664dbe9012f56d31f0cd",
+    "path": "/opt/ares/security_receipts/viewer-gwwy4yw9-Yooo/016e538de0fb57cf.json",
+    "merkle_root": "1bae600dafb2eb2f3810e0f6dff5786e9f5f5019341751ee88cb996f314dda40",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 2,
+    "diagnostics": 0
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76512,
+  "vantage_response": {
+    "broadcast_id": 76512,
+    "status": "ready"
+  }
+}

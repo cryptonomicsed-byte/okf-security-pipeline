@@ -1,0 +1,134 @@
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test initiated                                                  │
+│                                                                              │
+│  Target  /tmp/test-vuln-hard                                                 │
+│  Output  strix_runs/test-vuln-hard_844c                                      │
+│                                                                              │
+│  Vulnerabilities will be displayed in real-time.                             │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test in progress                                                │
+│                                                                              │
+│  Model openai/gemini-flash-lite                                              │
+│  Vulnerabilities 0                                                           │
+│                                                                              │
+│  Input Tokens 810.2K  ·  Cached Tokens 0                                     │
+│  Output Tokens 9.0K  ·  Cost $0.0000                                         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯Error during penetration test: Model produced apply_patch call without an 
+apply_patch tool.
+2026-11-09 05:29:27.806 ERROR   test-vuln-hard_844c - strix.core.execution: agent run failed for aa370249; marking failed
+Traceback (most recent call last):
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 809, in _run_cycle
+    async for event in stream.stream_events():
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 931, in stream_events
+    raise self._stored_exception
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 1021, in _await_task_safely
+    await task
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 695, in _await_run_and_cleanup
+    result = await original_task
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1226, in start_streaming
+    turn_result = await run_single_turn_streamed(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1877, in run_single_turn_streamed
+    single_step_result = await get_single_step_result_from_response(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/turn_resolution.py", line 2953, in get_single_step_result_from_response
+    processed_response = process_model_response(
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/turn_resolution.py", line 2821, in process_model_response
+    raise ModelBehaviorError(
+agents.exceptions.ModelBehaviorError: Model produced apply_patch call without an apply_patch tool.
+2026-11-09 05:29:27.845 ERROR   test-vuln-hard_844c - strix.core.runner: Strix scan test-vuln-hard_844c failed
+Traceback (most recent call last):
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/runner.py", line 651, in run_strix_scan
+    result = await run_agent_loop(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 253, in run_agent_loop
+    return await _run_agent_loop(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 312, in _run_agent_loop
+    result = await _run_until_lifecycle(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 593, in _run_until_lifecycle
+    result = await _run_cycle(
+             ^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 809, in _run_cycle
+    async for event in stream.stream_events():
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 931, in stream_events
+    raise self._stored_exception
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 1021, in _await_task_safely
+    await task
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 695, in _await_run_and_cleanup
+    result = await original_task
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1226, in start_streaming
+    turn_result = await run_single_turn_streamed(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1877, in run_single_turn_streamed
+    single_step_result = await get_single_step_result_from_response(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/turn_resolution.py", line 2953, in get_single_step_result_from_response
+    processed_response = process_model_response(
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/turn_resolution.py", line 2821, in process_model_response
+    raise ModelBehaviorError(
+agents.exceptions.ModelBehaviorError: Model produced apply_patch call without an apply_patch tool.
+Traceback (most recent call last):
+  File "/opt/ares/strix-venv/bin/strix", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/interface/main.py", line 503, in main
+    asyncio.run(run_cli(args))
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/interface/cli.py", line 219, in run_cli
+    await run_strix_scan(
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/runner.py", line 651, in run_strix_scan
+    result = await run_agent_loop(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 253, in run_agent_loop
+    return await _run_agent_loop(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 312, in _run_agent_loop
+    result = await _run_until_lifecycle(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 593, in _run_until_lifecycle
+    result = await _run_cycle(
+             ^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 809, in _run_cycle
+    async for event in stream.stream_events():
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 931, in stream_events
+    raise self._stored_exception
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 1021, in _await_task_safely
+    await task
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 695, in _await_run_and_cleanup
+    result = await original_task
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1226, in start_streaming
+    turn_result = await run_single_turn_streamed(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1877, in run_single_turn_streamed
+    single_step_result = await get_single_step_result_from_response(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/turn_resolution.py", line 2953, in get_single_step_result_from_response
+    processed_response = process_model_response(
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/turn_resolution.py", line 2821, in process_model_response
+    raise ModelBehaviorError(
+agents.exceptions.ModelBehaviorError: Model produced apply_patch call without an apply_patch tool.

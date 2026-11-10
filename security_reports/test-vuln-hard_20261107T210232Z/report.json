@@ -1,0 +1,718 @@
+{
+  "repo": "test-vuln-hard",
+  "repo_url": "/tmp/test-vuln-hard",
+  "target_url": "http://127.0.0.1:8098",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T21:02:32Z",
+  "duration_s": 416,
+  "strix_run_dir": "strix/strix_runs/test-vuln-hard_671a",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 48,
+    "rc": 1,
+    "leaks": [
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 4866,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 4866,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 5559,
+        "match_prefix": "api\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8536,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8537,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8538,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8539,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8540,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8541,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8542,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8543,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8544,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8545,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8546,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8547,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8548,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8549,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8550,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8551,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8552,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8553,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8554,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8555,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8556,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8557,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8558,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8561,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8562,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8564,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8567,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8574,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8575,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8576,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8580,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8581,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8583,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8584,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8586,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8587,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10637,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10747,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10854,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 11287,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 11453,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 11875,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 13507,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 13522,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 15576,
+        "match_prefix": "tok\u2026"
+      }
+    ]
+  },
+  "strix_findings": [
+    {
+      "title": "Server-Side Template Injection (SSTI) leading to RCE in /render",
+      "severity": "critical",
+      "description": "Server-Side Template Injection (SSTI) in the `/render` endpoint allows unauthenticated remote code execution via the `tpl` form parameter.",
+      "poc": "1. Send a POST request to `/render` with the form parameter `tpl={{config.__class__.__init__.__globals__['os'].popen('id').read()}}`.\\n2. Observe command execution output in the HTTP response.",
+      "target": "http://127.0.0.1:8098/render",
+      "endpoint": "/render",
+      "method": "POST",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "strix/strix_runs/test-vuln-hard_671a/vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in GET /orders sort parameter",
+      "severity": "high",
+      "description": "The GET /orders endpoint directly interpolates the 'sort' query parameter into an SQL ORDER BY clause without sanitization or parameterization, allowing boolean-based blind SQL injection and data exfiltration.",
+      "poc": "1. Send GET request to /orders with a sort parameter containing a conditional CASE statement.\n2. Observe different result rows ordering based on the boolean condition.",
+      "target": "http://127.0.0.1:8098/orders",
+      "endpoint": "/orders",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "strix/strix_runs/test-vuln-hard_671a/vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in POST /orders/by-sku sku parameter",
+      "severity": "critical",
+      "description": "The POST /orders/by-sku endpoint directly interpolates the JSON 'sku' parameter into an SQL WHERE clause without parameterization, enabling SQL injection and full data exfiltration.",
+      "poc": "1. Send POST request to /orders/by-sku with JSON body `{\"sku\": \"' OR 1=1 --\"}`.\n2. Observe all records returned in the response.",
+      "target": "http://127.0.0.1:8098/orders/by-sku",
+      "endpoint": "/orders/by-sku",
+      "method": "POST",
+      "cvss": 9.1,
+      "finding_class": "dynamic",
+      "source": "strix/strix_runs/test-vuln-hard_671a/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8098/render?form=1",
+    "http://127.0.0.1:8098/orders?sort=1",
+    "http://127.0.0.1:8098/orders/by-sku?sku=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8098/orders?sort=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "boolean-based blind"
+    ],
+    "tables": [
+      "orders"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 3,
+    "dumped_table": "orders",
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | 3   | alpha | flag{orderby_ok} |",
+      "| 2  | 7   | beta  | nothing          |",
+      "| 3  | 1   | gamma | x                |"
+    ],
+    "columns": "| id | qty | sku   | note             |"
+  },
+  "sqlmap_post": {},
+  "sstimap": {
+    "url": "http://127.0.0.1:8098/orders/by-sku?sku=1",
+    "vulnerable": false,
+    "confidence": null,
+    "engine": null,
+    "rce": false,
+    "rc": 0
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8098,
+    "services": [
+      [
+        "unknown",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 1,
+    "found": [
+      "http://127.0.0.1:8098/orders"
+    ]
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ]
+  },
+  "sweep": {
+    "candidates": 14,
+    "sstimap_hits": [],
+    "sstimap_low": [],
+    "xsstrike_hits": []
+  },
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974984,
+      "tip_time": 1794084386,
+      "mediantime": 1794081924,
+      "now_est": 1794085353,
+      "interval": [
+        1794084386,
+        1794085354
+      ],
+      "uncertainty_s": 484,
+      "elapsed_since_tip_s": 1,
+      "next_block_eta_s": 0,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794085353.1202931,
+      "ref_spread_s": 0,
+      "chain_lag_s": 968,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 974984,
+        "tip_hash": "0000000000000000000160f6d17872f227b2ef7fc6362b3763937f45070c941e",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794081744,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 974978,
+          "anchor_hash": "000000000000000000007f0363409739531a3d7e53bb5cf84987bf7aaa88382f",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "advanced_from": 974978,
+          "verified_against": "000000000000000000007f0363409739531a3d7e53bb5cf84987bf7aaa88382f",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true
+        },
+        "source": "mempool.space",
+        "errors": []
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 0,
+      "wall_now": 1794085354
+    },
+    "calendar": {
+      "block_height": 974984,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75016,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 104,
+      "supply_mined": 95.7587,
+      "timestamp": "2026-11-07T21:02:34.202Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "default_exec": [],
+    "requests": 28
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-hard_20261107T210232Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/ffuf.log",
+    "raw/metasploit.log",
+    "raw/nmap.log",
+    "raw/nuclei.log",
+    "raw/sqlmap.log",
+    "raw/sstimap.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11072026_1004pm.csv",
+    "sqlmap/results-11072026_1005pm.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [
+      {
+        "fp": "3a4a07640157d8d1",
+        "title": "Server-Side Template Injection (SSTI) leading to RCE in /render"
+      },
+      {
+        "fp": "f0ccf758f6be1fe8",
+        "title": "SQL Injection in GET /orders sort parameter"
+      },
+      {
+        "fp": "d2208cf68e0ae9ad",
+        "title": "SQL Injection in POST /orders/by-sku sku parameter"
+      }
+    ],
+    "persisting": [],
+    "resolved": [
+      {
+        "fp": "1aca562bde3af4ca",
+        "title": "Server-Side Template Injection (SSTI) leading to RCE in /render",
+        "last_seen": "2026-11-07T20:35:23Z"
+      },
+      {
+        "fp": "d65cd2b288aeb07c",
+        "title": "SQL Injection in GET /orders sort parameter",
+        "last_seen": "2026-11-07T20:35:23Z"
+      },
+      {
+        "fp": "0c6629aaed8b5e9e",
+        "title": "SQL Injection in POST /orders/by-sku sku parameter",
+        "last_seen": "2026-11-07T20:35:23Z"
+      },
+      {
+        "fp": "4a16aa620b0f60a1",
+        "title": "Server-Side Template Injection (SSTI) leading to RCE in /render\n\nServer-Side Template Injection (SSTI) in the `/render` endpoint allows unauthenticated remote c",
+        "last_seen": "2026-11-07T20:35:23Z"
+      },
+      {
+        "fp": "b27000c724b548c9",
+        "title": "SQL Injection in GET /orders sort parameter\n\nThe GET /orders endpoint directly interpolates the 'sort' query parameter into an SQL ORDER BY clause without sanit",
+        "last_seen": "2026-11-07T20:35:23Z"
+      },
+      {
+        "fp": "f13420a6dde13b21",
+        "title": "SQL Injection in POST /orders/by-sku sku parameter\n\nThe POST /orders/by-sku endpoint directly interpolates the JSON 'sku' parameter into an SQL WHERE clause wit",
+        "last_seen": "2026-11-07T20:35:23Z"
+      }
+    ],
+    "counts": {
+      "new": 3,
+      "persisting": 0,
+      "resolved": 6,
+      "active": 3,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T21:02:32Z"
+  },
+  "receipt": {
+    "receipt_id": "1af94e40fcf867cb5992d20d565ba8a6e410e93168f348696805ac1b6b1f75f1",
+    "path": "/opt/ares/security_receipts/test-vuln-hard/1af94e40fcf867cb.json",
+    "merkle_root": "598fabb2544b4c9f158eced02ef90ce3db82674a6425c6e38ca35cdd62b45e4d",
+    "chain_index": 1,
+    "prev_receipt": "216e8dac81aa69872c4914febe88200fd86ae55e63a774091bda92d374097eb8",
+    "artifacts": 13,
+    "diagnostics": 3
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76490,
+  "vantage_response": {
+    "broadcast_id": 76490,
+    "status": "ready"
+  }
+}

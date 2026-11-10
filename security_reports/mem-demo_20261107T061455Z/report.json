@@ -1,0 +1,137 @@
+{
+  "repo": "mem-demo",
+  "repo_url": "/tmp/test-vuln-app",
+  "target_url": "http://127.0.0.1:8099",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T06:14:55Z",
+  "duration_s": 35,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-app_38de",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "SQL Injection in /user endpoint id parameter",
+      "severity": "critical",
+      "description": "The `/user` endpoint directly interpolates user input from the `id` parameter into a SQLite query string, leading to SQL Injection.",
+      "poc": "1. Send a GET request to `/user?id=1 OR 1=1`.\n2. Observe that all database records are returned.",
+      "target": "/workspace/test-vuln-app",
+      "endpoint": "/user",
+      "method": "GET",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app_38de/vulnerabilities.json"
+    },
+    {
+      "title": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter",
+      "severity": "critical",
+      "description": "The `/hello` endpoint uses f-string interpolation to include user-supplied input in a template rendered by `render_template_string`, leading to Server-Side Template Injection (SSTI).",
+      "poc": "1. Send a GET request to `/hello?name={{7*7}}`.\n2. Observe the response `Hello 49`.\n3. Use advanced Jinja2 payloads to achieve remote code execution.",
+      "target": "/workspace/test-vuln-app",
+      "endpoint": "/hello",
+      "method": "GET",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app_38de/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8099/user?id=1",
+    "http://127.0.0.1:8099/hello?name=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8099/user?id=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "UNION query",
+      "boolean-based blind"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 1,
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | flag{super_secret} | admin    |"
+    ],
+    "columns": "| id | secret             | username |"
+  },
+  "sstimap": {
+    "url": "http://127.0.0.1:8099/hello?name=1",
+    "vulnerable": true,
+    "confidence": "high",
+    "engine": "Jinja2",
+    "rce": true,
+    "rc": 0
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ]
+  },
+  "sweep": {},
+  "evidence_dir": "/opt/ares/security_reports/mem-demo_20261107T061455Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/metasploit.log",
+    "raw/sqlmap.log",
+    "raw/sstimap.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/users.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11072026_0715am.csv"
+  ],
+  "memory": {
+    "new": [
+      {
+        "fp": "ddbd8d8e73bd75d2",
+        "title": "SQL Injection in /user endpoint id parameter"
+      },
+      {
+        "fp": "337535e9cd63d00b",
+        "title": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter"
+      }
+    ],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 2,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 2,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T06:14:55Z"
+  },
+  "receipt": {
+    "receipt_id": "5c8f7ccdb2b130341dc4d3e2b80b889592db7312158554d60643631fe10bb465",
+    "path": "/opt/ares/security_receipts/mem-demo/5c8f7ccdb2b13034.json",
+    "merkle_root": "8ff60e3c42a093887024b97e20187e759c7553e2e223408a51027bc09b5f0f20",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 11,
+    "diagnostics": 2
+  },
+  "vantage_broadcast_id": 76391,
+  "vantage_response": {
+    "broadcast_id": 76391,
+    "status": "ready"
+  }
+}

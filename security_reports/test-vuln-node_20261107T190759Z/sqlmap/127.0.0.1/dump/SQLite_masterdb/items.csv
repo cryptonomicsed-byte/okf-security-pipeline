@@ -1,0 +1,4 @@
+id,name,secret
+1,alpha,flag{fapi_sql_ok}
+2,beta,nothing
+

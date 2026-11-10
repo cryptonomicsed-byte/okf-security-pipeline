@@ -1,0 +1,38 @@
+{
+  "ots_file": "/opt/ares/security_receipts/test-vuln-node/28104913cb0ad22f.merkle.txt.ots",
+  "bitcoin": {
+    "height": 974970,
+    "pending": false,
+    "raw": "File sha256 hash: de82fd8e92dda3fb05478d64f8709a94e24f2f12dfd6d93ed2d28408c7e0116c\nTimestamp:\nappend 0562ac41f56cad78ed831d78bcf0a0e2\nsha256\n -> append 65bdde358dc48a1fc94601324b9f53ae\n    sha256\n    append af981e03e28585d45c68c22a0d6d6ff32f4bfd9a306f8d35304cede832f90c1e\n    sha256\n    prepend 6aef74b1\n    append fee35d46f036ab09\n    verify PendingAttestation('https://btc.calendar.catallaxy.com')\n -> append bfe8d44c81a568e4bc4dd3c802371bf8\n    sha256\n    prepend b09f69f8edfca81b825089b08dfd1cda3f7e97939dedc630f5fa4daab4a31e0a\n    sha256\n    append 792b3ae5d0e9ee6b73fba59c7f9f0ae99e1c76a3855ca7",
+    "pending_branches": 1,
+    "verification": {
+      "ok": true,
+      "source": "mempool.space",
+      "block_hash": "00000000000000000000a61a08601e7ffadabdc86b65b16c382945552f57bd66",
+      "merkle_match": true,
+      "pow_ok": true,
+      "errors": []
+    }
+  },
+  "sacred_time": {
+    "block_height": 974970,
+    "btc_day": 6770,
+    "btc_week": 967,
+    "btc_weekday": 1,
+    "btc_domain": "Score",
+    "is_sabbath": false,
+    "halving_era": 4,
+    "blocks_until_halving": 75030,
+    "block_reward": 3.125,
+    "epoch": {
+      "era": 4,
+      "name": "Fourth Reduction",
+      "reward": 3.125,
+      "alchemy": "Fermentation",
+      "element": "Ether"
+    },
+    "minute_slot": 90,
+    "supply_mined": 95.7585,
+    "timestamp": "2026-11-10T22:07:52.741Z"
+  }
+}

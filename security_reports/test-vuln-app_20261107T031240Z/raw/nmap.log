@@ -1,0 +1,46 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-07 04:12 CET
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00033s latency).
+
+PORT     STATE SERVICE VERSION
+8099/tcp open  unknown
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8099-TCP:V=7.94SVN%I=7%D=11/7%Time=6AEE9735%P=x86_64-pc-linux-gnu%r
+SF:(GetRequest,184,"HTTP/1\.1\x20404\x20NOT\x20FOUND\r\nServer:\x20Werkzeu
+SF:g/3\.0\.1\x20Python/3\.12\.3\r\nDate:\x20Sat,\x2007\x20Nov\x202026\x200
+SF:3:12:52\x20GMT\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nConte
+SF:nt-Length:\x20207\r\nConnection:\x20close\r\n\r\n<!doctype\x20html>\n<h
+SF:tml\x20lang=en>\n<title>404\x20Not\x20Found</title>\n<h1>Not\x20Found</
+SF:h1>\n<p>The\x20requested\x20URL\x20was\x20not\x20found\x20on\x20the\x20
+SF:server\.\x20If\x20you\x20entered\x20the\x20URL\x20manually\x20please\x2
+SF:0check\x20your\x20spelling\x20and\x20try\x20again\.</p>\n")%r(HTTPOptio
+SF:ns,184,"HTTP/1\.1\x20404\x20NOT\x20FOUND\r\nServer:\x20Werkzeug/3\.0\.1
+SF:\x20Python/3\.12\.3\r\nDate:\x20Sat,\x2007\x20Nov\x202026\x2003:12:53\x
+SF:20GMT\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nContent-Length
+SF::\x20207\r\nConnection:\x20close\r\n\r\n<!doctype\x20html>\n<html\x20la
+SF:ng=en>\n<title>404\x20Not\x20Found</title>\n<h1>Not\x20Found</h1>\n<p>T
+SF:he\x20requested\x20URL\x20was\x20not\x20found\x20on\x20the\x20server\.\
+SF:x20If\x20you\x20entered\x20the\x20URL\x20manually\x20please\x20check\x2
+SF:0your\x20spelling\x20and\x20try\x20again\.</p>\n")%r(RTSPRequest,16C,"<
+SF:!DOCTYPE\x20HTML>\n<html\x20lang=\"en\">\n\x20\x20\x20\x20<head>\n\x20\
+SF:x20\x20\x20\x20\x20\x20\x20<meta\x20charset=\"utf-8\">\n\x20\x20\x20\x2
+SF:0\x20\x20\x20\x20<title>Error\x20response</title>\n\x20\x20\x20\x20</he
+SF:ad>\n\x20\x20\x20\x20<body>\n\x20\x20\x20\x20\x20\x20\x20\x20<h1>Error\
+SF:x20response</h1>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Error\x20code:\x20
+SF:400</p>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Message:\x20Bad\x20request\
+SF:x20version\x20\('RTSP/1\.0'\)\.</p>\n\x20\x20\x20\x20\x20\x20\x20\x20<p
+SF:>Error\x20code\x20explanation:\x20400\x20-\x20Bad\x20request\x20syntax\
+SF:x20or\x20unsupported\x20method\.</p>\n\x20\x20\x20\x20</body>\n</html>\
+SF:n")%r(Help,167,"<!DOCTYPE\x20HTML>\n<html\x20lang=\"en\">\n\x20\x20\x20
+SF:\x20<head>\n\x20\x20\x20\x20\x20\x20\x20\x20<meta\x20charset=\"utf-8\">
+SF:\n\x20\x20\x20\x20\x20\x20\x20\x20<title>Error\x20response</title>\n\x2
+SF:0\x20\x20\x20</head>\n\x20\x20\x20\x20<body>\n\x20\x20\x20\x20\x20\x20\
+SF:x20\x20<h1>Error\x20response</h1>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>E
+SF:rror\x20code:\x20400</p>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Message:\x
+SF:20Bad\x20request\x20syntax\x20\('HELP'\)\.</p>\n\x20\x20\x20\x20\x20\x2
+SF:0\x20\x20<p>Error\x20code\x20explanation:\x20400\x20-\x20Bad\x20request
+SF:\x20syntax\x20or\x20unsupported\x20method\.</p>\n\x20\x20\x20\x20</body
+SF:>\n</html>\n");
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 88.94 seconds

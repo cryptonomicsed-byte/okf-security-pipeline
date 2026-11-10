@@ -1,0 +1,15 @@
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  SCAN PREPARATION FAILED                                                     │
+│                                                                              │
+│  Could not clone repository                                                  │
+│  http://127.0.0.1:3001/hermes-ares-6/owner-check.git: Cloning into           │
+│  '/root/strix_repos/owner-check_60c1/owner-check'...                         │
+│  fatal: could not read Username for 'http://127.0.0.1:3001': No such device  │
+│  or address                                                                  │
+│                                                                              │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+

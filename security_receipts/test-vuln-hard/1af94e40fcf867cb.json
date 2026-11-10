@@ -1,0 +1,118 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 38426,
+      "sha256": "ab5a330dbba3705b72ab9d8b5045b4dae189e2773c134670021238f471dae526"
+    },
+    "raw/ffuf.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/metasploit.log": {
+      "bytes": 452,
+      "sha256": "f5fc5c1ef365ef2f378935cc942adbce3faac1c3784b090542c6cf4e4a4a6092"
+    },
+    "raw/nmap.log": {
+      "bytes": 2851,
+      "sha256": "b53a18f91ae81a53014fc588ceaba29dad6ba250c4c00d5bc4f527751dec94a0"
+    },
+    "raw/nuclei.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/sqlmap.log": {
+      "bytes": 4865,
+      "sha256": "1d858e9b69558bf7fc518748aea0fa68c25e83a4bedbb3e9444ba040fd95ef77"
+    },
+    "raw/sstimap.log": {
+      "bytes": 11492,
+      "sha256": "b957f9beb9df8a3457e1bbc1349b14c9b3369379f0a363ada8925faf8cfb5be2"
+    },
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv": {
+      "bytes": 73,
+      "sha256": "c647f73a986318da88f69a4ffe693be0bdc731eab7d7d5f0c51496cf53184d5e"
+    },
+    "sqlmap/127.0.0.1/log": {
+      "bytes": 1067,
+      "sha256": "7855efb78d5fe7347def3774905d9e3dadad6045b945523d2021cc9b8ede408b"
+    },
+    "sqlmap/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "a515c8a61d4b30d894a7bb5ef9e585a59ba78a0fbddcbcaebb0f30c16b1a3490"
+    },
+    "sqlmap/127.0.0.1/target.txt": {
+      "bytes": 232,
+      "sha256": "bcbb577985afc8151debc6745ac3c743304e72c8620fbdf76d88be0d491c2a6a"
+    },
+    "sqlmap/results-11072026_1004pm.csv": {
+      "bytes": 48,
+      "sha256": "0f1334bd8b18642561ee73db8e851ce84831b3476bb5e0fb8d4ded44008bfa29"
+    },
+    "sqlmap/results-11072026_1005pm.csv": {
+      "bytes": 144,
+      "sha256": "726e133e78c9d166cc078741d1f42d919567c12c8f66c712bb112c790d216a55"
+    }
+  },
+  "chain_index": 1,
+  "created_at": "2026-11-07T21:09:29Z",
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-102",
+      "cvss": 9.8,
+      "endpoint": "/render",
+      "message": "Server-Side Template Injection (SSTI) leading to RCE in /render",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 7.5,
+      "endpoint": "/orders",
+      "message": "SQL Injection in GET /orders sort parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 9.1,
+      "endpoint": "/orders/by-sku",
+      "message": "SQL Injection in POST /orders/by-sku sku parameter",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-hard_20261107T210232Z",
+  "merkle_root": "598fabb2544b4c9f158eced02ef90ce3db82674a6425c6e38ca35cdd62b45e4d",
+  "prev_receipt": "216e8dac81aa69872c4914febe88200fd86ae55e63a774091bda92d374097eb8",
+  "receipt_id": "1af94e40fcf867cb5992d20d565ba8a6e410e93168f348696805ac1b6b1f75f1",
+  "receipt_version": "1.0",
+  "repo": "test-vuln-hard",
+  "run": {
+    "btc": {
+      "anchor_height": 974978,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974984,
+      "pow_ok": true,
+      "tip_hash": "0000000000000000000160f6d17872f227b2ef7fc6362b3763937f45070c941e",
+      "verified": true
+    },
+    "duration_s": 416,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "strix/strix_runs/test-vuln-hard_671a"
+  },
+  "signature": "effb038c18687ef2ca00ef0affc74d657f0fef350c912f93e4beaf4dbd9e1819",
+  "target": "http://127.0.0.1:8098"
+}

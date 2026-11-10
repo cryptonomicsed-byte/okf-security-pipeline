@@ -1,0 +1,38 @@
+{
+  "ots_file": "/opt/ares/security_receipts/crucible/f539a8ed704150ac.merkle.txt.ots",
+  "bitcoin": {
+    "height": 974981,
+    "pending": false,
+    "raw": "File sha256 hash: 602b4932634713698f96d5d94b7e65b17317944caed32de00576dd867bf0cea5\nTimestamp:\nappend e2573482c07106109c380b8601127b00\nsha256\n -> append 199e004bfcec93cc\n    sha256\n    append 9314567c615187e7c89edd3f1a927b40\n    sha256\n    prepend 3f72ecdf4f045131cd64ffe7b572989326587e9fc948c7ba8f4b00eaec052d7c\n    sha256\n    prepend 6aef8850\n    append 5843ee68a983642b\n    verify PendingAttestation('https://alice.btc.calendar.opentimestamps.org')\n    sha256\n    prepend af18c43defce3ba1edaa8a436768280e533cc259706eb7a32a922d3e8d185f11\n    sha256\n    prepend 8a5833150d35391eed6abaa1d083b8d7b9230f",
+    "pending_branches": 1,
+    "verification": {
+      "ok": true,
+      "source": "mempool.space",
+      "block_hash": "000000000000000000010c8fb9223c60cdd2b56ad2b9887f8006a5c8b7c1bf99",
+      "merkle_match": true,
+      "pow_ok": true,
+      "errors": []
+    }
+  },
+  "sacred_time": {
+    "block_height": 974981,
+    "btc_day": 6770,
+    "btc_week": 967,
+    "btc_weekday": 1,
+    "btc_domain": "Score",
+    "is_sabbath": false,
+    "halving_era": 4,
+    "blocks_until_halving": 75019,
+    "block_reward": 3.125,
+    "epoch": {
+      "era": 4,
+      "name": "Fourth Reduction",
+      "reward": 3.125,
+      "alchemy": "Fermentation",
+      "element": "Ether"
+    },
+    "minute_slot": 101,
+    "supply_mined": 95.7586,
+    "timestamp": "2026-11-10T22:06:44.242Z"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 162,
+      "sha256": "35606ca4401e21d8a85b454c0e5b77bd752b8e218349c0cd67ca795e0ee62c56"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-07T20:12:15Z",
+  "diagnostics": [],
+  "evidence_dir": "/opt/ares/security_reports/tiny-static_20261107T201212Z",
+  "merkle_root": "35606ca4401e21d8a85b454c0e5b77bd752b8e218349c0cd67ca795e0ee62c56",
+  "prev_receipt": null,
+  "receipt_id": "8e4f27707563f464dc3512f721aef98fdf57c7a8547afc9f2e54bea9f6f7ee77",
+  "receipt_version": "1.0",
+  "repo": "tiny-static",
+  "run": {
+    "btc": {
+      "anchor_height": 974973,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974979,
+      "pow_ok": true,
+      "tip_hash": "00000000000000000000195e2e8a56593ee8374f6a221b9933255af41b46d638",
+      "verified": true
+    },
+    "duration_s": 2,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/tmp"
+  },
+  "signature": "9992d86c0fa8e5610fc75427ed3e622cae50dc0ba0e439897049a01c04629b80",
+  "target": ""
+}

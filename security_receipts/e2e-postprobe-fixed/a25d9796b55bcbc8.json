@@ -1,0 +1,178 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 345685,
+      "sha256": "9298cb8fa9c33e20b8cd821e5ce0a46d855e02e9ec8314eef9652c9964f38cd3"
+    },
+    "raw/ffuf.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/metasploit.log": {
+      "bytes": 452,
+      "sha256": "f5fc5c1ef365ef2f378935cc942adbce3faac1c3784b090542c6cf4e4a4a6092"
+    },
+    "raw/nmap.log": {
+      "bytes": 2856,
+      "sha256": "36c22f0d16422385efb61e8eff6facac1c5461082b393759a4ab19a2e85fe8f0"
+    },
+    "raw/nuclei.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/sqlmap.log": {
+      "bytes": 4840,
+      "sha256": "d4907a828e695ac93b76bec1bb4d85a1d00a6e87f2828cefb420a7130620ff53"
+    },
+    "raw/sqlmap_post.log": {
+      "bytes": 5110,
+      "sha256": "40dcdb537be2d79aaa13ba90bdfd51393366dd8891f104e9ccaabaf3c9ae4753"
+    },
+    "raw/sstimap.log": {
+      "bytes": 11488,
+      "sha256": "3f836c136246c244dc535f0c98be39c8841e62ba6e863b427709433ddb6e6729"
+    },
+    "raw/sstimap_post.log": {
+      "bytes": 4047,
+      "sha256": "f9fa90bab18c3f3c84348c768bc73ebaa38c440b765ceffbf9bbaa21db19d938"
+    },
+    "raw/strix.log": {
+      "bytes": 93489,
+      "sha256": "38dd710be04a143aea25fa6bbb69fe2000dba4fb513f21e3a46e8925551b1ccc"
+    },
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv": {
+      "bytes": 73,
+      "sha256": "c647f73a986318da88f69a4ffe693be0bdc731eab7d7d5f0c51496cf53184d5e"
+    },
+    "sqlmap/127.0.0.1/log": {
+      "bytes": 1067,
+      "sha256": "442d4e1720ff8ced3bb5332c14e683ad58de80922da8a507b96e74573c53e473"
+    },
+    "sqlmap/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "00ee19f5b7aeb0ae79f6cf4422b21f5b9122b9f117fe4c14138285b2b5186e15"
+    },
+    "sqlmap/127.0.0.1/target.txt": {
+      "bytes": 237,
+      "sha256": "70b86f4fb7ce4b88ada094362d11f8e3968dd86fff7a47cb405ed46017a51bbb"
+    },
+    "sqlmap/results-11102026_0748am.csv": {
+      "bytes": 144,
+      "sha256": "726e133e78c9d166cc078741d1f42d919567c12c8f66c712bb112c790d216a55"
+    },
+    "sqlmap_post/127.0.0.1/dump/SQLite_masterdb/orders.csv": {
+      "bytes": 73,
+      "sha256": "c647f73a986318da88f69a4ffe693be0bdc731eab7d7d5f0c51496cf53184d5e"
+    },
+    "sqlmap_post/127.0.0.1/log": {
+      "bytes": 1777,
+      "sha256": "a74f40c87470bfa45facf3c2b46b1b3dd3c9322e68332695120097940543069b"
+    },
+    "sqlmap_post/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "3d12791306b072b13ec632db9a3507be75e634497113a73545391c1251b2e01b"
+    },
+    "sqlmap_post/127.0.0.1/target.txt": {
+      "bytes": 340,
+      "sha256": "3859fd048d1d5897c37093ce59855251794f70b0a9c7f80403c51c0cf5c7af13"
+    },
+    "sqlmap_post/results-11102026_0749am.csv": {
+      "bytes": 174,
+      "sha256": "88d8ec43d6c82b6ff92968c3e06c5de1e863ec5875d603d31e8064cb6eb4cc8c"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-10T06:50:41Z",
+  "created_at_btc": {
+    "block": {
+      "hash": "000000000000000000001b3938339df0662030890ee66839b94862f08b53eabb",
+      "height": 975268,
+      "time": 1794292997
+    },
+    "depth": 10158,
+    "rooted": true,
+    "verdict": "verified_rooted",
+    "verified": true,
+    "window": {
+      "hi": 1794293441,
+      "hi_utc": "2026-11-10T06:50:41Z",
+      "lo": 1794292997,
+      "lo_utc": "2026-11-10T06:43:17Z"
+    }
+  },
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-102",
+      "cvss": 9.8,
+      "endpoint": "/render",
+      "message": "Unauthenticated Jinja2 Server-Side Template Injection to Remote Code Execution in POST /render (tpl)",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 7.5,
+      "endpoint": "/orders",
+      "message": "SQL Injection in GET /orders sort parameter (ORDER BY clause)",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 7.5,
+      "endpoint": "/orders/by-sku",
+      "message": "SQL Injection in POST /orders/by-sku via JSON body sku field",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/e2e-postprobe-fixed_20261110T063304Z",
+  "merkle_root": "1affc63fce1c3219661e13fc56b60e2f57f735349525b007d4a4ef4a9eddad02",
+  "prev_receipt": null,
+  "receipt_id": "a25d9796b55bcbc8efc4f32687a6ffc8750035578e43c9fc4168313102a5a7fc",
+  "receipt_version": "1.0",
+  "repo": "e2e-postprobe-fixed",
+  "run": {
+    "btc": {
+      "anchor_height": 975261,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 975267,
+      "pin": {
+        "class": "self_recorded",
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "rooted_by": {
+          "class": "buried_multi_source",
+          "height": 974985,
+          "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+        },
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "00000000000000000000d216f37900961f51185df1da6b6c7d17c7b48fb84251",
+      "verified": true,
+      "verified_depth": 10157,
+      "verified_lowest": 965111
+    },
+    "duration_s": 1053,
+    "strix_model": "strix-paid",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-hard_424b"
+  },
+  "signature": "84bff1fa21a79625ca32524d655647e588b6039e7267197111e80c8d47ce0dbe",
+  "target": "http://127.0.0.1:8098"
+}

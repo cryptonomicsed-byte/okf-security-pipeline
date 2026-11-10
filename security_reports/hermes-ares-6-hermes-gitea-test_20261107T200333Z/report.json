@@ -1,0 +1,276 @@
+{
+  "repo": "hermes-ares-6-hermes-gitea-test",
+  "repo_url": "http://127.0.0.1:3001/hermes-ares-6/hermes-gitea-test.git",
+  "target_url": "",
+  "target_class": null,
+  "stealth": "n/a (static-only)",
+  "started": "2026-11-07T20:03:33Z",
+  "duration_s": 179,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/hermes-ares-6-hermes-gitea-test_2e2c",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 174,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [],
+  "endpoints": [],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974979,
+      "tip_time": 1794081924,
+      "mediantime": 1794080238,
+      "now_est": 1794081924,
+      "interval": [
+        1794081924,
+        1794081924
+      ],
+      "uncertainty_s": 0,
+      "elapsed_since_tip_s": 1,
+      "next_block_eta_s": 600,
+      "skew_s": -109,
+      "wall_skew_s": -109,
+      "ref_time": 1794081814.1449199,
+      "ref_spread_s": 1,
+      "chain_lag_s": -109,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 974979,
+        "tip_hash": "00000000000000000000195e2e8a56593ee8374f6a221b9933255af41b46d638",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794079917,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 974973,
+          "anchor_hash": "000000000000000000013812691237e0e2a4a3ad89d3b78bbdd80805dde9373b",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "advanced_from": 974973,
+          "verified_against": "000000000000000000013812691237e0e2a4a3ad89d3b78bbdd80805dde9373b",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true
+        },
+        "source": "mempool.space",
+        "errors": []
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 0,
+      "wall_now": 1794081815
+    },
+    "calendar": {
+      "block_height": 974979,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75021,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 99,
+      "supply_mined": 95.7586,
+      "timestamp": "2026-11-07T20:03:35.134Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "requests": 0
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/hermes-ares-6-hermes-gitea-test_20261107T200333Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 0,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 0,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T20:03:33Z"
+  },
+  "receipt": {
+    "receipt_id": "a20d81542b9d9fcdb504911b38652fd97f67b0960bdcf0f35cebae1e4b02b301",
+    "path": "/opt/ares/security_receipts/hermes-ares-6-hermes-gitea-test/a20d81542b9d9fcd.json",
+    "merkle_root": "fe5800fd4aa9d888ed19c26786f74f85a3e006c7b71a72911bbdaedbdc2bc4f5",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 2,
+    "diagnostics": 0
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76472,
+  "vantage_response": {
+    "broadcast_id": 76472,
+    "status": "ready"
+  }
+}

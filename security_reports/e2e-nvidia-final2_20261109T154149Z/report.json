@@ -1,0 +1,639 @@
+{
+  "repo": "e2e-nvidia-final2",
+  "repo_url": "/tmp/test-vuln-hard",
+  "target_url": "http://127.0.0.1:8098",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-09T15:41:49Z",
+  "duration_s": 3022,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-hard_e069",
+  "strix_model": "nvidia-mistral-large",
+  "strix_seconds": 2700,
+  "betterleaks": {
+    "hits": 50,
+    "rc": 1,
+    "leaks": [
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 4866,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 4866,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 5559,
+        "match_prefix": "api\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8536,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8537,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8538,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8539,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8540,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8541,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8542,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8543,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8544,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8545,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8546,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8547,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8548,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8549,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8550,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8551,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8552,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8553,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8554,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8555,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8556,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8557,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8558,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8561,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8562,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8564,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8567,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8574,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8575,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8576,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8580,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8581,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8583,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8584,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8586,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8587,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10637,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10747,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10854,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 11287,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 11453,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 11875,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 13507,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 13522,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 15576,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 121432,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 121432,
+        "match_prefix": "htt\u2026"
+      }
+    ]
+  },
+  "strix_findings": [],
+  "endpoints": [],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sqlmap_post": {},
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8098,
+    "services": [
+      [
+        "unknown",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 1,
+    "found": [
+      "http://127.0.0.1:8098/orders"
+    ]
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {
+    "candidates": 10,
+    "sstimap_hits": [],
+    "sstimap_low": [],
+    "xsstrike_hits": []
+  },
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 975189,
+      "tip_time": 1794237362,
+      "mediantime": 1794234886,
+      "now_est": 1794238909,
+      "interval": [
+        1794237362,
+        1794238910
+      ],
+      "uncertainty_s": 774,
+      "elapsed_since_tip_s": 1,
+      "next_block_eta_s": 0,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794238909.0940394,
+      "ref_spread_s": 0,
+      "chain_lag_s": 1548,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 975189,
+        "tip_hash": "00000000000000000000ca817ee906d517ba640606cd3e37e979e9cb72aa30f3",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794234854,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 975183,
+          "anchor_hash": "00000000000000000000f2381bd78be6e7f397b547eaaa1710260e7c2a6a6786",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "rooted": true,
+          "pin": {
+            "height": 974990,
+            "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+            "status": "matched",
+            "source": "self-recorded lockdown 2026-11-07",
+            "class": "self_recorded",
+            "rooted_by": {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          },
+          "roots": [
+            {
+              "height": 974990,
+              "class": "self_recorded",
+              "source": "self-recorded lockdown 2026-11-07"
+            },
+            {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          ],
+          "advanced_from": 975183,
+          "verified_against": "00000000000000000000f2381bd78be6e7f397b547eaaa1710260e7c2a6a6786",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true,
+          "verified_depth": {
+            "count": 10079,
+            "lowest": 965111,
+            "highest": 975189,
+            "span": 10079
+          }
+        },
+        "source": "mempool.space",
+        "errors": [],
+        "rooted": true
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 0,
+      "wall_now": 1794238910
+    },
+    "calendar": {
+      "block_height": 975189,
+      "btc_day": 6772,
+      "btc_week": 967,
+      "btc_weekday": 3,
+      "btc_domain": "Query",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 74811,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 309,
+      "supply_mined": 95.7617,
+      "timestamp": "2026-11-09T15:41:50.237Z"
+    },
+    "sabbath": false,
+    "domain": "Query",
+    "btc_day": 6772,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "default_exec": [],
+    "requests": 10
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/e2e-nvidia-final2_20261109T154149Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/ffuf.log",
+    "raw/nmap.log",
+    "raw/nuclei.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 0,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 0,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-09T15:41:49Z"
+  },
+  "receipt": {
+    "receipt_id": "86be6b57e5160041ab32863b80c3ff3c8c5d1e77fd8db93558fbd2f774af68a1",
+    "path": "/opt/ares/security_receipts/e2e-nvidia-final2/86be6b57e5160041.json",
+    "merkle_root": "16bec50daaf4c6bc8fe0af700b192f32825b541e19a96172c6dbcc707372924e",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 5,
+    "diagnostics": 0
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76627,
+  "vantage_response": {
+    "broadcast_id": 76627,
+    "status": "ready"
+  }
+}

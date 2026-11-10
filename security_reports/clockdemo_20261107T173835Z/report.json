@@ -1,0 +1,418 @@
+{
+  "repo": "clockdemo",
+  "repo_url": "/tmp/test-vuln-app",
+  "target_url": "http://127.0.0.1:8099",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T17:38:35Z",
+  "duration_s": 22,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-app_38de",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "SQL Injection in /user endpoint id parameter",
+      "severity": "critical",
+      "description": "The `/user` endpoint directly interpolates user input from the `id` parameter into a SQLite query string, leading to SQL Injection.",
+      "poc": "1. Send a GET request to `/user?id=1 OR 1=1`.\n2. Observe that all database records are returned.",
+      "target": "/workspace/test-vuln-app",
+      "endpoint": "/user",
+      "method": "GET",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app_38de/vulnerabilities.json"
+    },
+    {
+      "title": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter",
+      "severity": "critical",
+      "description": "The `/hello` endpoint uses f-string interpolation to include user-supplied input in a template rendered by `render_template_string`, leading to Server-Side Template Injection (SSTI).",
+      "poc": "1. Send a GET request to `/hello?name={{7*7}}`.\n2. Observe the response `Hello 49`.\n3. Use advanced Jinja2 payloads to achieve remote code execution.",
+      "target": "/workspace/test-vuln-app",
+      "endpoint": "/hello",
+      "method": "GET",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app_38de/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8099/user?id=1",
+    "http://127.0.0.1:8099/hello?name=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8099/user?id=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "UNION query",
+      "boolean-based blind"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 1,
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | flag{super_secret} | admin    |"
+    ],
+    "columns": "| id | secret             | username |"
+  },
+  "sstimap": {
+    "url": "http://127.0.0.1:8099/hello?name=1",
+    "vulnerable": true,
+    "confidence": "high",
+    "engine": "Jinja2",
+    "rce": true,
+    "rc": 0
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ]
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974956,
+      "tip_time": 1794072643,
+      "mediantime": 1794069695,
+      "now_est": 1794073112,
+      "interval": [
+        1794072643,
+        1794073115
+      ],
+      "uncertainty_s": 236,
+      "elapsed_since_tip_s": 0,
+      "next_block_eta_s": 131,
+      "skew_s": 3,
+      "wall_skew_s": 3,
+      "ref_time": 1794073079.02274,
+      "ref_spread_s": 3,
+      "chain_lag_s": 472,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "degraded": false,
+      "freshness_s": 33,
+      "wall_now": 1794073115
+    },
+    "calendar": {
+      "block_height": 974956,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75044,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 76,
+      "supply_mined": 95.7583,
+      "timestamp": "2026-11-07T17:38:35.161Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/clockdemo_20261107T173835Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/metasploit.log",
+    "raw/sqlmap.log",
+    "raw/sstimap.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/users.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11072026_0638pm.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.1,
+        "max_score": 0.1
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.473,
+        "max_score": 0.492
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.508,
+        "max_score": 0.529
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.575,
+        "max_score": 0.589
+      }
+    ],
+    "overall_flag_rate": 0.0
+  },
+  "memory": {
+    "new": [
+      {
+        "fp": "ddbd8d8e73bd75d2",
+        "title": "SQL Injection in /user endpoint id parameter"
+      },
+      {
+        "fp": "337535e9cd63d00b",
+        "title": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter"
+      },
+      {
+        "fp": "976ec1b0efcb3dd7",
+        "title": "Detector gap: identity obfuscation is not flagged"
+      },
+      {
+        "fp": "3687a5ce48785ed0",
+        "title": "Detector gap: rot13 obfuscation is not flagged"
+      },
+      {
+        "fp": "d67e4f790da1cf9a",
+        "title": "Detector gap: hex_escape obfuscation is not flagged"
+      },
+      {
+        "fp": "e457967c2d801e44",
+        "title": "Detector gap: unicode_escape obfuscation is not flagged"
+      },
+      {
+        "fp": "6d2e9bdd1c58772a",
+        "title": "Detector gap: spaced obfuscation is not flagged"
+      },
+      {
+        "fp": "8fa6cab54e00f13f",
+        "title": "Detector gap: fullwidth obfuscation is not flagged"
+      },
+      {
+        "fp": "8d75488c3e0ea613",
+        "title": "Detector gap: leet obfuscation is not flagged"
+      },
+      {
+        "fp": "8f0839bf5da6352a",
+        "title": "Detector gap: reversed obfuscation is not flagged"
+      },
+      {
+        "fp": "80b9d315fc99aa03",
+        "title": "Detector gap: zero_width obfuscation is not flagged"
+      },
+      {
+        "fp": "7dc8289051dd5404",
+        "title": "Detector gap: base64 obfuscation is not flagged"
+      },
+      {
+        "fp": "2befef04e60883d2",
+        "title": "Detector gap: base64x2 obfuscation is not flagged"
+      },
+      {
+        "fp": "ec2baaf773e9459a",
+        "title": "Detector gap: mixed obfuscation is not flagged"
+      }
+    ],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 14,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 14,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T17:38:35Z"
+  },
+  "receipt": {
+    "receipt_id": "3060f7f18050460ce3bc2ca84b0a6c60acb7787e977889e9ab4c0d3e2a3c8204",
+    "path": "/opt/ares/security_receipts/clockdemo/3060f7f18050460c.json",
+    "merkle_root": "06233c47644e6567c234e89220643b01e386d4a4fa323d48982d45c26ca3fedf",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 9,
+    "diagnostics": 14
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "ok": true,
+    "relays_ok": 6,
+    "relays_total": 6,
+    "per_relay": {
+      "ws://127.0.0.1:7788": {
+        "role": "vantage-local",
+        "profile": "full",
+        "event_id": "35a870b9d69002aad4c2dfcf5bf67bb8f42786231e28884b9b9058ef33174ff2",
+        "ok": true,
+        "message": "35a870b9d69002aad4c2dfcf5bf67bb8f42786231e28884b9b9058ef33174ff2",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/vantage-relay": {
+        "role": "vantage-public",
+        "profile": "full",
+        "event_id": "3be3bf4022b7694708a590483babb0dc19181f0be7b11a0f110245156cf7719e",
+        "ok": true,
+        "message": "3be3bf4022b7694708a590483babb0dc19181f0be7b11a0f110245156cf7719e",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/relay": {
+        "role": "buzz",
+        "profile": "full",
+        "event_id": "3be3bf4022b7694708a590483babb0dc19181f0be7b11a0f110245156cf7719e",
+        "ok": true,
+        "message": "e0cd0dacdc1dffd83e1d165dbb5de8ed571bc8c17f364043ac3997c53775557e",
+        "auth": true,
+        "auth_result": [
+          "OK",
+          "3be3bf4022b7694708a590483babb0dc19181f0be7b11a0f110245156cf7719e",
+          false,
+          "auth-required: not authenticated"
+        ]
+      },
+      "wss://relay.damus.io": {
+        "role": "damus",
+        "profile": "public",
+        "event_id": "1ff91fc4e4d47839c16d7116e6aef90c9b5f1a2488ba2e13a8539bf26bc2f8ef",
+        "ok": true,
+        "message": "1ff91fc4e4d47839c16d7116e6aef90c9b5f1a2488ba2e13a8539bf26bc2f8ef",
+        "auth": false,
+        "note": {
+          "event_id": "9118fee949e3a489ef810546f39c9c6316ac50dfb2c8bdea290d61407d168842",
+          "ok": true,
+          "message": "9118fee949e3a489ef810546f39c9c6316ac50dfb2c8bdea290d61407d168842",
+          "auth": false
+        }
+      },
+      "wss://relay.primal.net": {
+        "role": "primal",
+        "profile": "public",
+        "event_id": "41acb3fbe769fe2176076324b28e3a4b56d4b5da9ce281d392939bc67b6c0499",
+        "ok": true,
+        "message": "41acb3fbe769fe2176076324b28e3a4b56d4b5da9ce281d392939bc67b6c0499",
+        "auth": false,
+        "note": {
+          "event_id": "63eafaf5d903b4f0229ad2f68c74ae64d3e5bfdc4395591263867c784a363dec",
+          "ok": true,
+          "message": "63eafaf5d903b4f0229ad2f68c74ae64d3e5bfdc4395591263867c784a363dec",
+          "auth": false
+        }
+      },
+      "wss://relay.snort.social": {
+        "role": "snort",
+        "profile": "public",
+        "event_id": "9f05257992991448433c0a6f0c328e3240ce856ed6658f45f2424b3e9004be25",
+        "ok": true,
+        "message": "9f05257992991448433c0a6f0c328e3240ce856ed6658f45f2424b3e9004be25",
+        "auth": false,
+        "note": {
+          "event_id": "1754b76b7caa624e0f5445ab0864b312c19166c92b09b5f7c6b70eba18e97337",
+          "ok": true,
+          "message": "1754b76b7caa624e0f5445ab0864b312c19166c92b09b5f7c6b70eba18e97337",
+          "auth": false
+        }
+      }
+    }
+  },
+  "vantage_broadcast_id": 76436,
+  "vantage_response": {
+    "broadcast_id": 76436,
+    "status": "ready"
+  }
+}

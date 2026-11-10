@@ -1,0 +1,15 @@
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  LLM CONNECTION FAILED                                                       │
+│                                                                              │
+│  Could not establish connection to the language model.                       │
+│  Please check your configuration and try again.                              │
+│                                                                              │
+│  Error: openai/nvidia-mistral-large did not answer within 30s                │
+│  (LLM_PREFLIGHT_TIMEOUT). Check LLM_API_BASE and that the endpoint is        │
+│  reachable.                                                                  │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+

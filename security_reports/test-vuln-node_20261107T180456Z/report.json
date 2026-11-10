@@ -1,0 +1,497 @@
+{
+  "repo": "test-vuln-node",
+  "repo_url": "/tmp/test-vuln-node",
+  "target_url": "http://127.0.0.1:8097",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T18:04:56Z",
+  "duration_s": 965,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 667,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "Broken Function Level Authorization via Client-Supplied Header on /admin",
+      "severity": "medium",
+      "description": "The `/admin` endpoint relies solely on a client-supplied HTTP header (`x-admin`) to authorize administrative access. An unauthenticated attacker can supply `x-admin: 1` to bypass authorization checks and access the restricted admin panel.",
+      "poc": "1. Send a GET request to `/admin` without headers and observe a 403 Forbidden response.\n2. Send a GET request to `/admin` with the header `x-admin: 1` and observe a 200 OK response with administrative panel content.",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/admin",
+      "method": "GET",
+      "cvss": 5.3,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in /item endpoint",
+      "severity": "critical",
+      "description": "The `/item` endpoint uses f-string interpolation to construct SQL queries, allowing attackers to inject arbitrary SQL via the `id` parameter.",
+      "poc": "1. Send a request to `/item` with a valid ID to establish a baseline.\n2. Send a request with `id=1%20AND%201=1` to confirm boolean-based injection.\n3. Send a request with `id=1%20AND%201=2` to confirm the negative case.\n4. Use a `UNION SELECT` payload to extract arbitrary data.",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/item",
+      "method": "GET",
+      "cvss": 9.1,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "Path Traversal in /file endpoint via name parameter",
+      "severity": "high",
+      "description": "The /file endpoint in the FastAPI application is vulnerable to path traversal due to improper validation of user-supplied input in the 'name' parameter. An attacker can use '../' sequences to read arbitrary files on the server.",
+      "poc": "1. Send a GET request to /file?name=../../../../etc/passwd\n2. Observe that the server returns the contents of /etc/passwd",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/file",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "Broken Function Level Authorization via Client-Supplied Header on /admin\n\nThe `/admin` endpoint relies solely on a client-supplied HTTP header (`x-admin`) to au",
+      "severity": "warning",
+      "description": "Broken Function Level Authorization via Client-Supplied Header on /admin\n\nThe `/admin` endpoint relies solely on a client-supplied HTTP header (`x-admin`) to authorize administrative access. An unauthenticated attacker can supply `x-admin: 1` to bypass authorization checks and access the restricted admin panel.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "SQL Injection in /item endpoint\n\nThe `/item` endpoint uses f-string interpolation to construct SQL queries, allowing attackers to inject arbitrary SQL via the `",
+      "severity": "error",
+      "description": "SQL Injection in /item endpoint\n\nThe `/item` endpoint uses f-string interpolation to construct SQL queries, allowing attackers to inject arbitrary SQL via the `id` parameter.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "Path Traversal in /file endpoint via name parameter\n\nThe /file endpoint in the FastAPI application is vulnerable to path traversal due to improper validation of",
+      "severity": "error",
+      "description": "Path Traversal in /file endpoint via name parameter\n\nThe /file endpoint in the FastAPI application is vulnerable to path traversal due to improper validation of user-supplied input in the 'name' parameter. An attacker can use '../' sequences to read arbitrary files on the server.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8097/admin",
+    "http://127.0.0.1:8097/item?id=1",
+    "http://127.0.0.1:8097/file?name=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8097/item?id=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "UNION query",
+      "boolean-based blind"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 0,
+    "sensitive_exposed": false,
+    "sample": [],
+    "columns": null
+  },
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8097,
+    "services": [
+      [
+        "sac?",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 5,
+    "found": [
+      "http://127.0.0.1:8097/admin",
+      "http://127.0.0.1:8097/docs",
+      "http://127.0.0.1:8097/file",
+      "http://127.0.0.1:8097/item",
+      "http://127.0.0.1:8097/run"
+    ]
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": "uvicorn",
+    "module": null,
+    "rc": 0,
+    "candidates": []
+  },
+  "sweep": {
+    "candidates": 14,
+    "sstimap_hits": [],
+    "sstimap_low": [],
+    "xsstrike_hits": []
+  },
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974957,
+      "tip_time": 1794073540,
+      "mediantime": 1794070015,
+      "now_est": 1794074695,
+      "interval": [
+        1794073540,
+        1794074696
+      ],
+      "uncertainty_s": 578,
+      "elapsed_since_tip_s": 2,
+      "next_block_eta_s": 0,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794074694.0921524,
+      "ref_spread_s": 1,
+      "chain_lag_s": 1156,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "degraded": false,
+      "freshness_s": 1,
+      "wall_now": 1794074696
+    },
+    "calendar": {
+      "block_height": 974957,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75043,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 77,
+      "supply_mined": 95.7583,
+      "timestamp": "2026-11-07T18:04:56.798Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-node_20261107T180456Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/ffuf.log",
+    "raw/metasploit.log",
+    "raw/nmap.log",
+    "raw/nuclei.log",
+    "raw/sqlmap.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11072026_0718pm.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.1,
+        "max_score": 0.1
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.473,
+        "max_score": 0.492
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.508,
+        "max_score": 0.529
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.575,
+        "max_score": 0.589
+      }
+    ],
+    "overall_flag_rate": 0.0
+  },
+  "memory": {
+    "new": [
+      {
+        "fp": "4f07c6c53b7984b8",
+        "title": "Broken Function Level Authorization via Client-Supplied Header on /admin"
+      },
+      {
+        "fp": "6fb8e5b6fb323fa6",
+        "title": "SQL Injection in /item endpoint"
+      },
+      {
+        "fp": "8b4d531ecb11e5ae",
+        "title": "Path Traversal in /file endpoint via name parameter"
+      },
+      {
+        "fp": "4b89c988f9afd5cc",
+        "title": "Broken Function Level Authorization via Client-Supplied Header on /admin\n\nThe `/admin` endpoint relies solely on a client-supplied HTTP header (`x-admin`) to au"
+      },
+      {
+        "fp": "2e5f16192a29c622",
+        "title": "SQL Injection in /item endpoint\n\nThe `/item` endpoint uses f-string interpolation to construct SQL queries, allowing attackers to inject arbitrary SQL via the `"
+      },
+      {
+        "fp": "5b0d5fdc23dcff8c",
+        "title": "Path Traversal in /file endpoint via name parameter\n\nThe /file endpoint in the FastAPI application is vulnerable to path traversal due to improper validation of"
+      },
+      {
+        "fp": "976ec1b0efcb3dd7",
+        "title": "Detector gap: identity obfuscation is not flagged"
+      },
+      {
+        "fp": "3687a5ce48785ed0",
+        "title": "Detector gap: rot13 obfuscation is not flagged"
+      },
+      {
+        "fp": "d67e4f790da1cf9a",
+        "title": "Detector gap: hex_escape obfuscation is not flagged"
+      },
+      {
+        "fp": "e457967c2d801e44",
+        "title": "Detector gap: unicode_escape obfuscation is not flagged"
+      },
+      {
+        "fp": "6d2e9bdd1c58772a",
+        "title": "Detector gap: spaced obfuscation is not flagged"
+      },
+      {
+        "fp": "8fa6cab54e00f13f",
+        "title": "Detector gap: fullwidth obfuscation is not flagged"
+      },
+      {
+        "fp": "8d75488c3e0ea613",
+        "title": "Detector gap: leet obfuscation is not flagged"
+      },
+      {
+        "fp": "8f0839bf5da6352a",
+        "title": "Detector gap: reversed obfuscation is not flagged"
+      },
+      {
+        "fp": "80b9d315fc99aa03",
+        "title": "Detector gap: zero_width obfuscation is not flagged"
+      },
+      {
+        "fp": "7dc8289051dd5404",
+        "title": "Detector gap: base64 obfuscation is not flagged"
+      },
+      {
+        "fp": "2befef04e60883d2",
+        "title": "Detector gap: base64x2 obfuscation is not flagged"
+      },
+      {
+        "fp": "ec2baaf773e9459a",
+        "title": "Detector gap: mixed obfuscation is not flagged"
+      }
+    ],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 18,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 18,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T18:04:56Z"
+  },
+  "receipt": {
+    "receipt_id": "98fa093ff62d5ec5f2d48e77090c48ccd3c474beba31214f0f119ba0626d6322",
+    "path": "/opt/ares/security_receipts/test-vuln-node/98fa093ff62d5ec5.json",
+    "merkle_root": "d59dac2e4aea4059b2d1cab71308d8a498d798d52217b1058f79e9cd01d4f939",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 11,
+    "diagnostics": 18
+  },
+  "ots": {
+    "merkle_root": "d59dac2e4aea4059b2d1cab71308d8a498d798d52217b1058f79e9cd01d4f939",
+    "merkle_file": "/opt/ares/security_receipts/test-vuln-node/98fa093ff62d5ec5.merkle.txt",
+    "ots_file": "/opt/ares/security_receipts/test-vuln-node/98fa093ff62d5ec5.merkle.txt.ots",
+    "stamped": true,
+    "stamp_rc": 0,
+    "stamp_out": "Submitting to remote calendar https://a.pool.opentimestamps.org\nSubmitting to remote calendar https://b.pool.opentimestamps.org\nSubmitting to remote calendar https://a.pool.eternitywall.com\nSubmitting to remote calendar https://ots.btc.catallaxy.com",
+    "info": "File sha256 hash: f4ce2049ba951f6f472f51e219c22f95ca16ba024eda13c9c81780fa24cee37d\nTimestamp:\nappend ebffcdce718ffc92baca418e250d6a17\nsha256\n -> append 137c61b98f3cb449e0e790918e64796d\n    sha256\n    append 6593f2bd1cecabf22d9dfe6b744c4da90532ab9425b4858946a9755a869c5a85\n    sha256\n    append 6014ea69eace4e730c72071a287c1ac3c08d709c22b4ea53d063203eb9978053\n    sha256\n    append 70c8b6b19c8e87da7e48060bb1cd6800a59df9233f41875fe3ac9866e047f95b\n    sha256\n    prepend 6aef6c12\n    append 42a4d97c4e77499c\n    verify PendingAttestation('https://btc.calendar.catallaxy.com')\n -> append 5b8ef009ac628f97\n    sha256\n    append f9a95188e4f93165d27e7a8b3501e32b\n    sha256\n    append 6e2c0271a3c5a28faf83e7f5bad0c19bcf7f6b4326c191b0a3a80cfe3c29a490\n    sha256\n    prepend 6aef6c11\n    append b68b450f138bfdb7\n    verify PendingAttestation('https://alice.btc.calendar.opentimestamps.org')\n -> append 80c465"
+  },
+  "time": {
+    "ots_file": "/opt/ares/security_receipts/test-vuln-node/98fa093ff62d5ec5.merkle.txt.ots",
+    "pending": true,
+    "error": "pending calendar attestation \u2014 no Bitcoin height yet"
+  },
+  "anchor": {
+    "ok": true,
+    "relays_ok": 5,
+    "relays_total": 6,
+    "per_relay": {
+      "ws://127.0.0.1:7788": {
+        "role": "vantage-local",
+        "profile": "full",
+        "event_id": "e09574b5a48a02536361549fd6145c89ebff1452ee6b753fa20bda7ef7cf4de4",
+        "ok": true,
+        "message": "e09574b5a48a02536361549fd6145c89ebff1452ee6b753fa20bda7ef7cf4de4",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/vantage-relay": {
+        "role": "vantage-public",
+        "profile": "full",
+        "event_id": "e09574b5a48a02536361549fd6145c89ebff1452ee6b753fa20bda7ef7cf4de4",
+        "ok": true,
+        "message": "e09574b5a48a02536361549fd6145c89ebff1452ee6b753fa20bda7ef7cf4de4",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/relay": {
+        "role": "buzz",
+        "profile": "full",
+        "event_id": "e09574b5a48a02536361549fd6145c89ebff1452ee6b753fa20bda7ef7cf4de4",
+        "ok": true,
+        "message": "99f97c3ee20ae186ba5b82d356b86b6f77e58e200eb3ac2afc8d035b26488d72",
+        "auth": true,
+        "auth_result": [
+          "OK",
+          "e09574b5a48a02536361549fd6145c89ebff1452ee6b753fa20bda7ef7cf4de4",
+          false,
+          "auth-required: not authenticated"
+        ]
+      },
+      "wss://relay.damus.io": {
+        "role": "damus",
+        "profile": "public",
+        "event_id": "b1774feab3033d431654439a489639f43af0baed1c2fe1f87acaf952965deb9a",
+        "ok": false,
+        "error": "server rejected WebSocket connection: HTTP 503",
+        "queued": {
+          "queued": true,
+          "relay": "wss://relay.damus.io",
+          "event_id": "b1774feab3033d431654439a489639f43af0baed1c2fe1f87acaf952965deb9a"
+        }
+      },
+      "wss://relay.primal.net": {
+        "role": "primal",
+        "profile": "public",
+        "event_id": "d8a3b576e3f30b27ac940ed39d1c343a8e6c19377616346f7257bf818a42c65a",
+        "ok": true,
+        "message": "d8a3b576e3f30b27ac940ed39d1c343a8e6c19377616346f7257bf818a42c65a",
+        "auth": false,
+        "note": {
+          "event_id": "f0e8a11181b4a6ac934a749a689c08889b351cccfe6379cad2345447fd0bde2b",
+          "ok": true,
+          "message": "f0e8a11181b4a6ac934a749a689c08889b351cccfe6379cad2345447fd0bde2b",
+          "auth": false
+        }
+      },
+      "wss://relay.snort.social": {
+        "role": "snort",
+        "profile": "public",
+        "event_id": "8f0e9831c87bc6d691a92dd61f36c1f341dc6fa9cc88849b571a89e500fe9170",
+        "ok": true,
+        "message": "8f0e9831c87bc6d691a92dd61f36c1f341dc6fa9cc88849b571a89e500fe9170",
+        "auth": false,
+        "note": {
+          "event_id": "d7186b9f5539209488c5a3ceca344b746cf4aa719f2e9def9661eea35489d0b6",
+          "ok": true,
+          "message": "d7186b9f5539209488c5a3ceca344b746cf4aa719f2e9def9661eea35489d0b6",
+          "auth": false
+        }
+      }
+    }
+  },
+  "vantage_broadcast_id": 76440,
+  "vantage_response": {
+    "broadcast_id": 76440,
+    "status": "ready"
+  }
+}

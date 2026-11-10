@@ -1,0 +1,78 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 3211,
+      "sha256": "13091469d0d17300992f5094bdadae3d1f186d2158305acfae3838e53d7c6a25"
+    }
+  },
+  "chain_index": 2,
+  "created_at": "2026-11-07T20:34:14Z",
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-104",
+      "cvss": 7.5,
+      "endpoint": "/file",
+      "message": "Path Traversal in /file route",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-105",
+      "cvss": 9.8,
+      "endpoint": "/run",
+      "message": "Command Injection in /run Route",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 8.2,
+      "endpoint": "",
+      "message": "SQL Injection in /user endpoint via id parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": 7.5,
+      "endpoint": "",
+      "message": "Hardcoded Database Password in app.py",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/scan-canary_20261107T203411Z",
+  "merkle_root": "13091469d0d17300992f5094bdadae3d1f186d2158305acfae3838e53d7c6a25",
+  "prev_receipt": "bf51746e874f5c384bb9d765e50a07c70ebc160cd4e80e46ff8d080035dd3385",
+  "receipt_id": "458a107238b4a6065dd4521fc6c38aee10d58d1d17170be2d6661f29a421450f",
+  "receipt_version": "1.0",
+  "repo": "scan-canary",
+  "run": {
+    "btc": {
+      "anchor_height": 974975,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974981,
+      "pow_ok": true,
+      "tip_hash": "000000000000000000010c8fb9223c60cdd2b56ad2b9887f8006a5c8b7c1bf99",
+      "verified": true
+    },
+    "duration_s": 3,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "strix/strix_runs/scan-canary_7f28"
+  },
+  "signature": "aec4d1fb0a6442a2e530f23203b92dfae33b67c85edf03781b18cceb69338ab0",
+  "target": ""
+}

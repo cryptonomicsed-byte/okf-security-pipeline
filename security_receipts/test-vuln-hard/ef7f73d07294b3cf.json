@@ -1,0 +1,130 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 76130,
+      "sha256": "03e161ecc1818b63d185c13f39dccad9cf17372495cd4bf3de616af95666260a"
+    },
+    "raw/metasploit.log": {
+      "bytes": 452,
+      "sha256": "f5fc5c1ef365ef2f378935cc942adbce3faac1c3784b090542c6cf4e4a4a6092"
+    },
+    "raw/sqlmap.log": {
+      "bytes": 4864,
+      "sha256": "e3d58634a801f5296f1938c511a72c8ee88afcbbcf0fd55e022c32a8822fb753"
+    },
+    "raw/sqlmap_post.log": {
+      "bytes": 5091,
+      "sha256": "3adc2f0e48cda940b7b7688b4e144fac5e0dfa0e9bfdfabdc0f214cb214d4643"
+    },
+    "raw/sstimap.log": {
+      "bytes": 11492,
+      "sha256": "b957f9beb9df8a3457e1bbc1349b14c9b3369379f0a363ada8925faf8cfb5be2"
+    },
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv": {
+      "bytes": 73,
+      "sha256": "c647f73a986318da88f69a4ffe693be0bdc731eab7d7d5f0c51496cf53184d5e"
+    },
+    "sqlmap/127.0.0.1/log": {
+      "bytes": 1065,
+      "sha256": "aa93ba531c3ca28c21d4667975e24bc11523547737d7638f4e83b055b52b3e3f"
+    },
+    "sqlmap/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "a13386f1736c0905badadeb2d68bdee5e092dcc307316e623b26c553e1c9709d"
+    },
+    "sqlmap/127.0.0.1/target.txt": {
+      "bytes": 232,
+      "sha256": "4363b9e5eb519cd3c019f6f6cd07cd0618760bf5eadaa861068f17f3224fe286"
+    },
+    "sqlmap/results-11072026_1017pm.csv": {
+      "bytes": 48,
+      "sha256": "0f1334bd8b18642561ee73db8e851ce84831b3476bb5e0fb8d4ded44008bfa29"
+    },
+    "sqlmap/results-11072026_1018pm.csv": {
+      "bytes": 144,
+      "sha256": "726e133e78c9d166cc078741d1f42d919567c12c8f66c712bb112c790d216a55"
+    },
+    "sqlmap_post/127.0.0.1/dump/SQLite_masterdb/orders.csv": {
+      "bytes": 73,
+      "sha256": "c647f73a986318da88f69a4ffe693be0bdc731eab7d7d5f0c51496cf53184d5e"
+    },
+    "sqlmap_post/127.0.0.1/log": {
+      "bytes": 1769,
+      "sha256": "bc570b7ebf2f1925c01491e09c3af05f5518c14155203eded8caacf4760a0c92"
+    },
+    "sqlmap_post/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "b9796c0be4498267bafe9e295a60352990cd14a4116e3f85db747ce7cf3f5638"
+    },
+    "sqlmap_post/127.0.0.1/target.txt": {
+      "bytes": 335,
+      "sha256": "810eb50436dd441441cdee8edea0485f2753b9db445dbcdf3b6a269e73fd597d"
+    },
+    "sqlmap_post/results-11072026_1018pm.csv": {
+      "bytes": 174,
+      "sha256": "88d8ec43d6c82b6ff92968c3e06c5de1e863ec5875d603d31e8064cb6eb4cc8c"
+    }
+  },
+  "chain_index": 3,
+  "created_at": "2026-11-07T21:24:03Z",
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-102",
+      "cvss": 9.8,
+      "endpoint": "/render",
+      "message": "Server-Side Template Injection (SSTI) leading to RCE in /render",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 7.5,
+      "endpoint": "/orders",
+      "message": "SQL Injection in GET /orders sort parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 9.1,
+      "endpoint": "/orders/by-sku",
+      "message": "SQL Injection in POST /orders/by-sku sku parameter",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-hard_20261107T211731Z",
+  "merkle_root": "919b99c3404c73a605d3449176ba3493a9a7b03e8169332fdc14cd4ee5dcf9af",
+  "prev_receipt": "841a6453227c7de6e1a7cf810dabf831ba7f1c30934fd9da9cc34e80507f20f5",
+  "receipt_id": "ef7f73d07294b3cf1ad0e4f5ad7a3bb4f93f0a46c6affd7f2084426688aec505",
+  "receipt_version": "1.0",
+  "repo": "test-vuln-hard",
+  "run": {
+    "btc": {
+      "anchor_height": 974980,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974986,
+      "pow_ok": true,
+      "tip_hash": "000000000000000000002ef31422548810954bfd70fb97bf70f875e16076a1f4",
+      "verified": true
+    },
+    "duration_s": 391,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "strix/strix_runs/test-vuln-hard_671a"
+  },
+  "signature": "4f13dde4e297aaf33fced66d8e2806c8af3647b15730e406c55268c45a90c067",
+  "target": "http://127.0.0.1:8098"
+}

@@ -1,0 +1,396 @@
+{
+  "repo": "clocktest-rooted",
+  "repo_url": "/tmp/clocktest",
+  "target_url": "",
+  "target_class": null,
+  "stealth": "n/a (static-only)",
+  "started": "2026-11-07T22:27:51Z",
+  "duration_s": 2,
+  "strix_run_dir": "/tmp",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0,
+    "leaks": []
+  },
+  "strix_findings": [],
+  "endpoints": [],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sqlmap_post": {},
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974994,
+      "tip_time": 1794090230,
+      "mediantime": 1794086604,
+      "now_est": 1794090469,
+      "interval": [
+        1794090230,
+        1794090471
+      ],
+      "uncertainty_s": 120,
+      "elapsed_since_tip_s": 7,
+      "next_block_eta_s": 361,
+      "skew_s": 2,
+      "wall_skew_s": 2,
+      "ref_time": 1794090463.1219952,
+      "ref_spread_s": 1,
+      "chain_lag_s": 241,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 974994,
+        "tip_hash": "000000000000000000004c33b0dda237b526da6eaa3b89ae09b958aa5833dc5c",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794086544,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 974988,
+          "anchor_hash": "00000000000000000000558e1fa5facd59d38ef35411a9d711c2d21f88ef6e70",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "rooted": true,
+          "pin": {
+            "height": 974990,
+            "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+            "status": "matched",
+            "source": "self-recorded lockdown 2026-11-07",
+            "class": "self_recorded",
+            "rooted_by": {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          },
+          "roots": [
+            {
+              "height": 974990,
+              "class": "self_recorded",
+              "source": "self-recorded lockdown 2026-11-07"
+            },
+            {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          ],
+          "advanced_from": 974988,
+          "verified_against": "00000000000000000000558e1fa5facd59d38ef35411a9d711c2d21f88ef6e70",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true,
+          "verified_depth": {
+            "count": 44,
+            "lowest": 974951,
+            "highest": 974994,
+            "span": 44
+          }
+        },
+        "source": "mempool.space",
+        "errors": [],
+        "rooted": true
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 6,
+      "wall_now": 1794090471
+    },
+    "calendar": {
+      "block_height": 974994,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75006,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 114,
+      "supply_mined": 95.7588,
+      "timestamp": "2026-11-07T22:27:51.270Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "requests": 0
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/clocktest-rooted_20261107T222751Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "report.json",
+    "report.md"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 0,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 0,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T22:27:51Z"
+  },
+  "receipt": {
+    "receipt_id": "985c75e4d3191f2757d3bc5437325ea4a1b25bb8974671518ad6deee750a85f9",
+    "path": "/opt/ares/security_receipts/clocktest-rooted/985c75e4d3191f27.json",
+    "merkle_root": "11cf5dfd836274cf6cd797286f90b22773a05bc25e47e9f75a91b0c82d0080d4",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 1,
+    "diagnostics": 0
+  },
+  "ots": {
+    "merkle_root": "11cf5dfd836274cf6cd797286f90b22773a05bc25e47e9f75a91b0c82d0080d4",
+    "merkle_file": "/opt/ares/security_receipts/clocktest-rooted/985c75e4d3191f27.merkle.txt",
+    "ots_file": "/opt/ares/security_receipts/clocktest-rooted/985c75e4d3191f27.merkle.txt.ots",
+    "stamped": true,
+    "stamp_rc": 0,
+    "stamp_out": "Submitting to remote calendar https://a.pool.opentimestamps.org\nSubmitting to remote calendar https://b.pool.opentimestamps.org\nSubmitting to remote calendar https://a.pool.eternitywall.com\nSubmitting to remote calendar https://ots.btc.catallaxy.com",
+    "info": "File sha256 hash: 20605eedb827ca5f8b01c99e15ad7796647bbca7b2cc762bd7df35c575a6d9b5\nTimestamp:\nappend c51d9adaecc5ed9c54e9a2c951790b72\nsha256\n -> append 4a7a985ebc40f8ae8727f7d045efa4a6\n    sha256\n    append 8721aaafbaed53a8709b00b8392eb5b8a7a99e1a5440c8161f3c15ff99d06d51\n    sha256\n    prepend 333fff9be65ca5e065fd0c9b3f056839aa8096513d2ffac4be45720026502ab3\n    sha256\n    append 5ba504a80bbecda1b1ecbf492fa4bc2d0f7412db8eb6ed2f68b597f6574c729f\n    sha256\n    prepend 6aefa5eb\n    append 2e78fd20476a38af\n    verify PendingAttestation('https://finney.calendar.eternitywall.com')\n -> append 7d8b4e5ffaf4cdd2\n    sha256\n    append f0f289a02b395de393f162ca25617650\n    sha256\n    prepend 4bd5710efce68f49c0e06561225f0faf8b10b56997e1e1e36b327ed01e810aa9\n    sha256\n    prepend ea9d811fbb5a931bcadd4332311f8215ab7a42427662a20fc950cc0849bf934d\n    sha256\n    prepend 6aefa5ea\n    append 2349f6778822b417\n"
+  },
+  "time": {
+    "ots_file": "/opt/ares/security_receipts/clocktest-rooted/985c75e4d3191f27.merkle.txt.ots",
+    "pending": true,
+    "error": "pending calendar attestation \u2014 no Bitcoin height yet"
+  },
+  "anchor": {
+    "ok": true,
+    "relays_ok": 6,
+    "relays_total": 6,
+    "per_relay": {
+      "ws://127.0.0.1:7788": {
+        "role": "vantage-local",
+        "profile": "full",
+        "event_id": "b28b0d4efa7256a4e9e03172355d384cfe043d512d01cb0f7246c93437c98640",
+        "ok": true,
+        "message": "b28b0d4efa7256a4e9e03172355d384cfe043d512d01cb0f7246c93437c98640",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/vantage-relay": {
+        "role": "vantage-public",
+        "profile": "full",
+        "event_id": "b28b0d4efa7256a4e9e03172355d384cfe043d512d01cb0f7246c93437c98640",
+        "ok": true,
+        "message": "b28b0d4efa7256a4e9e03172355d384cfe043d512d01cb0f7246c93437c98640",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/relay": {
+        "role": "buzz",
+        "profile": "full",
+        "event_id": "8fa5be7687e80d0232036a801dfba5e04485e26700854dbb9cf56fe10d0e188e",
+        "ok": true,
+        "message": "6d2f19cc7d0b5bc7e66a395dad709a1e3df3c3024425535f859772456800c579",
+        "auth": true,
+        "auth_result": [
+          "OK",
+          "8fa5be7687e80d0232036a801dfba5e04485e26700854dbb9cf56fe10d0e188e",
+          false,
+          "auth-required: not authenticated"
+        ]
+      },
+      "wss://relay.damus.io": {
+        "role": "damus",
+        "profile": "public",
+        "event_id": "7603568365c0b54798ea3866d5ab69352055d3b85df0e952c4754d40988e8d6a",
+        "ok": true,
+        "message": "7603568365c0b54798ea3866d5ab69352055d3b85df0e952c4754d40988e8d6a",
+        "auth": false,
+        "note": {
+          "ok": false,
+          "error": "server rejected WebSocket connection: HTTP 503",
+          "queued": {
+            "queued": true,
+            "relay": "wss://relay.damus.io",
+            "event_id": "c342ac52d4299236fa120b55b240415d66eb00d8fe1008a7e1963d6a3a010ce8"
+          }
+        }
+      },
+      "wss://relay.primal.net": {
+        "role": "primal",
+        "profile": "public",
+        "event_id": "edfba0e3419389b34a751ef2191e299d836cdc61f0f3ce1a08a5102f18dda4ae",
+        "ok": true,
+        "message": "edfba0e3419389b34a751ef2191e299d836cdc61f0f3ce1a08a5102f18dda4ae",
+        "auth": false,
+        "note": {
+          "event_id": "d2ce38167745221e6503383496f378a3dd4bcdf5002d85814cfb22d6e9e397f1",
+          "ok": true,
+          "message": "d2ce38167745221e6503383496f378a3dd4bcdf5002d85814cfb22d6e9e397f1",
+          "auth": false
+        }
+      },
+      "wss://relay.snort.social": {
+        "role": "snort",
+        "profile": "public",
+        "event_id": "d88435969d5eec262f99d3610314f44fcedbf5df5e71206abcf39c957c4ccc09",
+        "ok": true,
+        "message": "d88435969d5eec262f99d3610314f44fcedbf5df5e71206abcf39c957c4ccc09",
+        "auth": false,
+        "note": {
+          "event_id": "b78e61644d55ad614f18fb04420538e4fe47cf1cfbe4925d7b109af26d28e3ba",
+          "ok": true,
+          "message": "b78e61644d55ad614f18fb04420538e4fe47cf1cfbe4925d7b109af26d28e3ba",
+          "auth": false
+        }
+      }
+    }
+  },
+  "vantage_broadcast_id": 76523,
+  "vantage_response": {
+    "broadcast_id": 76523,
+    "status": "ready"
+  }
+}

@@ -1,0 +1,23 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-07 20:48 CET
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00016s latency).
+
+PORT     STATE SERVICE VERSION
+8097/tcp open  sac?
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8097-TCP:V=7.94SVN%I=2%D=11/7%Time=6AEF8084%P=x86_64-pc-linux-gnu%r
+SF:(GetRequest,AD,"HTTP/1\.1\x20404\x20Not\x20Found\r\ndate:\x20Sat,\x2007
+SF:\x20Nov\x202026\x2019:48:19\x20GMT\r\nserver:\x20uvicorn\r\ncontent-len
+SF:gth:\x2022\r\ncontent-type:\x20application/json\r\nconnection:\x20close
+SF:\r\n\r\n{\"detail\":\"Not\x20Found\"}")%r(SSLSessionReq,C0,"HTTP/1\.1\x
+SF:20400\x20Bad\x20Request\r\ndate:\x20Sat,\x2007\x20Nov\x202026\x2019:48:
+SF:19\x20GMT\r\nserver:\x20uvicorn\r\ncontent-type:\x20text/plain;\x20char
+SF:set=utf-8\r\ncontent-length:\x2030\r\nconnection:\x20close\r\n\r\nInval
+SF:id\x20HTTP\x20request\x20received\.")%r(TLSSessionReq,C0,"HTTP/1\.1\x20
+SF:400\x20Bad\x20Request\r\ndate:\x20Sat,\x2007\x20Nov\x202026\x2019:48:19
+SF:\x20GMT\r\nserver:\x20uvicorn\r\ncontent-type:\x20text/plain;\x20charse
+SF:t=utf-8\r\ncontent-length:\x2030\r\nconnection:\x20close\r\n\r\nInvalid
+SF:\x20HTTP\x20request\x20received\.");
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 11.54 seconds

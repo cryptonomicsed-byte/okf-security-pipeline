@@ -1,0 +1,29 @@
+{
+  "attest_version": "1.0",
+  "attestation_id": "ddb8d59413bf0f4c9b64ddb8b51ac6c9b55cda1ba295f3a670b848ab77cfa191",
+  "bitcoin": {
+    "block_hash": "00000000000000000000a61a08601e7ffadabdc86b65b16c382945552f57bd66",
+    "block_time": 1794079453,
+    "height": 974970,
+    "merkle_root": "a45c60138d3d4229b475489be621eb973198980c7f0006f23772fb992f098268",
+    "source": "mempool.space"
+  },
+  "checks": {
+    "block_buried": true,
+    "blocks_behind": 6,
+    "header_hashes_to_block": true,
+    "merkle_in_block": true,
+    "pow_meets_target": true
+  },
+  "created_at": "2026-11-07T21:50:34Z",
+  "kind": "time-attestation",
+  "prev_attestation": "3169be368dbab4588d0b6266e851779fc220883a2258ec14c1d2bea38271e001",
+  "proof_file": "5e3627099d5b2be4.merkle.txt.ots",
+  "repo": "test-vuln-node",
+  "signature": "5ffe3a2514d828d52f9e7d72753a168bd2daa481549c5e0875fcbdec2650e2c4",
+  "stamped_digest": "f7508d2512addd3d58ccfb9064b1927388f547e43a64b0afd154523bf42e8f7d",
+  "target_chain_index": 7,
+  "target_created_at": "2026-11-07T19:04:53Z",
+  "target_merkle_root": "6781a7ff4518cda1d4f8057efd2ffe4ff214e88f9f75b83617534e7c41893cd4",
+  "target_receipt_id": "5e3627099d5b2be49303e59e256b7506eb24971d759e20751a77e6515e71297a"
+}

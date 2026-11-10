@@ -1,0 +1,29 @@
+{
+  "attest_version": "1.0",
+  "attestation_id": "a44dfb8c2ed2b47659ee657cd1f24b6f220db4ab771f4d19001d4997640e14f8",
+  "bitcoin": {
+    "block_hash": "0000000000000000000013c6b2caa227ce41634a42f14c9e8441cdc2c8c849e4",
+    "block_time": 1794329826,
+    "height": 975324,
+    "merkle_root": "6d1d4b11a3ed17f16304f49ed7a5248baf0b82d7a367aaaabd76c9afd9d71593",
+    "source": "mempool.space"
+  },
+  "checks": {
+    "block_buried": true,
+    "blocks_behind": 6,
+    "header_hashes_to_block": true,
+    "merkle_in_block": true,
+    "pow_meets_target": true
+  },
+  "created_at": "2026-11-10T19:09:55Z",
+  "kind": "time-attestation",
+  "prev_attestation": null,
+  "proof_file": "86be6b57e5160041.merkle.txt.ots",
+  "repo": "e2e-nvidia-final2",
+  "signature": "131c5c070e4639f9ed827c4e71867482a3e1af7a6e532b9b097acd23817562a6",
+  "stamped_digest": "7a9b000fcb56a97d9a2fa6158be14b9bf869951504082640209a5959a4d07947",
+  "target_chain_index": 0,
+  "target_created_at": "2026-11-09T16:32:14Z",
+  "target_merkle_root": "16bec50daaf4c6bc8fe0af700b192f32825b541e19a96172c6dbcc707372924e",
+  "target_receipt_id": "86be6b57e5160041ab32863b80c3ff3c8c5d1e77fd8db93558fbd2f774af68a1"
+}

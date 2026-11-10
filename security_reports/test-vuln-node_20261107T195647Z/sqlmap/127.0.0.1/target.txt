@@ -1,0 +1,1 @@
+http://127.0.0.1:8097/item?id=1 (GET)  # /usr/bin/sqlmap -u http://127.0.0.1:8097/item?id=1 --batch --technique=BEU -T items --dump --timeout=15 --output-dir=/opt/ares/security_reports/test-vuln-node_20261107T195647Z/sqlmap

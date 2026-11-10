@@ -1,0 +1,29 @@
+{
+  "attest_version": "1.0",
+  "attestation_id": "813ab1b7384a8fee40a6828d7de4be5d1cf8cfbba87bece3858664a1fe9dc77e",
+  "bitcoin": {
+    "block_hash": "0000000000000000000013c6b2caa227ce41634a42f14c9e8441cdc2c8c849e4",
+    "block_time": 1794329826,
+    "height": 975324,
+    "merkle_root": "6d1d4b11a3ed17f16304f49ed7a5248baf0b82d7a367aaaabd76c9afd9d71593",
+    "source": "mempool.space"
+  },
+  "checks": {
+    "block_buried": true,
+    "blocks_behind": 6,
+    "header_hashes_to_block": true,
+    "merkle_in_block": true,
+    "pow_meets_target": true
+  },
+  "created_at": "2026-11-10T19:09:57Z",
+  "kind": "time-attestation",
+  "prev_attestation": null,
+  "proof_file": "32b653124c145de5.merkle.txt.ots",
+  "repo": "e2e-strixpaid-verdict",
+  "signature": "e35f552a3c8894ec2ba6b5b3d351e12cf9a6726641887ef5dc16f2e5d22e8184",
+  "stamped_digest": "10edba81f29a497526453a4b8e7bf8d217490a8f5a84ed6611aaeefe571e3cbb",
+  "target_chain_index": 0,
+  "target_created_at": "2026-11-09T20:35:43Z",
+  "target_merkle_root": "c75654d910a31e709db0c126cd22d6b53e8242f40f56dad33cbdfcb1b6188c11",
+  "target_receipt_id": "32b653124c145de5874268e45fc7b235f8fd5469b71a5fb8f7942017d9b66e72"
+}

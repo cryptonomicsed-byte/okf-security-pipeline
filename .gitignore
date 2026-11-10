@@ -33,3 +33,26 @@
 
 # documentation
 !/docs
+
+# pipeline history + profile (same repo's scope, was untracked)
+!/okf_profile.py
+!/strix_pipeline.py
+!/strix_pipeline_v2.py
+!/strix_pipeline_v3.py
+!/strix_runner.py
+
+# the pipeline's own state and evidence — "ALL of it" (2026-11-10)
+# receipts + sidecars, sealed evidence reports, and the verified Bitcoin
+# ledger snapshot. Keys stay excluded: the whitelist model means a dotfile
+# like .okf_anchor_key is ignored unless named here, and it is not named.
+!/security_receipts
+!/security_reports
+!/.btc_anchor.json
+!/.btc_headers.json
+!/.btc_pins.json
+!/deploy
+
+# planted canary credentials (a fake private-key block, among others) prove
+# the scanner works; they must keep looking like secrets to every future
+# audit, so the raw logs stay on disk but never enter git. The receipts record that the test passed.
+security_reports/scan-canary_*/raw/betterleaks.log

@@ -1,0 +1,104 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 163,
+      "sha256": "7e35a31255a656fa1211673b9f14e6dc829f281c3e1dccb8aa11eae8d1f551cc"
+    },
+    "raw/ffuf.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/metasploit.log": {
+      "bytes": 431,
+      "sha256": "ed155d12ac0baa5d16a272658a6c9bcb31bb2c63d1d2b9dc5af7b0f16b966476"
+    },
+    "raw/nmap.log": {
+      "bytes": 1463,
+      "sha256": "6f525a7fed926289ff9ae383f9dcb888c646b43cf19d48d1e7cd9835cc7d6e95"
+    },
+    "raw/nuclei.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/sqlmap.log": {
+      "bytes": 4040,
+      "sha256": "67554b9ba4d42a183012c1beb6cf1e5cb80565664deb3f584314a6fa590275df"
+    },
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/items.csv": {
+      "bytes": 57,
+      "sha256": "cca84052dafc836284ea23d87f2ead15a43e19813b4b9b5ed9686686183622b3"
+    },
+    "sqlmap/127.0.0.1/log": {
+      "bytes": 1464,
+      "sha256": "e7f23f8a00ef3ac90c37198fd8437c7b0b4de0b49d740a29f91d55b7e56a61fd"
+    },
+    "sqlmap/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "f44ae9183906a9c7bfcb9425f358d447e0a8006e73215560ebe49c1575b804a9"
+    },
+    "sqlmap/127.0.0.1/target.txt": {
+      "bytes": 223,
+      "sha256": "2d73edce8ac3442a4a8732fd306c904a9a3b95bbb790355bf3dac8762ccd4355"
+    },
+    "sqlmap/results-11072026_0849pm.csv": {
+      "bytes": 134,
+      "sha256": "60664ba2dec230fd65460a8564446bdda220b0705604905780b5915552b3a207"
+    }
+  },
+  "chain_index": 12,
+  "created_at": "2026-11-07T19:50:11Z",
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": 5.3,
+      "endpoint": "/admin",
+      "message": "Broken Function Level Authorization via Client-Supplied Header on /admin",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 9.1,
+      "endpoint": "/item",
+      "message": "SQL Injection in /item endpoint",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-104",
+      "cvss": 7.5,
+      "endpoint": "/file",
+      "message": "Path Traversal in /file endpoint via name parameter",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-node_20261107T194803Z",
+  "merkle_root": "4da808816577891afebb818f5000d580de29a19fbb59a96887840b56f148449b",
+  "prev_receipt": "720ca128779721524d5991a6d7656a2c3856608eb70fca46692bb54775b8f255",
+  "receipt_id": "ab6e0c822598c4b042de5e1eb6abd8724bc51bc6fc0f2df801a66c7a26d24fe8",
+  "receipt_version": "1.0",
+  "repo": "test-vuln-node",
+  "run": {
+    "btc": {
+      "anchor_height": 974969,
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974975,
+      "pow_ok": true,
+      "tip_hash": "00000000000000000001882336c5647a55bccd1aa1746ba2da6a9fef08f8c143",
+      "verified": true
+    },
+    "duration_s": 127,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7"
+  },
+  "signature": "0f487cb0c48211b053d39b47a8f223e2f333ef3d1f94d488fa1d0c7f76447ef9",
+  "target": "http://127.0.0.1:8097"
+}

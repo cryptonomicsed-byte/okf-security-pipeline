@@ -1,0 +1,2 @@
+{"chain_index": 0, "created_at": "2026-11-07T20:12:15Z", "merkle_root": "35606ca4401e21d8a85b454c0e5b77bd752b8e218349c0cd67ca795e0ee62c56", "prev": null, "receipt_id": "8e4f27707563f464dc3512f721aef98fdf57c7a8547afc9f2e54bea9f6f7ee77"}
+{"chain_index": 1, "created_at": "2026-11-07T20:22:27Z", "merkle_root": "a7c5ed9a60f2351bc3b49a41f54d213af45f5c37262285737839fc73f6f2addc", "prev": "8e4f27707563f464dc3512f721aef98fdf57c7a8547afc9f2e54bea9f6f7ee77", "receipt_id": "8621acac83bd42c6eab4a40b6e242e89cd6aaa9df8201112d2658c8986711fbe"}

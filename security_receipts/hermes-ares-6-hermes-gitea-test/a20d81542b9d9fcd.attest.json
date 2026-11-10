@@ -1,0 +1,29 @@
+{
+  "attest_version": "1.0",
+  "attestation_id": "b269726d81a6c9444c5093c0db6b0b15dfb43e7cfad26b9619762f66c9541772",
+  "bitcoin": {
+    "block_hash": "00000000000000000001e421b6ab2cfc40c1aed1babd2c21196875f6694b0763",
+    "block_time": 1794329927,
+    "height": 975325,
+    "merkle_root": "e85f5eb66050b86b83a4b9c28c52d44a3dedae268ddec75262cc10857024be8e",
+    "source": "mempool.space"
+  },
+  "checks": {
+    "block_buried": true,
+    "blocks_behind": 6,
+    "header_hashes_to_block": true,
+    "merkle_in_block": true,
+    "pow_meets_target": true
+  },
+  "created_at": "2026-11-10T19:10:03Z",
+  "kind": "time-attestation",
+  "prev_attestation": null,
+  "proof_file": "a20d81542b9d9fcd.merkle.txt.ots",
+  "repo": "hermes-ares-6-hermes-gitea-test",
+  "signature": "7de869d4f7da466549de7ca7dc63c1dc08f9a23507ece90309732b3500ed4713",
+  "stamped_digest": "07feb33025fc7c830b8eddc14ad79d0251a1fe1ad63a0817823782ab2c1c7c8f",
+  "target_chain_index": 0,
+  "target_created_at": "2026-11-07T20:06:32Z",
+  "target_merkle_root": "fe5800fd4aa9d888ed19c26786f74f85a3e006c7b71a72911bbdaedbdc2bc4f5",
+  "target_receipt_id": "a20d81542b9d9fcdb504911b38652fd97f67b0960bdcf0f35cebae1e4b02b301"
+}

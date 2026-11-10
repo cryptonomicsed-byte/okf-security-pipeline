@@ -1,0 +1,23 @@
+{
+  "pins": [
+    {
+      "height": 974985,
+      "hash": "0000000000000000000159d41e23cc4ba1b2ddc7d8678337347fe9d16ceeb572",
+      "source": "3/3 sources agree, buried 6, PoW+linkage verified locally",
+      "class": "buried_multi_source",
+      "added_at": 1794089575,
+      "provenance": {
+        "mempool.space": "0000000000000000000159d41e23cc4ba1b2ddc7d8678337347fe9d16ceeb572",
+        "blockstream.info": "0000000000000000000159d41e23cc4ba1b2ddc7d8678337347fe9d16ceeb572",
+        "blockchain.info": "0000000000000000000159d41e23cc4ba1b2ddc7d8678337347fe9d16ceeb572"
+      },
+      "block_time": 1794085791
+    },
+    {
+      "height": 974990,
+      "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+      "source": "self-recorded lockdown 2026-11-07",
+      "added_at": 1794087498
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+[Unit]
+Description=OKF OpenTimestamps upgrade — fold Bitcoin block headers into .ots proofs
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /opt/ares/okf_ots_upgrade.sh

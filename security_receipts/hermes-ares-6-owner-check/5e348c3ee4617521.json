@@ -1,0 +1,58 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 146,
+      "sha256": "017061a5340ae08d16ba8538f684aeaf2c38f69f539bc6302420c2f17d588cc3"
+    },
+    "raw/strix.log": {
+      "bytes": 1321,
+      "sha256": "deda5441c518fdd39bbe7025103b7db23c2cf26c920170d7f06abc28a018bc49"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-07T21:51:25Z",
+  "diagnostics": [],
+  "evidence_dir": "/opt/ares/security_reports/hermes-ares-6-owner-check_20261107T215110Z",
+  "merkle_root": "783985dca93a5e9f11989221dd56bd202ac4755758cd10e1cceb3afedc7114c6",
+  "prev_receipt": null,
+  "receipt_id": "5e348c3ee4617521cdaae684298a35e124296260d5b718f69e9c4cf72a3c4c11",
+  "receipt_version": "1.0",
+  "repo": "hermes-ares-6-owner-check",
+  "run": {
+    "btc": {
+      "anchor_height": 974985,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974991,
+      "pin": {
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "0000000000000000000138a8c0aa6c2148c65dfffed0e9252648d11c930f9b11",
+      "verified": true,
+      "verified_depth": 41,
+      "verified_lowest": 974951
+    },
+    "duration_s": 14,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": null
+  },
+  "signature": "d2f2c9f93009b20de59eec26ab07ac088760d48881dca176c8af812e3f15c8a8",
+  "target": ""
+}

@@ -1,0 +1,75 @@
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test initiated                                                  │
+│                                                                              │
+│  Target  /tmp/strix-pipeline/viewer-gwwy4yw9-Yooo                            │
+│  Output  strix_runs/viewer-gwwy4yw9-yooo_8831                                │
+│                                                                              │
+│  Vulnerabilities will be displayed in real-time.                             │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test in progress                                                │
+│                                                                              │
+│  Model openai/gemini-flash-lite                                              │
+│  Vulnerabilities 0                                                           │
+│                                                                              │
+│  Input Tokens 944.4K  ·  Cached Tokens 765.6K                                │
+│  Output Tokens 1.1K  ·  Cost $0.0000                                         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test summary                                                    │
+│                                                                              │
+│  # Executive Summary                                                         │
+│                                                                              │
+│  An assessment of the provided codebase (`/workspace/viewer-gwwy4yw9-Yooo`)  │
+│  was conducted. The repository contains only documentation/probe             │
+│  placeholder files (`README.md` and `HOOK_PROBE.md`) with no application     │
+│  code, services, or endpoints present. Consequently, there is no attack      │
+│  surface or exploitable vulnerability.                                       │
+│                                                                              │
+│  # Methodology                                                               │
+│                                                                              │
+│  Conducted a comprehensive white-box source review of the repository,        │
+│  including filesystem enumeration and full Git history analysis.             │
+│                                                                              │
+│  # Technical Analysis                                                        │
+│                                                                              │
+│  The target repository is a delivery probe/skeleton containing no source     │
+│  code, dependencies, or configuration files. No vulnerability vectors        │
+│  exist.                                                                      │
+│                                                                              │
+│  # Recommendations                                                           │
+│                                                                              │
+│  No recommendations as the target contains no application code or runtime    │
+│  services.                                                                   │
+│                                                                              │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test completed                                                  │
+│                                                                              │
+│  Target  /tmp/strix-pipeline/viewer-gwwy4yw9-Yooo                            │
+│  Vulnerabilities  0 (No exploitable vulnerabilities detected)                │
+│                                                                              │
+│  Input Tokens 1.0M  ·  Cached Tokens 826.7K  ·  Output Tokens 1.2K           │
+│                                                                              │
+│  Output  /opt/ares/strix/strix_runs/viewer-gwwy4yw9-yooo_8831                │
+│                                                                              │
+│  View    strix view viewer-gwwy4yw9-yooo_8831                                │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+strix.ai  ·  docs.strix.ai  ·  discord.gg/strix-ai
+

@@ -1,0 +1,517 @@
+{
+  "repo": "test-vuln-hard",
+  "repo_url": "/tmp/test-vuln-hard",
+  "target_url": "http://127.0.0.1:8098",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T20:35:23Z",
+  "duration_s": 1513,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-hard_671a",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 1096,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0,
+    "leaks": []
+  },
+  "strix_findings": [
+    {
+      "title": "Server-Side Template Injection (SSTI) leading to RCE in /render",
+      "severity": "critical",
+      "description": "Server-Side Template Injection (SSTI) in the `/render` endpoint allows unauthenticated remote code execution via the `tpl` form parameter.",
+      "poc": "1. Send a POST request to `/render` with the form parameter `tpl={{config.__class__.__init__.__globals__['os'].popen('id').read()}}`.\\n2. Observe command execution output in the HTTP response.",
+      "target": "http://127.0.0.1:8098/render",
+      "endpoint": "/render",
+      "method": "POST",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in GET /orders sort parameter",
+      "severity": "high",
+      "description": "The GET /orders endpoint directly interpolates the 'sort' query parameter into an SQL ORDER BY clause without sanitization or parameterization, allowing boolean-based blind SQL injection and data exfiltration.",
+      "poc": "1. Send GET request to /orders with a sort parameter containing a conditional CASE statement.\n2. Observe different result rows ordering based on the boolean condition.",
+      "target": "http://127.0.0.1:8098/orders",
+      "endpoint": "/orders",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in POST /orders/by-sku sku parameter",
+      "severity": "critical",
+      "description": "The POST /orders/by-sku endpoint directly interpolates the JSON 'sku' parameter into an SQL WHERE clause without parameterization, enabling SQL injection and full data exfiltration.",
+      "poc": "1. Send POST request to /orders/by-sku with JSON body `{\"sku\": \"' OR 1=1 --\"}`.\n2. Observe all records returned in the response.",
+      "target": "http://127.0.0.1:8098/orders/by-sku",
+      "endpoint": "/orders/by-sku",
+      "method": "POST",
+      "cvss": 9.1,
+      "finding_class": "dynamic",
+      "source": "vulnerabilities.json"
+    },
+    {
+      "title": "Server-Side Template Injection (SSTI) leading to RCE in /render\n\nServer-Side Template Injection (SSTI) in the `/render` endpoint allows unauthenticated remote c",
+      "severity": "error",
+      "description": "Server-Side Template Injection (SSTI) leading to RCE in /render\n\nServer-Side Template Injection (SSTI) in the `/render` endpoint allows unauthenticated remote code execution via the `tpl` form parameter.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "SQL Injection in GET /orders sort parameter\n\nThe GET /orders endpoint directly interpolates the 'sort' query parameter into an SQL ORDER BY clause without sanit",
+      "severity": "error",
+      "description": "SQL Injection in GET /orders sort parameter\n\nThe GET /orders endpoint directly interpolates the 'sort' query parameter into an SQL ORDER BY clause without sanitization or parameterization, allowing boolean-based blind SQL injection and data exfiltration.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    },
+    {
+      "title": "SQL Injection in POST /orders/by-sku sku parameter\n\nThe POST /orders/by-sku endpoint directly interpolates the JSON 'sku' parameter into an SQL WHERE clause wit",
+      "severity": "error",
+      "description": "SQL Injection in POST /orders/by-sku sku parameter\n\nThe POST /orders/by-sku endpoint directly interpolates the JSON 'sku' parameter into an SQL WHERE clause without parameterization, enabling SQL injection and full data exfiltration.",
+      "poc": "",
+      "target": "",
+      "source": "findings.sarif"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8098/render?form=1",
+    "http://127.0.0.1:8098/orders?sort=1",
+    "http://127.0.0.1:8098/orders/by-sku?sku=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8098/orders?sort=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "boolean-based blind"
+    ],
+    "tables": [
+      "orders"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 3,
+    "dumped_table": "orders",
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | 3   | alpha | flag{orderby_ok} |",
+      "| 2  | 7   | beta  | nothing          |",
+      "| 3  | 1   | gamma | x                |"
+    ],
+    "columns": "| id | qty | sku   | note             |"
+  },
+  "sstimap": {
+    "url": "http://127.0.0.1:8098/orders/by-sku?sku=1",
+    "vulnerable": false,
+    "confidence": null,
+    "engine": null,
+    "rce": false,
+    "rc": 0
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8098,
+    "services": [
+      [
+        "unknown",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 1,
+    "found": [
+      "http://127.0.0.1:8098/orders"
+    ]
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ]
+  },
+  "sweep": {
+    "candidates": 14,
+    "sstimap_hits": [],
+    "sstimap_low": [],
+    "xsstrike_hits": []
+  },
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974981,
+      "tip_time": 1794083241,
+      "mediantime": 1794080951,
+      "now_est": 1794083722,
+      "interval": [
+        1794083241,
+        1794083723
+      ],
+      "uncertainty_s": 241,
+      "elapsed_since_tip_s": 9,
+      "next_block_eta_s": 119,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794083714.0859098,
+      "ref_spread_s": 0,
+      "chain_lag_s": 482,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 974981,
+        "tip_hash": "000000000000000000010c8fb9223c60cdd2b56ad2b9887f8006a5c8b7c1bf99",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794080651,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 974975,
+          "anchor_hash": "00000000000000000001882336c5647a55bccd1aa1746ba2da6a9fef08f8c143",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "advanced_from": 974975,
+          "verified_against": "00000000000000000001882336c5647a55bccd1aa1746ba2da6a9fef08f8c143",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true
+        },
+        "source": "mempool.space",
+        "errors": []
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 8,
+      "wall_now": 1794083723
+    },
+    "calendar": {
+      "block_height": 974981,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75019,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 101,
+      "supply_mined": 95.7586,
+      "timestamp": "2026-11-07T20:35:23.313Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "default_exec": [],
+    "requests": 28
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-hard_20261107T203523Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/ffuf.log",
+    "raw/metasploit.log",
+    "raw/nmap.log",
+    "raw/nuclei.log",
+    "raw/sqlmap.log",
+    "raw/sstimap.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11072026_0956pm.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [
+      {
+        "fp": "1aca562bde3af4ca",
+        "title": "Server-Side Template Injection (SSTI) leading to RCE in /render"
+      },
+      {
+        "fp": "d65cd2b288aeb07c",
+        "title": "SQL Injection in GET /orders sort parameter"
+      },
+      {
+        "fp": "0c6629aaed8b5e9e",
+        "title": "SQL Injection in POST /orders/by-sku sku parameter"
+      },
+      {
+        "fp": "4a16aa620b0f60a1",
+        "title": "Server-Side Template Injection (SSTI) leading to RCE in /render\n\nServer-Side Template Injection (SSTI) in the `/render` endpoint allows unauthenticated remote c"
+      },
+      {
+        "fp": "b27000c724b548c9",
+        "title": "SQL Injection in GET /orders sort parameter\n\nThe GET /orders endpoint directly interpolates the 'sort' query parameter into an SQL ORDER BY clause without sanit"
+      },
+      {
+        "fp": "f13420a6dde13b21",
+        "title": "SQL Injection in POST /orders/by-sku sku parameter\n\nThe POST /orders/by-sku endpoint directly interpolates the JSON 'sku' parameter into an SQL WHERE clause wit"
+      }
+    ],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 6,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 6,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T20:35:23Z"
+  },
+  "receipt": {
+    "receipt_id": "216e8dac81aa69872c4914febe88200fd86ae55e63a774091bda92d374097eb8",
+    "path": "/opt/ares/security_receipts/test-vuln-hard/216e8dac81aa6987.json",
+    "merkle_root": "8f9c7d054a30abd9e2ce19dd88cb5f0cdb3fe28d7b128dec2b4dbbad358e6e57",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 13,
+    "diagnostics": 6
+  },
+  "ots": {
+    "merkle_root": "8f9c7d054a30abd9e2ce19dd88cb5f0cdb3fe28d7b128dec2b4dbbad358e6e57",
+    "merkle_file": "/opt/ares/security_receipts/test-vuln-hard/216e8dac81aa6987.merkle.txt",
+    "ots_file": "/opt/ares/security_receipts/test-vuln-hard/216e8dac81aa6987.merkle.txt.ots",
+    "stamped": true,
+    "stamp_rc": 0,
+    "stamp_out": "Submitting to remote calendar https://a.pool.opentimestamps.org\nSubmitting to remote calendar https://b.pool.opentimestamps.org\nSubmitting to remote calendar https://a.pool.eternitywall.com\nSubmitting to remote calendar https://ots.btc.catallaxy.com",
+    "info": "File sha256 hash: 24894c0b675ca704863c987b669dbd284f13472a78a396f0792e343ca6bcdcd1\nTimestamp:\nappend ab2da1bc41edb568ec5012f25bd123d3\nsha256\n -> append 2c0dab144427bfdb\n    sha256\n    append 8ce6116f5d689f8419e4cd75d336c252\n    sha256\n    append 574b8388c4069696ae6499ea111be9f4fce22530d5b96b9c96c2f3dc9c51d224\n    sha256\n    prepend 953c0e4b2ecdbdaa954158e3492d87e2a068df6aaacebfd5dc8f071c1638cd72\n    sha256\n    append 9fa2638b94660f7abaa27cdd23285fa8288152218049de7d0a4b44159c92ef06\n    sha256\n    prepend 6aef9176\n    append 36cd56285502d743\n    verify PendingAttestation('https://alice.btc.calendar.opentimestamps.org')\n -> append 46df2f852d2dd5fa7899345b6e5113d2\n    sha256\n    prepend 2c71671a60336035fc16e1cf901a7620d1a54bb3b17eb898d40f1f6ad6ad58d6\n    sha256\n    prepend 6aef9176\n    append 9e158e6193230890\n    verify PendingAttestation('https://btc.calendar.catallaxy.com')\n -> append c7f3"
+  },
+  "time": {
+    "ots_file": "/opt/ares/security_receipts/test-vuln-hard/216e8dac81aa6987.merkle.txt.ots",
+    "pending": true,
+    "error": "pending calendar attestation \u2014 no Bitcoin height yet"
+  },
+  "anchor": {
+    "ok": true,
+    "relays_ok": 6,
+    "relays_total": 6,
+    "per_relay": {
+      "ws://127.0.0.1:7788": {
+        "role": "vantage-local",
+        "profile": "full",
+        "event_id": "6d684ad1aafcb19d09e176965ec5a535f04df62bb24c8fc45de088d8955ae3b9",
+        "ok": true,
+        "message": "6d684ad1aafcb19d09e176965ec5a535f04df62bb24c8fc45de088d8955ae3b9",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/vantage-relay": {
+        "role": "vantage-public",
+        "profile": "full",
+        "event_id": "bd263876a64d7097c3f9136e88a284411995451fd0f8073139fe65e1e0cebcd4",
+        "ok": true,
+        "message": "bd263876a64d7097c3f9136e88a284411995451fd0f8073139fe65e1e0cebcd4",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/relay": {
+        "role": "buzz",
+        "profile": "full",
+        "event_id": "bd263876a64d7097c3f9136e88a284411995451fd0f8073139fe65e1e0cebcd4",
+        "ok": true,
+        "message": "7a7fbad74ad742e4e4acb266c23f21dc334123f2ab9dfb959a3a6cc363c90fee",
+        "auth": true,
+        "auth_result": [
+          "OK",
+          "bd263876a64d7097c3f9136e88a284411995451fd0f8073139fe65e1e0cebcd4",
+          false,
+          "auth-required: not authenticated"
+        ]
+      },
+      "wss://relay.damus.io": {
+        "role": "damus",
+        "profile": "public",
+        "event_id": "1b76e635ba23efd78f8096ab8cd9adb5dde800ecddbed5ad4a51b2c7b1b41171",
+        "ok": true,
+        "message": "1b76e635ba23efd78f8096ab8cd9adb5dde800ecddbed5ad4a51b2c7b1b41171",
+        "auth": false,
+        "note": {
+          "event_id": "1d421224a4ee27e88672b60892b3aa5be5afca8a3a3ba37571481e69be3cf480",
+          "ok": true,
+          "message": "1d421224a4ee27e88672b60892b3aa5be5afca8a3a3ba37571481e69be3cf480",
+          "auth": false
+        }
+      },
+      "wss://relay.primal.net": {
+        "role": "primal",
+        "profile": "public",
+        "event_id": "e75cf7be9175d062d4ea865e3f198ead948f948d26466f11b36a75ac891276fe",
+        "ok": true,
+        "message": "e75cf7be9175d062d4ea865e3f198ead948f948d26466f11b36a75ac891276fe",
+        "auth": false,
+        "note": {
+          "event_id": "f22e2d301e25fe7ef7b10aedac18ff2226f417c90c6025041f0ed42470fc609a",
+          "ok": true,
+          "message": "f22e2d301e25fe7ef7b10aedac18ff2226f417c90c6025041f0ed42470fc609a",
+          "auth": false
+        }
+      },
+      "wss://relay.snort.social": {
+        "role": "snort",
+        "profile": "public",
+        "event_id": "4a7a0009ee92126d58fe21147d75f9f462bcd56410777b10f99de8125c78bafb",
+        "ok": true,
+        "message": "4a7a0009ee92126d58fe21147d75f9f462bcd56410777b10f99de8125c78bafb",
+        "auth": false,
+        "note": {
+          "event_id": "9d9df8fdeec50c0100ef970ab4ae4245de263c4585e23654e54dbe2d95910f9c",
+          "ok": true,
+          "message": "9d9df8fdeec50c0100ef970ab4ae4245de263c4585e23654e54dbe2d95910f9c",
+          "auth": false
+        }
+      }
+    }
+  },
+  "vantage_broadcast_id": 76488,
+  "vantage_response": {
+    "broadcast_id": 76488,
+    "status": "ready"
+  }
+}

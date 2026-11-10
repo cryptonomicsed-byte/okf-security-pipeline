@@ -1,0 +1,11 @@
+[*] Processing /tmp/msf_fp_v4.rc for ERB directives.
+resource (/tmp/msf_fp_v4.rc)> use auxiliary/scanner/http/http_version
+resource (/tmp/msf_fp_v4.rc)> set RHOSTS 127.0.0.1
+RHOSTS => 127.0.0.1
+resource (/tmp/msf_fp_v4.rc)> set RPORT 8099
+RPORT => 8099
+resource (/tmp/msf_fp_v4.rc)> run
+[+] 127.0.0.1:8099 Werkzeug/3.0.1 Python/3.12.3
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+resource (/tmp/msf_fp_v4.rc)> exit

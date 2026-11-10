@@ -1,0 +1,1 @@
+http://127.0.0.1:8099/user?id=1 (GET)  # /usr/bin/sqlmap -u http://127.0.0.1:8099/user?id=1 --batch --technique=BEU -T users --dump --timeout=15 --output-dir=/opt/ares/security_reports/pubtest_20261107T163132Z/sqlmap

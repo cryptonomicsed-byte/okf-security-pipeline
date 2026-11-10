@@ -1,0 +1,77 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 168,
+      "sha256": "f6497b7c4a41b1ddf9c59bb6c1386a7ba4aaa96017d02e08e0eadbce7c86471a"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-07T22:18:53Z",
+  "created_at_btc": {
+    "block": {
+      "hash": "0000000000000000000138a8c0aa6c2148c65dfffed0e9252648d11c930f9b11",
+      "height": 974991,
+      "time": 1794088126
+    },
+    "depth": 41,
+    "rooted": true,
+    "verdict": "verified_rooted",
+    "verified": true,
+    "window": {
+      "hi": 1794089933,
+      "hi_utc": "2026-11-07T22:18:53Z",
+      "lo": 1794088126,
+      "lo_utc": "2026-11-07T21:48:46Z"
+    }
+  },
+  "diagnostics": [],
+  "evidence_dir": "/opt/ares/security_reports/clocktest-btc_20261107T221845Z",
+  "merkle_root": "f6497b7c4a41b1ddf9c59bb6c1386a7ba4aaa96017d02e08e0eadbce7c86471a",
+  "prev_receipt": null,
+  "receipt_id": "e408d14f4bd1620ca2d73ea9298763596d73bd8250c9f8343927515e52c2459c",
+  "receipt_version": "1.0",
+  "repo": "clocktest-btc",
+  "run": {
+    "btc": {
+      "anchor_height": 974985,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974991,
+      "pin": {
+        "class": "self_recorded",
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "rooted_by": {
+          "class": "buried_multi_source",
+          "height": 974985,
+          "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+        },
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "0000000000000000000138a8c0aa6c2148c65dfffed0e9252648d11c930f9b11",
+      "verified": true,
+      "verified_depth": 41,
+      "verified_lowest": 974951
+    },
+    "duration_s": 7,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/tmp"
+  },
+  "signature": "daef2e14a01743bdb9c038fc21c76348d2799b65c996037d13d0d3ddd046b76b",
+  "target": ""
+}

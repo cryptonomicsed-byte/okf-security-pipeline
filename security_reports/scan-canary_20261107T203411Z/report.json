@@ -1,0 +1,379 @@
+{
+  "repo": "scan-canary",
+  "repo_url": "/tmp/scan-canary",
+  "target_url": "",
+  "target_class": null,
+  "stealth": "n/a (static-only)",
+  "started": "2026-11-07T20:34:11Z",
+  "duration_s": 3,
+  "strix_run_dir": "strix/strix_runs/scan-canary_7f28",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 4,
+    "rc": 1,
+    "leaks": [
+      {
+        "rule": "curl-auth-header",
+        "file": "/repo/deploy.sh",
+        "line": 8,
+        "match_prefix": "cur\u2026"
+      },
+      {
+        "rule": "jwt",
+        "file": "/repo/deploy.sh",
+        "line": 8,
+        "match_prefix": "eyJ\u2026"
+      },
+      {
+        "rule": "private-key",
+        "file": "/repo/deploy.sh",
+        "line": 4,
+        "match_prefix": "---\u2026"
+      },
+      {
+        "rule": "generic-password",
+        "file": "/repo/app.py",
+        "line": 24,
+        "match_prefix": "PAS\u2026"
+      }
+    ]
+  },
+  "strix_findings": [
+    {
+      "title": "Path Traversal in /file route",
+      "severity": "high",
+      "description": "A path traversal vulnerability in the `/file` route of the Flask application allows unauthenticated attackers to read arbitrary files from the server filesystem via the `name` parameter.",
+      "poc": "1. Send a GET request to `/file?name=../../etc/passwd`.\n2. Observe the contents of `/etc/passwd` returned in the response.",
+      "target": "/workspace/scan-canary",
+      "endpoint": "/file",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "strix/strix_runs/scan-canary_7f28/vulnerabilities.json"
+    },
+    {
+      "title": "Command Injection in /run Route",
+      "severity": "critical",
+      "description": "The /run endpoint executes arbitrary shell commands supplied via the cmd query parameter, enabling remote code execution.",
+      "poc": "1. Send a request to /run with a custom cmd parameter.\\n2. The server executes the command and returns output.",
+      "target": "/workspace/scan-canary",
+      "endpoint": "/run",
+      "method": "GET",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "strix/strix_runs/scan-canary_7f28/vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in /user endpoint via id parameter",
+      "severity": "high",
+      "description": "The /user endpoint constructs an SQL query using string formatting with user-supplied input, allowing attackers to inject arbitrary SQL commands and access or manipulate the database.",
+      "poc": "1. Start the Flask application.\n2. Send a GET request to /user?id=1 OR 1=1.\n3. Observe that the response contains all rows from the users table instead of just the row with id=1.",
+      "target": "/workspace/scan-canary",
+      "endpoint": "",
+      "method": "GET",
+      "cvss": 8.2,
+      "finding_class": "dynamic",
+      "source": "strix/strix_runs/scan-canary_7f28/vulnerabilities.json"
+    },
+    {
+      "title": "Hardcoded Database Password in app.py",
+      "severity": "high",
+      "description": "A hardcoded database password was found in the source code of the application.",
+      "poc": "1. Open the source file app.py.\n2. Locate line 24.\n3. Observe the hardcoded password.",
+      "target": "/workspace/scan-canary",
+      "endpoint": "",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "strix/strix_runs/scan-canary_7f28/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "/file?name=1",
+    "/run?cmd=1",
+    "/user?id=1"
+  ],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974981,
+      "tip_time": 1794083241,
+      "mediantime": 1794080951,
+      "now_est": 1794083650,
+      "interval": [
+        1794083241,
+        1794083651
+      ],
+      "uncertainty_s": 205,
+      "elapsed_since_tip_s": 25,
+      "next_block_eta_s": 191,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794083626.093083,
+      "ref_spread_s": 0,
+      "chain_lag_s": 410,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 974981,
+        "tip_hash": "000000000000000000010c8fb9223c60cdd2b56ad2b9887f8006a5c8b7c1bf99",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794080651,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 974975,
+          "anchor_hash": "00000000000000000001882336c5647a55bccd1aa1746ba2da6a9fef08f8c143",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "advanced_from": 974975,
+          "verified_against": "00000000000000000001882336c5647a55bccd1aa1746ba2da6a9fef08f8c143",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true
+        },
+        "source": "mempool.space",
+        "errors": []
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 24,
+      "wall_now": 1794083651
+    },
+    "calendar": {
+      "block_height": 974981,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75019,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 101,
+      "supply_mined": 95.7586,
+      "timestamp": "2026-11-07T20:34:11.429Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "requests": 0
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/scan-canary_20261107T203411Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "report.json",
+    "report.md"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [],
+    "persisting": [
+      {
+        "fp": "df1ab0fcc88154b4",
+        "title": "Path Traversal in /file route",
+        "first_seen": "2026-11-07T20:33:45Z",
+        "severity": "high"
+      },
+      {
+        "fp": "9e47f4cd5c81b241",
+        "title": "Command Injection in /run Route",
+        "first_seen": "2026-11-07T20:33:45Z",
+        "severity": "critical"
+      },
+      {
+        "fp": "7157987c54d3f4f6",
+        "title": "SQL Injection in /user endpoint via id parameter",
+        "first_seen": "2026-11-07T20:33:45Z",
+        "severity": "high"
+      },
+      {
+        "fp": "0bdc384b6331fcbe",
+        "title": "Hardcoded Database Password in app.py",
+        "first_seen": "2026-11-07T20:33:45Z",
+        "severity": "high"
+      }
+    ],
+    "resolved": [],
+    "counts": {
+      "new": 0,
+      "persisting": 4,
+      "resolved": 0,
+      "active": 4,
+      "age_of_oldest_active": "2026-11-07T20:33:45Z"
+    },
+    "run": "2026-11-07T20:34:11Z"
+  },
+  "receipt": {
+    "receipt_id": "458a107238b4a6065dd4521fc6c38aee10d58d1d17170be2d6661f29a421450f",
+    "path": "/opt/ares/security_receipts/scan-canary/458a107238b4a606.json",
+    "merkle_root": "13091469d0d17300992f5094bdadae3d1f186d2158305acfae3838e53d7c6a25",
+    "chain_index": 2,
+    "prev_receipt": "bf51746e874f5c384bb9d765e50a07c70ebc160cd4e80e46ff8d080035dd3385",
+    "artifacts": 1,
+    "diagnostics": 4
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76485,
+  "vantage_response": {
+    "broadcast_id": 76485,
+    "status": "ready"
+  }
+}

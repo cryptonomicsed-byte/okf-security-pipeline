@@ -1,0 +1,46 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 164,
+      "sha256": "0d72368bdad53c92f69efb47c8b9bb6d9635d252c11ffef23cab3f751adc1c80"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-07T17:39:33Z",
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 9.8,
+      "endpoint": "/user",
+      "message": "SQL Injection in /user endpoint id parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-102",
+      "cvss": 9.8,
+      "endpoint": "/hello",
+      "message": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/sabbathdemo_20261107T173927Z",
+  "merkle_root": "0d72368bdad53c92f69efb47c8b9bb6d9635d252c11ffef23cab3f751adc1c80",
+  "prev_receipt": null,
+  "receipt_id": "ddf7fb576d4dd4bb7c4349cff95d98302f0f1720531a4685809317ed7dd65155",
+  "receipt_version": "1.0",
+  "repo": "sabbathdemo",
+  "run": {
+    "duration_s": 6,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-app_38de"
+  },
+  "signature": "91ef2ebe2453774fdc1bb5aa820a2d2c8fec06a3d55bb59f9823ac5f5ddffe39",
+  "target": ""
+}

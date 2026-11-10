@@ -1,0 +1,7 @@
+{
+  "receipt_id": "e408d14f4bd1620ca2d73ea9298763596d73bd8250c9f8343927515e52c2459c",
+  "vantage_broadcast_id": 76519,
+  "ots_proof": "/opt/ares/security_receipts/clocktest-btc/e408d14f4bd1620c.merkle.txt.ots",
+  "recorded_at": 1794090041,
+  "ots_sha256": "ffc9a3ef07b1b78fa849667a8caf4a8fe6f87e2601c6e13722b9315d4dd9cd24"
+}

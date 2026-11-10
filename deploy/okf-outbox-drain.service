@@ -1,0 +1,8 @@
+[Unit]
+Description=OKF outbox drain — retry failed relay publishes with backoff
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/ares/okf_outbox.py drain --limit 50
+WorkingDirectory=/opt/ares

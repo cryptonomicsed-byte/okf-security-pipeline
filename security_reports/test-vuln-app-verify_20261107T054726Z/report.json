@@ -1,0 +1,69 @@
+{
+  "repo": "test-vuln-app-verify",
+  "repo_url": "/tmp/test-vuln-app",
+  "target_url": "http://127.0.0.1:8099",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T05:47:26Z",
+  "duration_s": 35,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-app_38de",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "SQL Injection in /user endpoint id parameter",
+      "severity": "critical",
+      "description": "The `/user` endpoint directly interpolates user input from the `id` parameter into a SQLite query string, leading to SQL Injection.",
+      "poc": "1. Send a GET request to `/user?id=1 OR 1=1`.\n2. Observe that all database records are returned.",
+      "target": "/workspace/test-vuln-app",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app_38de/vulnerabilities.json"
+    },
+    {
+      "title": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter",
+      "severity": "critical",
+      "description": "The `/hello` endpoint uses f-string interpolation to include user-supplied input in a template rendered by `render_template_string`, leading to Server-Side Template Injection (SSTI).",
+      "poc": "1. Send a GET request to `/hello?name={{7*7}}`.\n2. Observe the response `Hello 49`.\n3. Use advanced Jinja2 payloads to achieve remote code execution.",
+      "target": "/workspace/test-vuln-app",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app_38de/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ]
+  },
+  "sweep": {},
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-app-verify_20261107T054726Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/metasploit.log",
+    "report.json",
+    "report.md"
+  ],
+  "vantage_broadcast_id": 76386,
+  "vantage_response": {
+    "broadcast_id": 76386,
+    "status": "ready"
+  }
+}

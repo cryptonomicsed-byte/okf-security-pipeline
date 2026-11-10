@@ -1,0 +1,369 @@
+{
+  "repo": "timedemo",
+  "repo_url": "/tmp/test-vuln-app",
+  "target_url": "http://127.0.0.1:8099",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T17:25:24Z",
+  "duration_s": 22,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-app_38de",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "SQL Injection in /user endpoint id parameter",
+      "severity": "critical",
+      "description": "The `/user` endpoint directly interpolates user input from the `id` parameter into a SQLite query string, leading to SQL Injection.",
+      "poc": "1. Send a GET request to `/user?id=1 OR 1=1`.\n2. Observe that all database records are returned.",
+      "target": "/workspace/test-vuln-app",
+      "endpoint": "/user",
+      "method": "GET",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app_38de/vulnerabilities.json"
+    },
+    {
+      "title": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter",
+      "severity": "critical",
+      "description": "The `/hello` endpoint uses f-string interpolation to include user-supplied input in a template rendered by `render_template_string`, leading to Server-Side Template Injection (SSTI).",
+      "poc": "1. Send a GET request to `/hello?name={{7*7}}`.\n2. Observe the response `Hello 49`.\n3. Use advanced Jinja2 payloads to achieve remote code execution.",
+      "target": "/workspace/test-vuln-app",
+      "endpoint": "/hello",
+      "method": "GET",
+      "cvss": 9.8,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-app_38de/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8099/user?id=1",
+    "http://127.0.0.1:8099/hello?name=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8099/user?id=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "UNION query",
+      "boolean-based blind"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 1,
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | flag{super_secret} | admin    |"
+    ],
+    "columns": "| id | secret             | username |"
+  },
+  "sstimap": {
+    "url": "http://127.0.0.1:8099/hello?name=1",
+    "vulnerable": true,
+    "confidence": "high",
+    "engine": "Jinja2",
+    "rce": true,
+    "rc": 0
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": "Werkzeug/3.0.1 Python/3.12.3",
+    "module": null,
+    "rc": 0,
+    "candidates": [
+      "exploit/multi/http/werkzeug_debug_rce",
+      "exploit/multi/http/werkzeug_debug_rce"
+    ]
+  },
+  "sweep": {},
+  "evidence_dir": "/opt/ares/security_reports/timedemo_20261107T172524Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/metasploit.log",
+    "raw/sqlmap.log",
+    "raw/sstimap.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/users.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11072026_0625pm.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.1,
+        "max_score": 0.1
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.473,
+        "max_score": 0.492
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.508,
+        "max_score": 0.529
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.575,
+        "max_score": 0.589
+      }
+    ],
+    "overall_flag_rate": 0.0
+  },
+  "memory": {
+    "new": [
+      {
+        "fp": "ddbd8d8e73bd75d2",
+        "title": "SQL Injection in /user endpoint id parameter"
+      },
+      {
+        "fp": "337535e9cd63d00b",
+        "title": "Server-Side Template Injection (SSTI) in /hello endpoint name parameter"
+      },
+      {
+        "fp": "976ec1b0efcb3dd7",
+        "title": "Detector gap: identity obfuscation is not flagged"
+      },
+      {
+        "fp": "3687a5ce48785ed0",
+        "title": "Detector gap: rot13 obfuscation is not flagged"
+      },
+      {
+        "fp": "d67e4f790da1cf9a",
+        "title": "Detector gap: hex_escape obfuscation is not flagged"
+      },
+      {
+        "fp": "e457967c2d801e44",
+        "title": "Detector gap: unicode_escape obfuscation is not flagged"
+      },
+      {
+        "fp": "6d2e9bdd1c58772a",
+        "title": "Detector gap: spaced obfuscation is not flagged"
+      },
+      {
+        "fp": "8fa6cab54e00f13f",
+        "title": "Detector gap: fullwidth obfuscation is not flagged"
+      },
+      {
+        "fp": "8d75488c3e0ea613",
+        "title": "Detector gap: leet obfuscation is not flagged"
+      },
+      {
+        "fp": "8f0839bf5da6352a",
+        "title": "Detector gap: reversed obfuscation is not flagged"
+      },
+      {
+        "fp": "80b9d315fc99aa03",
+        "title": "Detector gap: zero_width obfuscation is not flagged"
+      },
+      {
+        "fp": "7dc8289051dd5404",
+        "title": "Detector gap: base64 obfuscation is not flagged"
+      },
+      {
+        "fp": "2befef04e60883d2",
+        "title": "Detector gap: base64x2 obfuscation is not flagged"
+      },
+      {
+        "fp": "ec2baaf773e9459a",
+        "title": "Detector gap: mixed obfuscation is not flagged"
+      }
+    ],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 14,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 14,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-07T17:25:24Z"
+  },
+  "receipt": {
+    "receipt_id": "1bdfe2d078c6ab7cd981dd8a284103ce1d3dfe0bffb4e6c32d1e82ea5f419a5b",
+    "path": "/opt/ares/security_receipts/timedemo/1bdfe2d078c6ab7c.json",
+    "merkle_root": "631efe483edaa6486681083121499ead98285b780b0c0fe0f8ac236c5424cf99",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 9,
+    "diagnostics": 14
+  },
+  "ots": {
+    "merkle_root": "631efe483edaa6486681083121499ead98285b780b0c0fe0f8ac236c5424cf99",
+    "merkle_file": "/opt/ares/security_receipts/timedemo/1bdfe2d078c6ab7c.merkle.txt",
+    "ots_file": "/opt/ares/security_receipts/timedemo/1bdfe2d078c6ab7c.merkle.txt.ots",
+    "stamped": true,
+    "stamp_rc": 0,
+    "stamp_out": "Submitting to remote calendar https://a.pool.opentimestamps.org\nSubmitting to remote calendar https://b.pool.opentimestamps.org\nSubmitting to remote calendar https://a.pool.eternitywall.com\nSubmitting to remote calendar https://ots.btc.catallaxy.com",
+    "info": "File sha256 hash: 9cf49333470315419208a342d8cfd1442645d5a7348b61ba8e992a6ffb02cf8e\nTimestamp:\nappend 707823b11dc17e967dce5be2301faa87\nsha256\n -> append 08f35df85f08de73cbe3c7ac88b303ed\n    sha256\n    prepend 1c5ba7a092bd99ea4172c3e8d8d7695470af03caed402f4a1c6d9de367424cef\n    sha256\n    prepend 6aef5f1c\n    append 28fab273c3a4cbc2\n    verify PendingAttestation('https://finney.calendar.eternitywall.com')\n -> append 3cfde5cbed118cc6552bb2cdf1711f43\n    sha256\n    prepend e8354d1ad9ede9be4bf16585548eb1169b402a809107b095ea9208ec1587396c\n    sha256\n    prepend 1de8ddee0132b0abb42c0a815c275e29728b85bdd36dace3929de8998f640c0e\n    sha256\n    prepend 6aef5f1b\n    append 81e5c6bf3ef3462a\n    verify PendingAttestation('https://btc.calendar.catallaxy.com')\n -> append 9dc94def832d95cb\n    sha256\n    prepend 1f225f0ded28e070e0d68caeb57eda886f3a12c93f38a4918bf4c436f76592bd\n    sha256\n    append 8dd01a2"
+  },
+  "time": {
+    "ots_file": "/opt/ares/security_receipts/timedemo/1bdfe2d078c6ab7c.merkle.txt.ots",
+    "pending": true,
+    "error": "pending calendar attestation \u2014 no Bitcoin height yet"
+  },
+  "anchor": {
+    "ok": true,
+    "relays_ok": 5,
+    "relays_total": 6,
+    "per_relay": {
+      "ws://127.0.0.1:7788": {
+        "role": "vantage-local",
+        "profile": "full",
+        "event_id": "b1d4702a3285cf0976a1df80d2fe79191b25415f0d56cd9f1cd86f8bd28072df",
+        "ok": true,
+        "message": "b1d4702a3285cf0976a1df80d2fe79191b25415f0d56cd9f1cd86f8bd28072df",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/vantage-relay": {
+        "role": "vantage-public",
+        "profile": "full",
+        "event_id": "b1d4702a3285cf0976a1df80d2fe79191b25415f0d56cd9f1cd86f8bd28072df",
+        "ok": true,
+        "message": "b1d4702a3285cf0976a1df80d2fe79191b25415f0d56cd9f1cd86f8bd28072df",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/relay": {
+        "role": "buzz",
+        "profile": "full",
+        "event_id": "b1d4702a3285cf0976a1df80d2fe79191b25415f0d56cd9f1cd86f8bd28072df",
+        "ok": true,
+        "message": "0eda558ef7b4c27d2fc85d92aae7ba51786685b9ab083969a4f3091d7b63f979",
+        "auth": true,
+        "auth_result": [
+          "OK",
+          "b1d4702a3285cf0976a1df80d2fe79191b25415f0d56cd9f1cd86f8bd28072df",
+          false,
+          "auth-required: not authenticated"
+        ]
+      },
+      "wss://relay.damus.io": {
+        "role": "damus",
+        "profile": "public",
+        "event_id": "bdcddae36e202b41fba44ec9aa7e3fa2b382dbe53d70aaa3a8ddd5d9a9697a8c",
+        "ok": false,
+        "error": "server rejected WebSocket connection: HTTP 503",
+        "queued": {
+          "queued": true,
+          "relay": "wss://relay.damus.io",
+          "event_id": "bdcddae36e202b41fba44ec9aa7e3fa2b382dbe53d70aaa3a8ddd5d9a9697a8c"
+        }
+      },
+      "wss://relay.primal.net": {
+        "role": "primal",
+        "profile": "public",
+        "event_id": "129e2b7843b9dc49198b000cea041077fbc5d09232a26d37a16c436896e23cab",
+        "ok": true,
+        "message": "129e2b7843b9dc49198b000cea041077fbc5d09232a26d37a16c436896e23cab",
+        "auth": false,
+        "note": {
+          "event_id": "a773fdc6bf1f58ee7b5d2f0f024f6bf624c42bb521c174a2de0bee456cf7c5ed",
+          "ok": true,
+          "message": "a773fdc6bf1f58ee7b5d2f0f024f6bf624c42bb521c174a2de0bee456cf7c5ed",
+          "auth": false
+        }
+      },
+      "wss://relay.snort.social": {
+        "role": "snort",
+        "profile": "public",
+        "event_id": "106b7f50b114e86e1a92313da00bfbcec49d948f48f3552587c466c602733e5a",
+        "ok": true,
+        "message": "106b7f50b114e86e1a92313da00bfbcec49d948f48f3552587c466c602733e5a",
+        "auth": false,
+        "note": {
+          "event_id": "b8ebaca110b06a6298d6b85c5ac99b7a15006dcfe4bddb58f67c5b862d4f0e8d",
+          "ok": true,
+          "message": "b8ebaca110b06a6298d6b85c5ac99b7a15006dcfe4bddb58f67c5b862d4f0e8d",
+          "auth": false
+        }
+      }
+    }
+  },
+  "vantage_broadcast_id": 76433,
+  "vantage_response": {
+    "broadcast_id": 76433,
+    "status": "ready"
+  }
+}

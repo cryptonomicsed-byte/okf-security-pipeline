@@ -1,0 +1,44 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "a.txt": {
+      "bytes": 49,
+      "sha256": "a85ea8735a7286ba333d85b532b370d8e97cb40983d9c33b0b714f8123fc20c0"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-07T22:16:27Z",
+  "created_at_btc": {
+    "block": {
+      "hash": "0000000000000000000138a8c0aa6c2148c65dfffed0e9252648d11c930f9b11",
+      "height": 974991,
+      "time": 1794088126
+    },
+    "depth": 41,
+    "rooted": true,
+    "verdict": "verified_rooted",
+    "verified": true,
+    "window": {
+      "hi": 1794089787,
+      "hi_utc": "2026-11-07T22:16:27Z",
+      "lo": 1794088126,
+      "lo_utc": "2026-11-07T21:48:46Z"
+    }
+  },
+  "diagnostics": [],
+  "evidence_dir": "/tmp/clocktest",
+  "merkle_root": "a85ea8735a7286ba333d85b532b370d8e97cb40983d9c33b0b714f8123fc20c0",
+  "prev_receipt": null,
+  "receipt_id": "b15140a9d88cb9cf6559472c9ed21fa87cf3b7d950179df9c551a820df96ae49",
+  "receipt_version": "1.0",
+  "repo": "clocktest",
+  "run": {
+    "duration_s": 0
+  },
+  "signature": "98b9f2cdc43a3fa8aaa899020b94b2060580ea655140fbdf03a0245fa8ee4d46",
+  "target": ""
+}

@@ -1,0 +1,114 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 163,
+      "sha256": "d0c8ee5c2c09dbfffa0b89aae5a0d34370ca8910c18bf059a9e7d9677fb90a6e"
+    },
+    "raw/strix.log": {
+      "bytes": 35997,
+      "sha256": "45d370c217c0f36e564d2b2421fa80ba6d3b3831f07db84ae5ec7138d7c9b5b5"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-07T20:33:41Z",
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-104",
+      "cvss": 7.5,
+      "endpoint": "/file",
+      "message": "Path Traversal in /file route",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-105",
+      "cvss": 9.8,
+      "endpoint": "/run",
+      "message": "Command Injection in /run Route",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 8.2,
+      "endpoint": "",
+      "message": "SQL Injection in /user endpoint via id parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": 7.5,
+      "endpoint": "",
+      "message": "Hardcoded Database Password in app.py",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-104",
+      "cvss": null,
+      "endpoint": "",
+      "message": "Path Traversal in /file route\n\nA path traversal vulnerability in the `/file` route of the Flask application allows unauthenticated attackers to read arbitrary f",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-105",
+      "cvss": null,
+      "endpoint": "",
+      "message": "Command Injection in /run Route\n\nThe /run endpoint executes arbitrary shell commands supplied via the cmd query parameter, enabling remote code execution",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": null,
+      "endpoint": "",
+      "message": "SQL Injection in /user endpoint via id parameter\n\nThe /user endpoint constructs an SQL query using string formatting with user-supplied input, allowing attacker",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-199",
+      "cvss": null,
+      "endpoint": "",
+      "message": "Hardcoded Database Password in app",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/scan-canary_20261107T202256Z",
+  "merkle_root": "a522546cf6eb9ded42aa2420a424c03ee2731b20358a5d1e9158446de7ba2078",
+  "prev_receipt": null,
+  "receipt_id": "c0cc5694f87e61ca5ef0a9f1bb492b1a37a4de7f650148e8f05e688c6349a70e",
+  "receipt_version": "1.0",
+  "repo": "scan-canary",
+  "run": {
+    "btc": {
+      "anchor_height": 974973,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974979,
+      "pow_ok": true,
+      "tip_hash": "00000000000000000000195e2e8a56593ee8374f6a221b9933255af41b46d638",
+      "verified": true
+    },
+    "duration_s": 644,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/scan-canary_7f28"
+  },
+  "signature": "051d6b251f0d0a6a5df1e067406134cf6ea156762a8297bb0aea07252e4b3ef5",
+  "target": ""
+}

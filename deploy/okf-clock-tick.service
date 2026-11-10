@@ -1,0 +1,8 @@
+[Unit]
+Description=OKF block clock tick — refresh Bitcoin height cache
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/ares/koodu_clock.py refresh
+WorkingDirectory=/opt/ares

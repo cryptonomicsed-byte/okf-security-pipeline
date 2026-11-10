@@ -1,0 +1,58 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "raw/betterleaks.log": {
+      "bytes": 169,
+      "sha256": "97eef6f5d2fae97ba4b2852adecdc0a0cc567e2ecca2f951e7c6dfd3aafe0b90"
+    },
+    "raw/strix.log": {
+      "bytes": 6698,
+      "sha256": "70ba8214255597000d70bccbe89ce87555a4f65294eeae39f966943df852bea2"
+    }
+  },
+  "chain_index": 1,
+  "created_at": "2026-11-07T21:58:04Z",
+  "diagnostics": [],
+  "evidence_dir": "/opt/ares/security_reports/viewer-gwwy4yw9-Yooo_20261107T215451Z",
+  "merkle_root": "88017b1037e0402f318b72f6b374130d22f1fba8b8581ba23198f3092e67b765",
+  "prev_receipt": "016e538de0fb57cffcec9806b309c1311ccad52f0810664dbe9012f56d31f0cd",
+  "receipt_id": "6f8ed7d9d5768aae56a039351b5f6b7157491926e91c5a2140d1b7ed4aa001fc",
+  "receipt_version": "1.0",
+  "repo": "viewer-gwwy4yw9-Yooo",
+  "run": {
+    "btc": {
+      "anchor_height": 974985,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 974991,
+      "pin": {
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "0000000000000000000138a8c0aa6c2148c65dfffed0e9252648d11c930f9b11",
+      "verified": true,
+      "verified_depth": 41,
+      "verified_lowest": 974951
+    },
+    "duration_s": 192,
+    "strix_model": "gemini-flash-lite",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/viewer-gwwy4yw9-yooo_2802"
+  },
+  "signature": "fd05c20a2e0fbc5cec84d3ffc71f20db159cfc2f8f8dc0e088125e176c52b609",
+  "target": ""
+}

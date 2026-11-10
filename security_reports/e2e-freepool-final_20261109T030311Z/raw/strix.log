@@ -1,0 +1,215 @@
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test initiated                                                  │
+│                                                                              │
+│  Target  /tmp/test-vuln-hard                                                 │
+│  Output  strix_runs/test-vuln-hard_a4a7                                      │
+│                                                                              │
+│  Vulnerabilities will be displayed in real-time.                             │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯
+
+
+╭─ STRIX ──────────────────────────────────────────────────────────────────────╮
+│                                                                              │
+│  Penetration test in progress                                                │
+│                                                                              │
+│  Model openai/free-pool                                                      │
+│  Vulnerabilities 0                                                           │
+│                                                                              │
+│  Input Tokens 628.3K  ·  Cached Tokens 400.3K                                │
+│  Output Tokens 9.0K  ·  Cost $0.0000                                         │
+│                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────╯Error during penetration test: Error code: 400 - {'error': {'message': 
+'litellm.BadRequestError: OpenAIException - Error code: 400 - {\'errors\': 
+[{\'message\': "AiError: Bad input: Error: oneOf at \'/\' not met, 0 matches: 
+required properties at \'/\' are \'prompt\', Type mismatch of 
+\'/messages/0/content\', \'array\' not in \'string\', Type mismatch of 
+\'/messages/1/content\', \'array\' not in \'string\', required properties at 
+\'/messages/2\' are \'role,content\' (326f70c3-31dc-434f-abd1-5b4bace3fe1b)", 
+\'code\': 5006}], \'success\': False, \'result\': {}, \'messages\': 
+[]}\n\nLiteLLM: model group \'free-pool\' failed with the error above and no 
+fallback model group was found for it, so the request was not retried on another
+model. Fallbacks are configured for: deepseek/deepseek-v4-flash, deepseek-chat, 
+gemini-flash-lite, gemini-3.8-flash. Add a fallbacks entry for that model group 
+(Router fallbacks or proxy router_settings.fallbacks) to retry on another 
+model.', 'type': 'invalid_request_error', 'param': None, 'code': '400'}}
+2026-11-09 04:06:38.729 ERROR   test-vuln-hard_a4a7 - strix.core.execution: agent run failed for 24ceb4c2; marking failed
+Traceback (most recent call last):
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 809, in _run_cycle
+    async for event in stream.stream_events():
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 931, in stream_events
+    raise self._stored_exception
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 1021, in _await_task_safely
+    await task
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 695, in _await_run_and_cleanup
+    result = await original_task
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1226, in start_streaming
+    turn_result = await run_single_turn_streamed(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1712, in run_single_turn_streamed
+    async for event in model_run_context_stream(retry_stream, tool_use_tracker):
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/_run_context.py", line 31, in model_run_context_stream
+    async for item in stream:
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/model_retry.py", line 560, in stream_response_with_retry
+    event = await stream.__anext__()
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 377, in stream_response
+    async for event in _with_timeouts(
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 443, in _with_timeouts
+    event = await _next_event(iterator, *min(limits))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 473, in _next_event
+    return await iterator.__anext__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/llm/request_log.py", line 1273, in stream_response
+    async for event in self._inner.stream_response(
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/openai_chatcompletions.py", line 399, in stream_response
+    response, stream = await self._fetch_response(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/openai_chatcompletions.py", line 670, in _fetch_response
+    ret = await self._get_client().chat.completions.create(**create_kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2907, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/_base_client.py", line 1992, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/_base_client.py", line 1777, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': 'litellm.BadRequestError: OpenAIException - Error code: 400 - {\'errors\': [{\'message\': "AiError: Bad input: Error: oneOf at \'/\' not met, 0 matches: required properties at \'/\' are \'prompt\', Type mismatch of \'/messages/0/content\', \'array\' not in \'string\', Type mismatch of \'/messages/1/content\', \'array\' not in \'string\', required properties at \'/messages/2\' are \'role,content\' (326f70c3-31dc-434f-abd1-5b4bace3fe1b)", \'code\': 5006}], \'success\': False, \'result\': {}, \'messages\': []}\n\nLiteLLM: model group \'free-pool\' failed with the error above and no fallback model group was found for it, so the request was not retried on another model. Fallbacks are configured for: deepseek/deepseek-v4-flash, deepseek-chat, gemini-flash-lite, gemini-3.8-flash. Add a fallbacks entry for that model group (Router fallbacks or proxy router_settings.fallbacks) to retry on another model.', 'type': 'invalid_request_error', 'param': None, 'code': '400'}}
+2026-11-09 04:06:38.813 ERROR   test-vuln-hard_a4a7 - strix.core.runner: Strix scan test-vuln-hard_a4a7 failed
+Traceback (most recent call last):
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/runner.py", line 651, in run_strix_scan
+    result = await run_agent_loop(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 253, in run_agent_loop
+    return await _run_agent_loop(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 312, in _run_agent_loop
+    result = await _run_until_lifecycle(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 593, in _run_until_lifecycle
+    result = await _run_cycle(
+             ^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 809, in _run_cycle
+    async for event in stream.stream_events():
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 931, in stream_events
+    raise self._stored_exception
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 1021, in _await_task_safely
+    await task
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 695, in _await_run_and_cleanup
+    result = await original_task
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1226, in start_streaming
+    turn_result = await run_single_turn_streamed(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1712, in run_single_turn_streamed
+    async for event in model_run_context_stream(retry_stream, tool_use_tracker):
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/_run_context.py", line 31, in model_run_context_stream
+    async for item in stream:
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/model_retry.py", line 560, in stream_response_with_retry
+    event = await stream.__anext__()
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 377, in stream_response
+    async for event in _with_timeouts(
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 443, in _with_timeouts
+    event = await _next_event(iterator, *min(limits))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 473, in _next_event
+    return await iterator.__anext__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/llm/request_log.py", line 1273, in stream_response
+    async for event in self._inner.stream_response(
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/openai_chatcompletions.py", line 399, in stream_response
+    response, stream = await self._fetch_response(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/openai_chatcompletions.py", line 670, in _fetch_response
+    ret = await self._get_client().chat.completions.create(**create_kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2907, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/_base_client.py", line 1992, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/_base_client.py", line 1777, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': 'litellm.BadRequestError: OpenAIException - Error code: 400 - {\'errors\': [{\'message\': "AiError: Bad input: Error: oneOf at \'/\' not met, 0 matches: required properties at \'/\' are \'prompt\', Type mismatch of \'/messages/0/content\', \'array\' not in \'string\', Type mismatch of \'/messages/1/content\', \'array\' not in \'string\', required properties at \'/messages/2\' are \'role,content\' (326f70c3-31dc-434f-abd1-5b4bace3fe1b)", \'code\': 5006}], \'success\': False, \'result\': {}, \'messages\': []}\n\nLiteLLM: model group \'free-pool\' failed with the error above and no fallback model group was found for it, so the request was not retried on another model. Fallbacks are configured for: deepseek/deepseek-v4-flash, deepseek-chat, gemini-flash-lite, gemini-3.8-flash. Add a fallbacks entry for that model group (Router fallbacks or proxy router_settings.fallbacks) to retry on another model.', 'type': 'invalid_request_error', 'param': None, 'code': '400'}}
+Traceback (most recent call last):
+  File "/opt/ares/strix-venv/bin/strix", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/interface/main.py", line 503, in main
+    asyncio.run(run_cli(args))
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/interface/cli.py", line 219, in run_cli
+    await run_strix_scan(
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/runner.py", line 651, in run_strix_scan
+    result = await run_agent_loop(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 253, in run_agent_loop
+    return await _run_agent_loop(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 312, in _run_agent_loop
+    result = await _run_until_lifecycle(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 593, in _run_until_lifecycle
+    result = await _run_cycle(
+             ^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/core/execution.py", line 809, in _run_cycle
+    async for event in stream.stream_events():
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 931, in stream_events
+    raise self._stored_exception
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 1021, in _await_task_safely
+    await task
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/result.py", line 695, in _await_run_and_cleanup
+    result = await original_task
+             ^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1226, in start_streaming
+    turn_result = await run_single_turn_streamed(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/run_loop.py", line 1712, in run_single_turn_streamed
+    async for event in model_run_context_stream(retry_stream, tool_use_tracker):
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/_run_context.py", line 31, in model_run_context_stream
+    async for item in stream:
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/run_internal/model_retry.py", line 560, in stream_response_with_retry
+    event = await stream.__anext__()
+            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 377, in stream_response
+    async for event in _with_timeouts(
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 443, in _with_timeouts
+    event = await _next_event(iterator, *min(limits))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/config/models.py", line 473, in _next_event
+    return await iterator.__anext__()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/strix/llm/request_log.py", line 1273, in stream_response
+    async for event in self._inner.stream_response(
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/openai_chatcompletions.py", line 399, in stream_response
+    response, stream = await self._fetch_response(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/agents/models/openai_chatcompletions.py", line 670, in _fetch_response
+    ret = await self._get_client().chat.completions.create(**create_kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/resources/chat/completions/completions.py", line 2907, in create
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/_base_client.py", line 1992, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/ares/strix-venv/lib/python3.12/site-packages/openai/_base_client.py", line 1777, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.BadRequestError: Error code: 400 - {'error': {'message': 'litellm.BadRequestError: OpenAIException - Error code: 400 - {\'errors\': [{\'message\': "AiError: Bad input: Error: oneOf at \'/\' not met, 0 matches: required properties at \'/\' are \'prompt\', Type mismatch of \'/messages/0/content\', \'array\' not in \'string\', Type mismatch of \'/messages/1/content\', \'array\' not in \'string\', required properties at \'/messages/2\' are \'role,content\' (326f70c3-31dc-434f-abd1-5b4bace3fe1b)", \'code\': 5006}], \'success\': False, \'result\': {}, \'messages\': []}\n\nLiteLLM: model group \'free-pool\' failed with the error above and no fallback model group was found for it, so the request was not retried on another model. Fallbacks are configured for: deepseek/deepseek-v4-flash, deepseek-chat, gemini-flash-lite, gemini-3.8-flash. Add a fallbacks entry for that model group (Router fallbacks or proxy router_settings.fallbacks) to retry on another model.', 'type': 'invalid_request_error', 'param': None, 'code': '400'}}

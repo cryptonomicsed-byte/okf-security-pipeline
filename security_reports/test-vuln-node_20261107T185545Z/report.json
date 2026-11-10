@@ -1,0 +1,526 @@
+{
+  "repo": "test-vuln-node",
+  "repo_url": "/tmp/test-vuln-node",
+  "target_url": "http://127.0.0.1:8097",
+  "target_class": "local",
+  "stealth": "direct \u2014 no Tor for local targets (Arti has no loopback route)",
+  "started": "2026-11-07T18:55:45Z",
+  "duration_s": 126,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7",
+  "strix_model": "gemini-flash-lite",
+  "strix_seconds": 0,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0
+  },
+  "strix_findings": [
+    {
+      "title": "Broken Function Level Authorization via Client-Supplied Header on /admin",
+      "severity": "medium",
+      "description": "The `/admin` endpoint relies solely on a client-supplied HTTP header (`x-admin`) to authorize administrative access. An unauthenticated attacker can supply `x-admin: 1` to bypass authorization checks and access the restricted admin panel.",
+      "poc": "1. Send a GET request to `/admin` without headers and observe a 403 Forbidden response.\n2. Send a GET request to `/admin` with the header `x-admin: 1` and observe a 200 OK response with administrative panel content.",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/admin",
+      "method": "GET",
+      "cvss": 5.3,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7/vulnerabilities.json"
+    },
+    {
+      "title": "SQL Injection in /item endpoint",
+      "severity": "critical",
+      "description": "The `/item` endpoint uses f-string interpolation to construct SQL queries, allowing attackers to inject arbitrary SQL via the `id` parameter.",
+      "poc": "1. Send a request to `/item` with a valid ID to establish a baseline.\n2. Send a request with `id=1%20AND%201=1` to confirm boolean-based injection.\n3. Send a request with `id=1%20AND%201=2` to confirm the negative case.\n4. Use a `UNION SELECT` payload to extract arbitrary data.",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/item",
+      "method": "GET",
+      "cvss": 9.1,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7/vulnerabilities.json"
+    },
+    {
+      "title": "Path Traversal in /file endpoint via name parameter",
+      "severity": "high",
+      "description": "The /file endpoint in the FastAPI application is vulnerable to path traversal due to improper validation of user-supplied input in the 'name' parameter. An attacker can use '../' sequences to read arbitrary files on the server.",
+      "poc": "1. Send a GET request to /file?name=../../../../etc/passwd\n2. Observe that the server returns the contents of /etc/passwd",
+      "target": "/workspace/test-vuln-node",
+      "endpoint": "/file",
+      "method": "GET",
+      "cvss": 7.5,
+      "finding_class": "dynamic",
+      "source": "/opt/ares/strix/strix_runs/test-vuln-node_3ce7/vulnerabilities.json"
+    }
+  ],
+  "endpoints": [
+    "http://127.0.0.1:8097/admin",
+    "http://127.0.0.1:8097/item?id=1",
+    "http://127.0.0.1:8097/file?name=1"
+  ],
+  "sqlmap": {
+    "url": "http://127.0.0.1:8097/item?id=1",
+    "injectable": true,
+    "rc": 0,
+    "dbms": "SQLite",
+    "techniques": [
+      "UNION query",
+      "boolean-based blind"
+    ],
+    "tables": [
+      "items"
+    ],
+    "dump_rc": 0,
+    "dump_rows": 2,
+    "dumped_table": "items",
+    "sensitive_exposed": true,
+    "sample": [
+      "| 1  | alpha | flag{fapi_sql_ok} |",
+      "| 2  | beta  | nothing           |"
+    ],
+    "columns": "| id | name  | secret            |"
+  },
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {
+    "host": "127.0.0.1",
+    "port": 8097,
+    "services": [
+      [
+        "sac?",
+        "1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :"
+      ]
+    ],
+    "rc": 0
+  },
+  "ffuf": {
+    "paths": 5,
+    "found": [
+      "http://127.0.0.1:8097/admin",
+      "http://127.0.0.1:8097/docs",
+      "http://127.0.0.1:8097/file",
+      "http://127.0.0.1:8097/item",
+      "http://127.0.0.1:8097/run"
+    ]
+  },
+  "nuclei": {
+    "hits": 0,
+    "findings": [],
+    "rc": 0
+  },
+  "metasploit": {
+    "server": "uvicorn",
+    "module": null,
+    "rc": 0,
+    "candidates": []
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 974966,
+      "tip_time": 1794077713,
+      "mediantime": 1794075852,
+      "now_est": 1794077747,
+      "interval": [
+        1794077713,
+        1794077748
+      ],
+      "uncertainty_s": 17,
+      "elapsed_since_tip_s": 0,
+      "next_block_eta_s": 566,
+      "skew_s": 1,
+      "wall_skew_s": 1,
+      "ref_time": 1794077747.4699802,
+      "ref_spread_s": 3,
+      "chain_lag_s": 35,
+      "source": "mempool.space",
+      "height_spread": 1,
+      "degraded": false,
+      "freshness_s": 0,
+      "wall_now": 1794077748
+    },
+    "calendar": {
+      "block_height": 974966,
+      "btc_day": 6770,
+      "btc_week": 967,
+      "btc_weekday": 1,
+      "btc_domain": "Score",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 75034,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 86,
+      "supply_mined": 95.7584,
+      "timestamp": "2026-11-07T18:55:48.482Z"
+    },
+    "sabbath": false,
+    "domain": "Score",
+    "btc_day": 6770,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [
+      {
+        "url": "http://127.0.0.1:8097/run",
+        "param": "cmd",
+        "payload": "1;id",
+        "evidence": "uid=0(root) gid=0(root) groups=0(root)"
+      },
+      {
+        "url": "http://127.0.0.1:8097/run",
+        "param": "exec",
+        "payload": "1;id",
+        "evidence": "uid=0(root) gid=0(root) groups=0(root)"
+      },
+      {
+        "url": "http://127.0.0.1:8097/run",
+        "param": "ping",
+        "payload": "1;id",
+        "evidence": "uid=0(root) gid=0(root) groups=0(root)"
+      }
+    ],
+    "traversal": [
+      {
+        "url": "http://127.0.0.1:8097/file?name=1",
+        "param": "name",
+        "payload": "../../../../etc/passwd",
+        "evidence": "root:x:0:0:root:/root:/bin/bash"
+      }
+    ],
+    "requests": 48
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/test-vuln-node_20261107T185545Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/ffuf.log",
+    "raw/metasploit.log",
+    "raw/nmap.log",
+    "raw/nuclei.log",
+    "raw/sqlmap.log",
+    "report.json",
+    "report.md",
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/items.csv",
+    "sqlmap/127.0.0.1/log",
+    "sqlmap/127.0.0.1/session.sqlite",
+    "sqlmap/127.0.0.1/target.txt",
+    "sqlmap/results-11072026_0757pm.csv"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.0,
+        "max_score": 0.0
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.1,
+        "max_score": 0.1
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.473,
+        "max_score": 0.492
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.508,
+        "max_score": 0.529
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 0.0,
+        "block_rate": 0.0,
+        "mean_score": 0.575,
+        "max_score": 0.589
+      }
+    ],
+    "overall_flag_rate": 0.0
+  },
+  "memory": {
+    "new": [],
+    "persisting": [
+      {
+        "fp": "9ae90dbbbf3c9364",
+        "title": "Broken Function Level Authorization via Client-Supplied Header on /admin",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "medium"
+      },
+      {
+        "fp": "b02c6517edff529f",
+        "title": "SQL Injection in /item endpoint",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "critical"
+      },
+      {
+        "fp": "5eebe7c2ed76d8f9",
+        "title": "Path Traversal in /file endpoint via name parameter",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "976ec1b0efcb3dd7",
+        "title": "Detector gap: identity obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "3687a5ce48785ed0",
+        "title": "Detector gap: rot13 obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "d67e4f790da1cf9a",
+        "title": "Detector gap: hex_escape obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "e457967c2d801e44",
+        "title": "Detector gap: unicode_escape obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "6d2e9bdd1c58772a",
+        "title": "Detector gap: spaced obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "8fa6cab54e00f13f",
+        "title": "Detector gap: fullwidth obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "8d75488c3e0ea613",
+        "title": "Detector gap: leet obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "8f0839bf5da6352a",
+        "title": "Detector gap: reversed obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "80b9d315fc99aa03",
+        "title": "Detector gap: zero_width obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "7dc8289051dd5404",
+        "title": "Detector gap: base64 obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "2befef04e60883d2",
+        "title": "Detector gap: base64x2 obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      },
+      {
+        "fp": "ec2baaf773e9459a",
+        "title": "Detector gap: mixed obfuscation is not flagged",
+        "first_seen": "2026-11-07T18:46:25Z",
+        "severity": "high"
+      }
+    ],
+    "resolved": [],
+    "counts": {
+      "new": 0,
+      "persisting": 15,
+      "resolved": 0,
+      "active": 15,
+      "age_of_oldest_active": "2026-11-07T18:46:25Z"
+    },
+    "run": "2026-11-07T18:55:45Z"
+  },
+  "receipt": {
+    "receipt_id": "28104913cb0ad22ff176405608d33c2dc9f867a219d3a0d3aafa695e2d01eb78",
+    "path": "/opt/ares/security_receipts/test-vuln-node/28104913cb0ad22f.json",
+    "merkle_root": "caaed611bdb3c1f710e526738be04901b883388442cdc2b1bc3da2df03d406f5",
+    "chain_index": 5,
+    "prev_receipt": "0dca74cd01d439c963791cff1d62d9e89713b934ec0642eefd5f6d0c1a60e428",
+    "artifacts": 11,
+    "diagnostics": 15
+  },
+  "ots": {
+    "merkle_root": "caaed611bdb3c1f710e526738be04901b883388442cdc2b1bc3da2df03d406f5",
+    "merkle_file": "/opt/ares/security_receipts/test-vuln-node/28104913cb0ad22f.merkle.txt",
+    "ots_file": "/opt/ares/security_receipts/test-vuln-node/28104913cb0ad22f.merkle.txt.ots",
+    "stamped": true,
+    "stamp_rc": 0,
+    "stamp_out": "Submitting to remote calendar https://a.pool.opentimestamps.org\nSubmitting to remote calendar https://b.pool.opentimestamps.org\nSubmitting to remote calendar https://a.pool.eternitywall.com\nSubmitting to remote calendar https://ots.btc.catallaxy.com",
+    "info": "File sha256 hash: de82fd8e92dda3fb05478d64f8709a94e24f2f12dfd6d93ed2d28408c7e0116c\nTimestamp:\nappend 0562ac41f56cad78ed831d78bcf0a0e2\nsha256\n -> append 65bdde358dc48a1fc94601324b9f53ae\n    sha256\n    append af981e03e28585d45c68c22a0d6d6ff32f4bfd9a306f8d35304cede832f90c1e\n    sha256\n    prepend 6aef74b1\n    append fee35d46f036ab09\n    verify PendingAttestation('https://btc.calendar.catallaxy.com')\n -> append bfe8d44c81a568e4bc4dd3c802371bf8\n    sha256\n    prepend b09f69f8edfca81b825089b08dfd1cda3f7e97939dedc630f5fa4daab4a31e0a\n    sha256\n    append 792b3ae5d0e9ee6b73fba59c7f9f0ae99e1c76a3855ca7ec85cc785c51622c40\n    sha256\n    prepend 6aef74b1\n    append c46835fc7ae0e7b3\n    verify PendingAttestation('https://finney.calendar.eternitywall.com')\n -> append d5826fe88de2cbbf\n    sha256\n    append 47120140b7f78a95883f825e2885ad48\n    sha256\n    prepend c9146365b81f6d8bc272d7f6f01120f72646853ca"
+  },
+  "time": {
+    "ots_file": "/opt/ares/security_receipts/test-vuln-node/28104913cb0ad22f.merkle.txt.ots",
+    "pending": true,
+    "error": "pending calendar attestation \u2014 no Bitcoin height yet"
+  },
+  "anchor": {
+    "ok": true,
+    "relays_ok": 6,
+    "relays_total": 6,
+    "per_relay": {
+      "ws://127.0.0.1:7788": {
+        "role": "vantage-local",
+        "profile": "full",
+        "event_id": "63f8cfc8d42372f220cd01faf06cef512fe01c221cded54aca3d75c269f6c785",
+        "ok": true,
+        "message": "63f8cfc8d42372f220cd01faf06cef512fe01c221cded54aca3d75c269f6c785",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/vantage-relay": {
+        "role": "vantage-public",
+        "profile": "full",
+        "event_id": "63f8cfc8d42372f220cd01faf06cef512fe01c221cded54aca3d75c269f6c785",
+        "ok": true,
+        "message": "63f8cfc8d42372f220cd01faf06cef512fe01c221cded54aca3d75c269f6c785",
+        "auth": false
+      },
+      "wss://omokoda.duckdns.org:3443/relay": {
+        "role": "buzz",
+        "profile": "full",
+        "event_id": "017b36298490e14beb35d7adcf346a4ec5339ff249b11ce31773e7e02af2cbbe",
+        "ok": true,
+        "message": "b6420d94e83bf5bcf3c740cac64e4b4d255b149e5b86ce9b8392197219bfefba",
+        "auth": true,
+        "auth_result": [
+          "OK",
+          "017b36298490e14beb35d7adcf346a4ec5339ff249b11ce31773e7e02af2cbbe",
+          false,
+          "auth-required: not authenticated"
+        ]
+      },
+      "wss://relay.damus.io": {
+        "role": "damus",
+        "profile": "public",
+        "event_id": "f21254c50adc3d655ca97ecbf0f1bd136aaa4319fc8401c3fe03ea1c2437ab69",
+        "ok": true,
+        "message": "f21254c50adc3d655ca97ecbf0f1bd136aaa4319fc8401c3fe03ea1c2437ab69",
+        "auth": false,
+        "note": {
+          "event_id": "270f7366030b14dc6de16cf286eb55e02a44da0ab102ea3e6ef01132a7ad588a",
+          "ok": true,
+          "message": "270f7366030b14dc6de16cf286eb55e02a44da0ab102ea3e6ef01132a7ad588a",
+          "auth": false
+        }
+      },
+      "wss://relay.primal.net": {
+        "role": "primal",
+        "profile": "public",
+        "event_id": "18c7e9cf7cea18b2246dac6b34f9abcbb0a77c7a74b30ecd0b8f63c0b2473382",
+        "ok": true,
+        "message": "18c7e9cf7cea18b2246dac6b34f9abcbb0a77c7a74b30ecd0b8f63c0b2473382",
+        "auth": false,
+        "note": {
+          "event_id": "bb21b03391fd26d41812a555debb821db2260852cb56baf275b39f949311a04e",
+          "ok": true,
+          "message": "bb21b03391fd26d41812a555debb821db2260852cb56baf275b39f949311a04e",
+          "auth": false
+        }
+      },
+      "wss://relay.snort.social": {
+        "role": "snort",
+        "profile": "public",
+        "event_id": "eff6adcc80e3525d7248f78774f007af15bcfda297d7c1f9d2647fe65707154d",
+        "ok": true,
+        "message": "eff6adcc80e3525d7248f78774f007af15bcfda297d7c1f9d2647fe65707154d",
+        "auth": false,
+        "note": {
+          "event_id": "9f15d4c455cab812361a93635b176c538e1e71eab0af7f9af817f504f704ace9",
+          "ok": true,
+          "message": "9f15d4c455cab812361a93635b176c538e1e71eab0af7f9af817f504f704ace9",
+          "auth": false
+        }
+      }
+    }
+  },
+  "vantage_broadcast_id": 76451,
+  "vantage_response": {
+    "broadcast_id": 76451,
+    "status": "ready"
+  }
+}
