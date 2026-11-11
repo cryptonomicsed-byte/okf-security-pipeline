@@ -42,6 +42,11 @@ BINARY_ALIASES = {
 }
 SCRIPT_ALIASES = {"sstimap.py": "sstimap", "xsstrike.py": "xsstrike"}
 VAR_ALIASES = {"STRIX_BIN": "strix", "OTS_BIN": "ots"}
+# runner-function name -> manifest name. Some tools are not a subprocess at
+# all (Decepticon is an HTTP API on the already-running LangGraph server), so
+# command-position discovery cannot see them. A call to the runner function is
+# the evidence of invocation.
+FUNCTION_ALIASES = {"run_decepticon": "decepticon"}
 
 # a line that builds or runs a command
 CMD_LINE = re.compile(r"(?:subprocess\.\w+|\brun\(|\bwrap\(|\b_cmd\s*=|\bcmd\s*=|dump_cmd\s*=)")
@@ -85,6 +90,18 @@ def discover(src_dir=None):
             # OTS_BIN is referenced through a variable in okf_receipt.py
             if "OTS_BIN" in line and name == "okf_receipt.py":
                 found.setdefault("ots", f"{where} var OTS_BIN")
+    # runner-function dispatch (HTTP APIs, not subprocesses): a call to the
+    # function is the invocation. `def run_decepticon` alone is not; it must be
+    # called somewhere.
+    for fn, tool in FUNCTION_ALIASES.items():
+        for name in SOURCES:
+            path = os.path.join(src_dir, name)
+            if not os.path.exists(path):
+                continue
+            src = open(path, encoding="utf-8", errors="replace").read()
+            call = re.search(r"(?<!def )\b" + fn + r"\s*\(", src)
+            if call:
+                found.setdefault(tool, f"{name} call {fn}()")
     return found, unknown
 
 

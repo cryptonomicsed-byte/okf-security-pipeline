@@ -971,10 +971,154 @@ def post_to_vantage(repo, payload, ev):
 
 
 # ── main ───────────────────────────────────────────────────────────────────
+
+
+# ── Step 8.5 (ported from v3): Decepticon deep red-team stage ──────────
+# Decepticon is a separate autonomous red-team agent (16 specialist LangGraph
+# graphs) running in containers on this box. This stage is OPT-IN: it is
+# LLM-driven, slow, non-deterministic and spends gateway credits, so it never
+# runs unless --decepticon is passed. It fails closed — no approved RoE, no
+# reachable graph, no run.
+def run_decepticon(target_url, graph="recon", timeout=600, base=None):
+    """Dispatch one Decepticon LangGraph against target_url and return
+    (findings, meta). findings is a list in the pipeline's shape; meta carries
+    thread_id/run_id/status so the receipt can prove a run was actually
+    dispatched, not merely claimed."""
+    import urllib.request
+    import urllib.error
+    from urllib.parse import urlparse
+    BASE = base or os.environ.get("OKF_DECEPTICON_URL", "http://127.0.0.1:2024")
+    host = urlparse(target_url).hostname or target_url
+    # The sandbox is a separate container network: it cannot reach the host
+    # loopback. host.docker.internal is wired on the langgraph image (it is how
+    # the LLM base :8300 is reached), so loopback targets are rewritten.
+    scope_host = ("host.docker.internal" if host in ("127.0.0.1", "localhost", "::1")
+                  else host)
+    reachable = (target_url.replace(host, "host.docker.internal")
+                 if host in ("127.0.0.1", "localhost", "::1") else target_url)
+    meta = {"graph": graph, "target": target_url, "reachable": reachable,
+            "status": "not_run", "thread_id": None, "run_id": None,
+            "report_chars": 0, "roe_path": None}
+
+    # Provision machine-readable RoE. Decepticon fails closed without it: an
+    # engagement with no approved in-scope target is a refusal, not a scan.
+    roe_dir = "/root/.decepticon/workspace/plan"
+    try:
+        os.makedirs(roe_dir, exist_ok=True)
+        roe = {
+            "engagement_name": f"Sovereign OKF Pipeline — {target_url}",
+            "machine_enforcement": {
+                "in_scope": [scope_host],
+                "out_of_scope": [],
+                "forbidden_destinations": [],
+                "forbidden_command_patterns": [],
+                "allow_cloud_metadata": False,
+                "allow_sensitive_tlds": False,
+                "max_concurrent_connections": 10,
+                "min_inter_request_delay_ms": 0,
+                "authorized_windows": [],
+                "blackout_windows": [],
+            },
+        }
+        rp = os.path.join(roe_dir, "roe.json")
+        with open(rp, "w") as f:
+            json.dump(roe, f, indent=2)
+        meta["roe_path"] = rp
+        print(f"  Decepticon: RoE in_scope={[scope_host]} -> {rp}")
+    except Exception as e:  # noqa: BLE001
+        meta["status"] = "error"
+        meta["error"] = f"roe: {e}"
+        print(f"  ⚠️ Decepticon RoE error: {e}")
+        return [], meta
+
+    def post(path, data, t=30):
+        req = urllib.request.Request(
+            f"{BASE}{path}", data=json.dumps(data).encode(),
+            headers={"Content-Type": "application/json"}, method="POST")
+        return json.loads(urllib.request.urlopen(req, timeout=t).read())
+
+    def get(path, t=30):
+        return json.loads(urllib.request.urlopen(
+            urllib.request.Request(f"{BASE}{path}"), timeout=t).read())
+
+    print(f"  Decepticon: dispatching '{graph}' -> {reachable} (base={BASE})")
+    try:
+        thread = post("/threads", {})
+        tid = thread["thread_id"]
+        meta["thread_id"] = tid
+        run = post(f"/threads/{tid}/runs", {
+            "assistant_id": graph,
+            "input": {
+                "messages": [{"role": "user",
+                              "content": (f"Authorized reconnaissance of {reachable}. "
+                                          "Identify vulnerabilities and report concisely.")}],
+                "workspace_path": "/workspace",
+            },
+            "config": {"configurable": {"workspace_path": "/workspace"}},
+        })
+        rid = run.get("run_id", "")
+        meta["run_id"] = rid
+        meta["status"] = "dispatched"
+        print(f"  Decepticon: thread={tid} run={rid} (timeout {timeout}s)")
+
+        deadline = time.time() + timeout
+        status = "pending"
+        while time.time() < deadline:
+            time.sleep(5)
+            try:
+                runs = get(f"/threads/{tid}/runs") or []
+                m = [r for r in runs if r.get("run_id") == rid]
+                status = m[0].get("status", "unknown") if m else "unknown"
+            except Exception:  # noqa: BLE001
+                status = "unknown"
+            if status in ("success", "error", "interrupted", "timeout"):
+                break
+
+        if status not in ("success", "error", "interrupted", "timeout"):
+            print(f"  Decepticon: timeout after {timeout}s — cancelling")
+            try:
+                post(f"/threads/{tid}/runs/{rid}/cancel", {})
+            except Exception:  # noqa: BLE001
+                pass
+            status = "timeout"
+        meta["status"] = status
+
+        content = ""
+        try:
+            state = get(f"/threads/{tid}/state")
+            msgs = (state.get("values") or {}).get("messages", []) or []
+            for m in reversed(msgs):
+                if m.get("type") == "ai" and m.get("content"):
+                    content = m["content"]
+                    break
+        except Exception as e:  # noqa: BLE001
+            print(f"  ⚠️ Decepticon state read: {e}")
+        meta["report_chars"] = len(content)
+        print(f"  Decepticon: status={status} report={len(content)} chars")
+        if content:
+            return ([{
+                "title": f"Decepticon {graph} report",
+                "severity": "info",
+                "description": content[:3000],
+                "location": target_url,
+                "finding_class": "decepticon",
+            }], meta)
+        if status != "success":
+            meta["error"] = f"status={status}, no report"
+        return [], meta
+    except Exception as e:  # noqa: BLE001
+        meta["status"] = "error"
+        meta["error"] = str(e)
+        print(f"  ⚠️ Decepticon error: {e}")
+        return [], meta
+
+
 def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
              findings_from=None, strix_timeout=2700, skip_surface=False,
              do_sweep=True, msf_check=False, do_evasion=True, do_anchor=False,
-             do_ots=True, do_clock=True, sabbath_gate=False):
+             do_ots=True, do_clock=True, sabbath_gate=False,
+             do_decepticon=False, decepticon_graph="recon",
+             decepticon_timeout=600):
     # Proof is the default: a receipt without an OTS proof is a claim; with one it
     # is checkable. Opt out with --no-ots, never by forgetting a flag.
     if not target_url:
@@ -990,6 +1134,8 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
     # purpose: there is no Èṣù gatekeeper here, and the Nostr key is a
     # signing key, not an identity.
     _invoked, _unknown = okf_tool_manifests.discover()
+    if do_decepticon:
+        _invoked = set(_invoked) | {"decepticon"}
     prof = okf_profile.RunProfile(
         repo_name, goal=f"security receipt for {repo_name}", mode=mode,
         target_url=target_url, tools=sorted(_invoked), budget_s=strix_timeout)
@@ -1141,6 +1287,14 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
     if findings and target_url:
         msf, raws["metasploit"] = run_metasploit(target_url, msf_check)
 
+    decepticon = {"run": False}
+    if do_decepticon and target_url:
+        df, dmeta = run_decepticon(target_url, decepticon_graph, decepticon_timeout)
+        findings.extend(df)
+        decepticon = {"run": True, **dmeta, "findings": len(df)}
+    elif do_decepticon:
+        decepticon = {"run": False, "skipped": "no target_url (static-only)"}
+
     payload = {"repo": repo_name, "repo_url": repo_url, "target_url": target_url,
                "target_class": tclass, "stealth": stealth, "started": started,
                "duration_s": int(time.time() - t0), "strix_run_dir": run_dir,
@@ -1150,6 +1304,7 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
                "sstimap": sstimap,
                "xsstrike": xsstrike, "nmap": nmap, "ffuf": ffuf,
                "nuclei": nuclei, "metasploit": msf, "sweep": sweep,
+               "decepticon": decepticon,
                "clock": clock,
                "injection": inj,
                "sabbath_gate": {"enabled": sabbath_gate, "blocked": sabbath_blocked}}
@@ -1426,11 +1581,20 @@ if __name__ == "__main__":
                     help="skip the block clock (no height/domain recorded)")
     ap.add_argument("--sabbath-gate", action="store_true",
                     help="on a Sabbath block, defer dynamic checks on public targets")
+    ap.add_argument("--decepticon", action="store_true",
+                    help="opt-in: dispatch Decepticon (autonomous red-team agent) "
+                         "as a deep stage after the deterministic probes")
+    ap.add_argument("--decepticon-graph", default="recon",
+                    help="Decepticon LangGraph to dispatch (default: recon)")
+    ap.add_argument("--decepticon-timeout", type=int, default=600,
+                    help="seconds to wait for the Decepticon run (default: 600)")
     a = ap.parse_args()
     out = pipeline(a.repo_url, a.repo_name, a.target_url, a.mode,
                    a.findings_from, a.strix_timeout, a.skip_surface, not a.no_sweep,
                    a.msf_check, not a.no_evasion, a.anchor, (not a.no_ots),
-                   not a.no_clock, a.sabbath_gate)
+                   not a.no_clock, a.sabbath_gate, a.decepticon,
+                   a.decepticon_graph, a.decepticon_timeout)
     print(json.dumps({k: out[k] for k in ("repo", "target_class", "sqlmap", "sstimap",
                                           "xsstrike", "nuclei", "ffuf", "metasploit",
-                                          "vantage_broadcast_id", "evidence_dir")}, indent=2))
+                                          "decepticon", "vantage_broadcast_id",
+                                          "evidence_dir")}, indent=2))

@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0",
-  "note": "Doctrine \u00a79: every exposed action declares input/output schemas, required capabilities, side effects, timeout and cancellation, idempotency, and audit. Doctrine \u00a712.5: versioned schemas. One entry per executable this repo invokes. Adding a tool to strix_pipeline_v4.py without adding it here fails the startup gate and okf_tool_manifests.py --check.",
+  "note": "Doctrine §9: every exposed action declares input/output schemas, required capabilities, side effects, timeout and cancellation, idempotency, and audit. Doctrine §12.5: versioned schemas. One entry per executable this repo invokes. Adding a tool to strix_pipeline_v4.py without adding it here fails the startup gate and okf_tool_manifests.py --check.",
   "tools": [
     {
       "name": "betterleaks",
@@ -146,7 +146,7 @@
         "strix.log, vulnerabilities.json, findings.sarif retained per run",
         "receipt records run dir, exit code and finding count"
       ],
-      "authority_note": "docx \u00a710: permissions are not enforced outside the model for this tool; it is the known gap recorded in \u00a712 item 4"
+      "authority_note": "docx §10: permissions are not enforced outside the model for this tool; it is the known gap recorded in §12 item 4"
     },
     {
       "name": "sqlmap",
@@ -781,6 +781,83 @@
       ],
       "destructive": true,
       "destructive_note": "blast radius is exactly SCAN_DIR/<safe repo name>; the name is now slugged and the resolved path asserted inside /tmp/strix-pipeline before any deletion. Before this guard, a crafted repo_name argument reached outside the scan directory."
+    },
+    {
+      "name": "decepticon",
+      "exec": [
+        "python3",
+        "strix_pipeline_v4.py",
+        "--decepticon",
+        "<target>"
+      ],
+      "version_probe": "curl -s http://127.0.0.1:2024/ok",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "target_url",
+          "graph"
+        ],
+        "properties": {
+          "target_url": {
+            "type": "string",
+            "description": "authorized live target (host loopback is rewritten to host.docker.internal for the sandbox)"
+          },
+          "graph": {
+            "type": "string",
+            "description": "LangGraph id to dispatch (recon, exploit, postexploit, autohunt, decepticon, ...)"
+          },
+          "timeout_s": {
+            "type": "integer",
+            "description": "max seconds to wait for the run"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "status",
+          "findings"
+        ],
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "findings": {
+            "type": "integer"
+          },
+          "thread_id": {
+            "type": "string"
+          },
+          "run_id": {
+            "type": "string"
+          },
+          "report_chars": {
+            "type": "integer"
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "network_egress_target",
+        "network_egress_llm_gateway",
+        "container_run",
+        "read_local_files",
+        "write_local_files"
+      ],
+      "side_effects": [
+        "writes a machine-enforced RoE (in-scope target) to the Decepticon workspace",
+        "dispatches an LLM-driven LangGraph run against the authorized target",
+        "spends LiteLLM gateway credits (:8300) and runs tools inside the Kali sandbox"
+      ],
+      "timeout_s": 600,
+      "cancellable": true,
+      "idempotent": false,
+      "idempotency_note": "an LLM agent is non-deterministic; the same target produces a different run each time",
+      "audit": [
+        "thread_id, run_id and status recorded in the receipt payload (decepticon section)",
+        "the agent's final report is folded into findings and hashed as evidence"
+      ],
+      "note": "OPT-IN (--decepticon). Fails closed: no RoE, no reachable graph, no run. Never runs by default because it is slow, non-deterministic and spends credits."
     }
   ]
 }
