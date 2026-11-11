@@ -1,0 +1,310 @@
+{
+  "repo": "profile-wired",
+  "repo_url": "/tmp/tiny-okf",
+  "target_url": "",
+  "target_class": null,
+  "stealth": "n/a (static-only)",
+  "started": "2026-11-10T23:29:53Z",
+  "duration_s": 154,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/profile-wired_c499",
+  "strix_model": "strix-paid",
+  "strix_seconds": 129,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0,
+    "leaks": []
+  },
+  "strix_findings": [],
+  "endpoints": [],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sqlmap_post": {},
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 975357,
+      "tip_time": 1794352962,
+      "mediantime": 1794349701,
+      "now_est": 1794353397,
+      "interval": [
+        1794352962,
+        1794353397
+      ],
+      "uncertainty_s": 217,
+      "elapsed_since_tip_s": 1,
+      "next_block_eta_s": 165,
+      "skew_s": 0,
+      "wall_skew_s": 0,
+      "ref_time": 1794353395.3672485,
+      "ref_spread_s": 1,
+      "chain_lag_s": 435,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 975357,
+        "tip_hash": "00000000000000000000f8ce721e2108071a6e749378efb093b7222e6fb0b93f",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794349500,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 975351,
+          "anchor_hash": "0000000000000000000031aeb2f10b13433e791da948cfaec9ccb6367ba8cb78",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "rooted": true,
+          "pin": {
+            "height": 974990,
+            "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+            "status": "matched",
+            "source": "self-recorded lockdown 2026-11-07",
+            "class": "self_recorded",
+            "rooted_by": {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          },
+          "roots": [
+            {
+              "height": 974990,
+              "class": "self_recorded",
+              "source": "self-recorded lockdown 2026-11-07"
+            },
+            {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          ],
+          "advanced_from": 975351,
+          "verified_against": "0000000000000000000031aeb2f10b13433e791da948cfaec9ccb6367ba8cb78",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true,
+          "verified_depth": {
+            "count": 10247,
+            "lowest": 965111,
+            "highest": 975357,
+            "span": 10247
+          }
+        },
+        "source": "mempool.space",
+        "errors": [],
+        "rooted": true
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 1,
+      "wall_now": 1794353397
+    },
+    "calendar": {
+      "block_height": 975357,
+      "btc_day": 6773,
+      "btc_week": 967,
+      "btc_weekday": 4,
+      "btc_domain": "Sync",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 74643,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 477,
+      "supply_mined": 95.7642,
+      "timestamp": "2026-11-10T23:29:58.284Z"
+    },
+    "sabbath": false,
+    "domain": "Sync",
+    "btc_day": 6773,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "requests": 0
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "evidence_dir": "/opt/ares/security_reports/profile-wired_20261110T232953Z",
+  "evidence_files": [
+    "raw/betterleaks.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 0,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 0,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-10T23:29:53Z"
+  },
+  "receipt": {
+    "receipt_id": "c3edcd6a4df9855d2a89c0b7dce24409c590e0815006da318be213a05a8ea3d4",
+    "path": "/opt/ares/security_receipts/profile-wired/c3edcd6a4df9855d.json",
+    "merkle_root": "1fbc05481715b8d0a69926c09a8d22e63f5ab0bca3d0e47d4f63d88dd227529c",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 2,
+    "diagnostics": 0
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76696,
+  "vantage_response": {
+    "broadcast_id": 76696,
+    "status": "ready"
+  }
+}

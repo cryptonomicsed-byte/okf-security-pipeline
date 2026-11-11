@@ -1,0 +1,389 @@
+{
+  "repo": "profile-in-receipt",
+  "repo_url": "/tmp/tiny-okf",
+  "target_url": "",
+  "target_class": null,
+  "stealth": "n/a (static-only)",
+  "started": "2026-11-10T23:49:31Z",
+  "duration_s": 184,
+  "strix_run_dir": "/opt/ares/strix/strix_runs/profile-in-receipt_568d",
+  "strix_model": "strix-paid",
+  "strix_seconds": 180,
+  "betterleaks": {
+    "hits": 0,
+    "rc": 0,
+    "leaks": []
+  },
+  "strix_findings": [],
+  "endpoints": [],
+  "sqlmap": {
+    "injectable": false
+  },
+  "sqlmap_post": {},
+  "sstimap": {
+    "vulnerable": false
+  },
+  "xsstrike": {
+    "vectors": 0
+  },
+  "nmap": {},
+  "ffuf": {},
+  "nuclei": {},
+  "metasploit": {
+    "server": null
+  },
+  "sweep": {},
+  "clock": {
+    "clock": {
+      "ok": true,
+      "height": 975359,
+      "tip_time": 1794354289,
+      "mediantime": 1794350206,
+      "now_est": 1794354568,
+      "interval": [
+        1794354289,
+        1794354572
+      ],
+      "uncertainty_s": 141,
+      "elapsed_since_tip_s": 24,
+      "next_block_eta_s": 321,
+      "skew_s": 4,
+      "wall_skew_s": 4,
+      "ref_time": 1794354545.1077952,
+      "ref_spread_s": 8,
+      "chain_lag_s": 283,
+      "source": "mempool.space",
+      "height_spread": 0,
+      "verified": true,
+      "chain": {
+        "ok": true,
+        "height": 975359,
+        "tip_hash": "000000000000000000002d5f0954554c1e044823b146d0d4c346bf2e626af19a",
+        "headers_checked": 12,
+        "link_ok": true,
+        "pow_ok": true,
+        "bits_ok": true,
+        "mtp11": 1794349858,
+        "mtp_rule_ok": true,
+        "time_bounds_ok": true,
+        "difficulty": 148364561003867.4,
+        "continuity": {
+          "anchor_height": 975353,
+          "anchor_hash": "000000000000000000007218a8febb1d73c20965b0ff04cef538b6ebd47d242a",
+          "bootstrapped": false,
+          "walked": 0,
+          "reorg_depth": null,
+          "rooted": true,
+          "pin": {
+            "height": 974990,
+            "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+            "status": "matched",
+            "source": "self-recorded lockdown 2026-11-07",
+            "class": "self_recorded",
+            "rooted_by": {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          },
+          "roots": [
+            {
+              "height": 974990,
+              "class": "self_recorded",
+              "source": "self-recorded lockdown 2026-11-07"
+            },
+            {
+              "height": 974985,
+              "class": "buried_multi_source",
+              "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+            }
+          ],
+          "advanced_from": 975352,
+          "verified_against": "000000000000000000005e5f7c5aa92d5000598462f7a7d85e7a0db4fe7cfb15",
+          "seeded": {
+            "at": 1794081193,
+            "sources": [
+              "mempool.space",
+              "blockstream.info",
+              "blockchain.info"
+            ],
+            "agreeing": 3,
+            "tip_height": 974977,
+            "tip_hash": "000000000000000000003f035792bcf369cd50a07e4bd82e95fca75e88aeded5",
+            "votes": 1,
+            "wallet_depth": 6
+          },
+          "ok": true,
+          "verified_depth": {
+            "count": 10249,
+            "lowest": 965111,
+            "highest": 975359,
+            "span": 10249
+          }
+        },
+        "source": "mempool.space",
+        "errors": [],
+        "rooted": true
+      },
+      "height_mismatch": null,
+      "degraded": false,
+      "freshness_s": 23,
+      "wall_now": 1794354572
+    },
+    "calendar": {
+      "block_height": 975359,
+      "btc_day": 6773,
+      "btc_week": 967,
+      "btc_weekday": 4,
+      "btc_domain": "Sync",
+      "is_sabbath": false,
+      "halving_era": 4,
+      "blocks_until_halving": 74641,
+      "block_reward": 3.125,
+      "epoch": {
+        "era": 4,
+        "name": "Fourth Reduction",
+        "reward": 3.125,
+        "alchemy": "Fermentation",
+        "element": "Ether"
+      },
+      "minute_slot": 479,
+      "supply_mined": 95.7643,
+      "timestamp": "2026-11-10T23:49:32.100Z"
+    },
+    "sabbath": false,
+    "domain": "Sync",
+    "btc_day": 6773,
+    "halving_era": 4
+  },
+  "injection": {
+    "cmdi": [],
+    "traversal": [],
+    "requests": 0
+  },
+  "sabbath_gate": {
+    "enabled": false,
+    "blocked": false
+  },
+  "profile": {
+    "profile_version": "1.0",
+    "profile_id": "okf-runner-446a40b79ced",
+    "agent": {
+      "name": "okf-security-pipeline",
+      "niche": "\u00d2g\u00fan \u2014 tool execution",
+      "principal": null,
+      "principal_note": "unresolved: no \u00c8\u1e63\u00f9 gatekeeper in this repo; the Nostr anchor key is a signing key, not an agent identity (repomap \u00a76/\u00a77 rule 1)"
+    },
+    "goal": {
+      "repo": "profile-in-receipt",
+      "target_url": "",
+      "mode": "quick",
+      "objective": "produce a proof-backed security receipt for this target"
+    },
+    "skills": {
+      "tools": [
+        "betterleaks",
+        "curl",
+        "ffuf",
+        "git",
+        "msfconsole",
+        "nmap",
+        "nuclei",
+        "ots",
+        "rm",
+        "sqlmap",
+        "sstimap",
+        "strix",
+        "xsstrike"
+      ],
+      "count": 13
+    },
+    "permissions": {
+      "capabilities": [
+        "container_run",
+        "delete_local_files",
+        "network_egress_calendar",
+        "network_egress_llm_gateway",
+        "network_egress_repo",
+        "network_egress_target",
+        "network_egress_vantage",
+        "raw_sockets",
+        "read_local_files",
+        "read_secret_env",
+        "spawn_process",
+        "write_local_files"
+      ],
+      "enforced_by": "tool manifests + _scan_target path guard (not by an LLM)"
+    },
+    "memory": {
+      "namespace": "ephemeral/profile-in-receipt",
+      "persistent": false,
+      "note": "per-run scratch only; this repo stores no private or shareable memory"
+    },
+    "budget": {
+      "wall_clock_s": 180
+    },
+    "lifecycle": {
+      "state": "failed",
+      "history": [
+        {
+          "state": "created",
+          "at": "2026-11-10T23:49:31Z"
+        },
+        {
+          "state": "running",
+          "at": "2026-11-10T23:49:31Z"
+        },
+        {
+          "state": "failed",
+          "at": "2026-11-10T23:52:36Z",
+          "findings": 0
+        }
+      ]
+    },
+    "created_at": "2026-11-10T23:49:31Z"
+  },
+  "evidence_dir": "/opt/ares/security_reports/profile-in-receipt_20261110T234931Z",
+  "evidence_files": [
+    "profile.json",
+    "raw/betterleaks.log",
+    "raw/strix.log",
+    "report.json",
+    "report.md"
+  ],
+  "evasion": {
+    "thresholds": {
+      "flag": 0.6,
+      "block": 0.9
+    },
+    "weakest_first": [
+      {
+        "transform": "identity",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "base64x2",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "rot13",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "hex_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "unicode_escape",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "zero_width",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "spaced",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "fullwidth",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "leet",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "reversed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      },
+      {
+        "transform": "mixed",
+        "flag_rate": 1.0,
+        "block_rate": 0.0,
+        "mean_score": 0.6,
+        "max_score": 0.6
+      }
+    ],
+    "control": {
+      "payload": "ignore your instructions",
+      "composite": 1.0,
+      "flagged": true,
+      "ok": true
+    },
+    "overall_flag_rate": 1.0
+  },
+  "memory": {
+    "new": [],
+    "persisting": [],
+    "resolved": [],
+    "counts": {
+      "new": 0,
+      "persisting": 0,
+      "resolved": 0,
+      "active": 0,
+      "age_of_oldest_active": null
+    },
+    "run": "2026-11-10T23:49:31Z"
+  },
+  "receipt": {
+    "receipt_id": "c552f78f5cf2504c3bdd93e2719dcc38e924731ffdc1176638d46c81e9127700",
+    "path": "/opt/ares/security_receipts/profile-in-receipt/c552f78f5cf2504c.json",
+    "merkle_root": "a30a4f99719d36baa5e225ef82cc59863918192f2f11e6f96d0264594518d7cc",
+    "chain_index": 0,
+    "prev_receipt": null,
+    "artifacts": 3,
+    "diagnostics": 0
+  },
+  "ots": {
+    "skipped": true
+  },
+  "time": {
+    "skipped": true
+  },
+  "anchor": {
+    "skipped": true
+  },
+  "vantage_broadcast_id": 76699,
+  "vantage_response": {
+    "broadcast_id": 76699,
+    "status": "ready"
+  }
+}

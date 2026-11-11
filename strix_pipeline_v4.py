@@ -983,7 +983,17 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
     # Doctrine §9/§12.5: refuse to run a tool that has no declared manifest.
     # This is a gate, not a warning: an undeclared action is an unreviewed one.
     import okf_tool_manifests
+    import okf_profile
     okf_tool_manifests.require_coverage()
+    # Doctrine §1: every agent run carries a profile — goals, skills,
+    # permissions, memory namespace, lifecycle. principal stays null on
+    # purpose: there is no Èṣù gatekeeper here, and the Nostr key is a
+    # signing key, not an identity.
+    _invoked, _unknown = okf_tool_manifests.discover()
+    prof = okf_profile.RunProfile(
+        repo_name, goal=f"security receipt for {repo_name}", mode=mode,
+        target_url=target_url, tools=sorted(_invoked), budget_s=strix_timeout)
+    prof.start()
 
     repo_name = _safe_name(repo_name or repo_url.rstrip("/").split("/")[-1].replace(".git", ""))
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -1143,6 +1153,15 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
                "clock": clock,
                "injection": inj,
                "sabbath_gate": {"enabled": sabbath_gate, "blocked": sabbath_blocked}}
+    prof.finish(
+        "completed" if STRIX_RC in (0, 2, None) else "failed",
+        findings=len(findings))
+    try:
+        prof.write(str(evdir / "profile.json"))
+        payload["profile"] = prof.to_dict()
+    except Exception as e:  # noqa: BLE001
+        print(f"  ⚠️ profile: {e}")
+
     ev = write_evidence(repo_name, ts, payload, raws)
     payload["evidence_dir"], payload["evidence_files"] = str(ev), sorted(
         str(p.relative_to(ev)) for p in ev.rglob("*") if p.is_file())
@@ -1207,7 +1226,8 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
         payload["receipt"] = okf_receipt.emit(
             ev, repo_name, tracked, target_url,
             {"duration_s": payload["duration_s"], "strix_run_dir": run_dir,
-             "strix_model": STRIX_MODEL, "btc": btc_meta})
+             "strix_model": STRIX_MODEL, "btc": btc_meta,
+             "profile": payload.get("profile")})
         print(f"  receipt: {payload['receipt']['receipt_id'][:16]} "
               f"chain={payload['receipt']['chain_index']} "
               f"merkle={payload['receipt']['merkle_root'][:16]}")

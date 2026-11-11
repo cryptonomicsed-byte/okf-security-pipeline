@@ -1,0 +1,163 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "profile.json": {
+      "bytes": 1688,
+      "sha256": "3eb993bd2b0160ed9e5bfd9ad80f138f10741b8b4e859ef44c2e82ffca54e323"
+    },
+    "raw/betterleaks.log": {
+      "bytes": 169,
+      "sha256": "2afa89981f5c38d477886e31bb6537a1436468ba041e15525b88d18292b65cb3"
+    },
+    "raw/strix.log": {
+      "bytes": 15,
+      "sha256": "9a55a30ce6e4acbdf1ec03e9667c52092cc3fd43f6dbecda82817cb536e12c0b"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-10T23:52:38Z",
+  "created_at_btc": {
+    "block": {
+      "hash": "000000000000000000002d5f0954554c1e044823b146d0d4c346bf2e626af19a",
+      "height": 975359,
+      "time": 1794354289
+    },
+    "depth": 10249,
+    "rooted": true,
+    "verdict": "verified_rooted",
+    "verified": true,
+    "window": {
+      "hi": 1794354758,
+      "hi_utc": "2026-11-10T23:52:38Z",
+      "lo": 1794354289,
+      "lo_utc": "2026-11-10T23:44:49Z"
+    }
+  },
+  "diagnostics": [],
+  "evidence_dir": "/opt/ares/security_reports/profile-in-receipt_20261110T234931Z",
+  "merkle_root": "a30a4f99719d36baa5e225ef82cc59863918192f2f11e6f96d0264594518d7cc",
+  "prev_receipt": null,
+  "receipt_id": "c552f78f5cf2504c3bdd93e2719dcc38e924731ffdc1176638d46c81e9127700",
+  "receipt_version": "1.0",
+  "repo": "profile-in-receipt",
+  "run": {
+    "btc": {
+      "anchor_height": 975353,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 975359,
+      "pin": {
+        "class": "self_recorded",
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "rooted_by": {
+          "class": "buried_multi_source",
+          "height": 974985,
+          "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+        },
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "000000000000000000002d5f0954554c1e044823b146d0d4c346bf2e626af19a",
+      "verified": true,
+      "verified_depth": 10249,
+      "verified_lowest": 965111
+    },
+    "duration_s": 184,
+    "profile": {
+      "agent": {
+        "name": "okf-security-pipeline",
+        "niche": "\u00d2g\u00fan \u2014 tool execution",
+        "principal": null,
+        "principal_note": "unresolved: no \u00c8\u1e63\u00f9 gatekeeper in this repo; the Nostr anchor key is a signing key, not an agent identity (repomap \u00a76/\u00a77 rule 1)"
+      },
+      "budget": {
+        "wall_clock_s": 180
+      },
+      "created_at": "2026-11-10T23:49:31Z",
+      "goal": {
+        "mode": "quick",
+        "objective": "produce a proof-backed security receipt for this target",
+        "repo": "profile-in-receipt",
+        "target_url": ""
+      },
+      "lifecycle": {
+        "history": [
+          {
+            "at": "2026-11-10T23:49:31Z",
+            "state": "created"
+          },
+          {
+            "at": "2026-11-10T23:49:31Z",
+            "state": "running"
+          },
+          {
+            "at": "2026-11-10T23:52:36Z",
+            "findings": 0,
+            "state": "failed"
+          }
+        ],
+        "state": "failed"
+      },
+      "memory": {
+        "namespace": "ephemeral/profile-in-receipt",
+        "note": "per-run scratch only; this repo stores no private or shareable memory",
+        "persistent": false
+      },
+      "permissions": {
+        "capabilities": [
+          "container_run",
+          "delete_local_files",
+          "network_egress_calendar",
+          "network_egress_llm_gateway",
+          "network_egress_repo",
+          "network_egress_target",
+          "network_egress_vantage",
+          "raw_sockets",
+          "read_local_files",
+          "read_secret_env",
+          "spawn_process",
+          "write_local_files"
+        ],
+        "enforced_by": "tool manifests + _scan_target path guard (not by an LLM)"
+      },
+      "profile_id": "okf-runner-446a40b79ced",
+      "profile_version": "1.0",
+      "skills": {
+        "count": 13,
+        "tools": [
+          "betterleaks",
+          "curl",
+          "ffuf",
+          "git",
+          "msfconsole",
+          "nmap",
+          "nuclei",
+          "ots",
+          "rm",
+          "sqlmap",
+          "sstimap",
+          "strix",
+          "xsstrike"
+        ]
+      }
+    },
+    "strix_model": "strix-paid",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/profile-in-receipt_568d"
+  },
+  "signature": "6443526d9df39f52a3ef79452c42c3473f4fd2bfb89e3e1a937f12810bda8c19",
+  "target": ""
+}
