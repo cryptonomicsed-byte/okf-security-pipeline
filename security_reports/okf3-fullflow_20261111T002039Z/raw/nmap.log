@@ -1,0 +1,42 @@
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2026-11-11 01:26 CET
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00019s latency).
+
+PORT     STATE SERVICE VERSION
+8098/tcp open  unknown
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8098-TCP:V=7.94SVN%I=2%D=11/11%Time=6AF3B640%P=x86_64-pc-linux-gnu%
+SF:r(GetRequest,184,"HTTP/1\.1\x20404\x20NOT\x20FOUND\r\nServer:\x20Werkze
+SF:ug/3\.0\.1\x20Python/3\.12\.3\r\nDate:\x20Wed,\x2011\x20Nov\x202026\x20
+SF:00:26:40\x20GMT\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nCont
+SF:ent-Length:\x20207\r\nConnection:\x20close\r\n\r\n<!doctype\x20html>\n<
+SF:html\x20lang=en>\n<title>404\x20Not\x20Found</title>\n<h1>Not\x20Found<
+SF:/h1>\n<p>The\x20requested\x20URL\x20was\x20not\x20found\x20on\x20the\x2
+SF:0server\.\x20If\x20you\x20entered\x20the\x20URL\x20manually\x20please\x
+SF:20check\x20your\x20spelling\x20and\x20try\x20again\.</p>\n")%r(SSLSessi
+SF:onReq,1E8,"<!DOCTYPE\x20HTML>\n<html\x20lang=\"en\">\n\x20\x20\x20\x20<
+SF:head>\n\x20\x20\x20\x20\x20\x20\x20\x20<meta\x20charset=\"utf-8\">\n\x2
+SF:0\x20\x20\x20\x20\x20\x20\x20<title>Error\x20response</title>\n\x20\x20
+SF:\x20\x20</head>\n\x20\x20\x20\x20<body>\n\x20\x20\x20\x20\x20\x20\x20\x
+SF:20<h1>Error\x20response</h1>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Error\
+SF:x20code:\x20400</p>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Message:\x20Bad
+SF:\x20request\x20syntax\x20\('\\x16\\x03\\x00\\x00S\\x01\\x00\\x00O\\x03\
+SF:\x00\?G\xc3\x97\xc3\xb7\xc2\xba,\xc3\xae\xc3\xaa\xc2\xb2`~\xc3\xb3\\x00
+SF:\xc3\xbd\\x82{\xc2\xb9\xc3\x95\\x96\xc3\x88w\\x9b\xc3\xa6\xc3\x84\xc3\x
+SF:9b&lt;=\xc3\x9bo\xc3\xaf\\x10n\\x00\\x00\(\\x00\\x16\\x00\\x13\\x00'\)\
+SF:.</p>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Error\x20code\x20explanation:
+SF:\x20400\x20-\x20Bad\x20request\x20syntax\x20or\x20unsupported\x20method
+SF:\.</p>\n\x20\x20\x20\x20</body>\n</html>\n")%r(TLSSessionReq,16D,"<!DOC
+SF:TYPE\x20HTML>\n<html\x20lang=\"en\">\n\x20\x20\x20\x20<head>\n\x20\x20\
+SF:x20\x20\x20\x20\x20\x20<meta\x20charset=\"utf-8\">\n\x20\x20\x20\x20\x2
+SF:0\x20\x20\x20<title>Error\x20response</title>\n\x20\x20\x20\x20</head>\
+SF:n\x20\x20\x20\x20<body>\n\x20\x20\x20\x20\x20\x20\x20\x20<h1>Error\x20r
+SF:esponse</h1>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Error\x20code:\x20400<
+SF:/p>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>Message:\x20Bad\x20request\x20v
+SF:ersion\x20\('\\x00/\\x00'\)\.</p>\n\x20\x20\x20\x20\x20\x20\x20\x20<p>E
+SF:rror\x20code\x20explanation:\x20400\x20-\x20Bad\x20request\x20syntax\x2
+SF:0or\x20unsupported\x20method\.</p>\n\x20\x20\x20\x20</body>\n</html>\n"
+SF:);
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 7.67 seconds

@@ -149,7 +149,7 @@ def sidecars(root="/opt/ares/security_receipts"):
     verify and everybody will misread as an attested time."""
     import glob
     import os
-    out = {"written": [], "pending": 0, "no_proof": 0, "pruned": []}
+    out = {"written": [], "pending": 0, "no_proof": 0, "pruned": [], "unchanged": 0}
     for rp in sorted(glob.glob(f"{root}/*/*.json")):
         if rp.endswith((".time.json", ".attest.json")):
             continue
@@ -160,6 +160,23 @@ def sidecars(root="/opt/ares/security_receipts"):
             continue
         path = rp[:-5] + ".time.json"
         if res.get("sacred_time"):
+            # The BTCTime snapshot carries a generation wall-clock timestamp.
+            # It is not attested time, it changes every run, and this docstring
+            # exists precisely because such a field gets misread as "when this
+            # happened". The sidecar keeps only what the Bitcoin proof attests.
+            # (The JS snapshot shape is untouched -- it is a cross-repo contract.)
+            res = dict(res)
+            res["sacred_time"] = {k: v for k, v in res["sacred_time"].items()
+                                  if k != "timestamp"}
+            # Write only when content actually changed: the hourly timer must
+            # not dirty 64 files (and now a git repo) with no new information.
+            if os.path.exists(path):
+                try:
+                    if json.load(open(path)) == res:
+                        out["unchanged"] = out.get("unchanged", 0) + 1
+                        continue
+                except Exception:  # noqa: BLE001
+                    pass  # unreadable sidecar -> rewrite it
             tmp = path + ".tmp"
             with open(tmp, "w") as f:
                 json.dump(res, f, indent=2)

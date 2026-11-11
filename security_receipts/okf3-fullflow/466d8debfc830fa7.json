@@ -1,0 +1,264 @@
+{
+  "anchors": {
+    "arweave_tx": null,
+    "btc_ots": null,
+    "sui_object": null
+  },
+  "artifacts": {
+    "profile.json": {
+      "bytes": 1706,
+      "sha256": "c3d6d2d76b8d7b72dca822efb211d17b101730c2df88da38d091d7ee7779ceab"
+    },
+    "raw/betterleaks.log": {
+      "bytes": 384200,
+      "sha256": "381dd78182a430b195a037ca86f6ff3077c20c9fc52ca858da567b52a7a3c559"
+    },
+    "raw/ffuf.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/metasploit.log": {
+      "bytes": 452,
+      "sha256": "f5fc5c1ef365ef2f378935cc942adbce3faac1c3784b090542c6cf4e4a4a6092"
+    },
+    "raw/nmap.log": {
+      "bytes": 2856,
+      "sha256": "22476c236afab482282d3fc4f238a380118581a405811c14b783aabd8236f4e5"
+    },
+    "raw/nuclei.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "raw/sqlmap.log": {
+      "bytes": 4859,
+      "sha256": "60c7cbcccecdaa8cf36afd3b12ce05a142c15e5b298ff58142b228a30b24bd02"
+    },
+    "raw/sqlmap_post.log": {
+      "bytes": 5095,
+      "sha256": "a9f69a593ba0fde0ce4d66cac543af3511818389718d128206513c156ae68ee6"
+    },
+    "raw/sstimap.log": {
+      "bytes": 11492,
+      "sha256": "b957f9beb9df8a3457e1bbc1349b14c9b3369379f0a363ada8925faf8cfb5be2"
+    },
+    "raw/sstimap_post.log": {
+      "bytes": 4047,
+      "sha256": "f9fa90bab18c3f3c84348c768bc73ebaa38c440b765ceffbf9bbaa21db19d938"
+    },
+    "raw/strix.log": {
+      "bytes": 54857,
+      "sha256": "7b9809929989767f8dbfbdbeb2908d1c4d518cb31ef7cbbd0854e7531db7af32"
+    },
+    "sqlmap/127.0.0.1/dump/SQLite_masterdb/orders.csv": {
+      "bytes": 73,
+      "sha256": "c647f73a986318da88f69a4ffe693be0bdc731eab7d7d5f0c51496cf53184d5e"
+    },
+    "sqlmap/127.0.0.1/log": {
+      "bytes": 1061,
+      "sha256": "09c17396b2b6e1c40eb0efa62248f770229c63e373d7716312b4433e5d544f25"
+    },
+    "sqlmap/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "1f303f4831678715c9bf4308e035d0c505b366a7b6b54888f08816f565503925"
+    },
+    "sqlmap/127.0.0.1/target.txt": {
+      "bytes": 231,
+      "sha256": "221e00bd048ddd44086eb068a56c2c2b6ab0005a4ab380d2762aadfa7d0d7259"
+    },
+    "sqlmap/results-11112026_0129am.csv": {
+      "bytes": 48,
+      "sha256": "0f1334bd8b18642561ee73db8e851ce84831b3476bb5e0fb8d4ded44008bfa29"
+    },
+    "sqlmap/results-11112026_0130am.csv": {
+      "bytes": 144,
+      "sha256": "726e133e78c9d166cc078741d1f42d919567c12c8f66c712bb112c790d216a55"
+    },
+    "sqlmap_post/127.0.0.1/dump/SQLite_masterdb/orders.csv": {
+      "bytes": 73,
+      "sha256": "c647f73a986318da88f69a4ffe693be0bdc731eab7d7d5f0c51496cf53184d5e"
+    },
+    "sqlmap_post/127.0.0.1/log": {
+      "bytes": 1783,
+      "sha256": "4219c6413a4921a5473a19bdbd5b7cb40af0fac2e7ad5257acfb0e8f638ee8c8"
+    },
+    "sqlmap_post/127.0.0.1/session.sqlite": {
+      "bytes": 8192,
+      "sha256": "53f157eedd914062add5f8ac5223a3826b5d50e97c186a078ce6bd1a457e3c2f"
+    },
+    "sqlmap_post/127.0.0.1/target.txt": {
+      "bytes": 334,
+      "sha256": "e0cd231eb3b50b7496fc44431bd2fc4dcf8819ced97ba3f1b63890dd15237d89"
+    },
+    "sqlmap_post/results-11112026_0131am.csv": {
+      "bytes": 174,
+      "sha256": "88d8ec43d6c82b6ff92968c3e06c5de1e863ec5875d603d31e8064cb6eb4cc8c"
+    }
+  },
+  "chain_index": 0,
+  "created_at": "2026-11-11T00:32:51Z",
+  "created_at_btc": {
+    "block": {
+      "hash": "0000000000000000000174399b81760fbb4dedb4ae8bce15e5e3b768db967700",
+      "height": 975361,
+      "time": 1794356915
+    },
+    "depth": 10251,
+    "rooted": true,
+    "verdict": "verified_rooted",
+    "verified": true,
+    "window": {
+      "hi": 1794357171,
+      "hi_utc": "2026-11-11T00:32:51Z",
+      "lo": 1794356915,
+      "lo_utc": "2026-11-11T00:28:35Z"
+    }
+  },
+  "diagnostics": [
+    {
+      "category": 4,
+      "code": "OMO-ERR-102",
+      "cvss": 9.8,
+      "endpoint": "/render",
+      "message": "Server-Side Template Injection (Jinja2) to RCE in POST /render `tpl` parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 7.5,
+      "endpoint": "/orders",
+      "message": "SQL Injection in ORDER BY clause via GET /orders sort parameter",
+      "severity": 2
+    },
+    {
+      "category": 4,
+      "code": "OMO-ERR-101",
+      "cvss": 7.5,
+      "endpoint": "/orders/by-sku",
+      "message": "UNION-based SQL injection in POST /orders/by-sku sku parameter",
+      "severity": 2
+    }
+  ],
+  "evidence_dir": "/opt/ares/security_reports/okf3-fullflow_20261111T002039Z",
+  "merkle_root": "09bc5b76a8f1dc1174b7fc122e8a1f51a5b8ec2c0b3762449078b1bcd842476e",
+  "prev_receipt": null,
+  "receipt_id": "466d8debfc830fa7c31ebc3a64aeb949bfea4ca9436f34118ea30e0d5cfa7be5",
+  "receipt_version": "1.0",
+  "repo": "okf3-fullflow",
+  "run": {
+    "btc": {
+      "anchor_height": 975354,
+      "anchor_seeded": true,
+      "anchor_sources": [
+        "mempool.space",
+        "blockstream.info",
+        "blockchain.info"
+      ],
+      "continuity_ok": true,
+      "difficulty": 148364561003867.4,
+      "headers_checked": 12,
+      "height": 975360,
+      "pin": {
+        "class": "self_recorded",
+        "hash": "00000000000000000000060a86c8d28dce411044214051e27c27947ed3ea26c5",
+        "height": 974990,
+        "rooted_by": {
+          "class": "buried_multi_source",
+          "height": 974985,
+          "source": "3/3 sources agree, buried 6, PoW+linkage verified locally"
+        },
+        "source": "self-recorded lockdown 2026-11-07",
+        "status": "matched"
+      },
+      "pow_ok": true,
+      "rooted": true,
+      "tip_hash": "00000000000000000001e10901ef7b99169293019afe4b5acf3dea43ff6d2880",
+      "verified": true,
+      "verified_depth": 10250,
+      "verified_lowest": 965111
+    },
+    "duration_s": 728,
+    "profile": {
+      "agent": {
+        "name": "okf-security-pipeline",
+        "niche": "\u00d2g\u00fan \u2014 tool execution",
+        "principal": null,
+        "principal_note": "unresolved: no \u00c8\u1e63\u00f9 gatekeeper in this repo; the Nostr anchor key is a signing key, not an agent identity (repomap \u00a76/\u00a77 rule 1)"
+      },
+      "budget": {
+        "wall_clock_s": 2700
+      },
+      "created_at": "2026-11-11T00:20:39Z",
+      "goal": {
+        "mode": "quick",
+        "objective": "produce a proof-backed security receipt for this target",
+        "repo": "okf3-fullflow",
+        "target_url": "http://127.0.0.1:8098"
+      },
+      "lifecycle": {
+        "history": [
+          {
+            "at": "2026-11-11T00:20:39Z",
+            "state": "created"
+          },
+          {
+            "at": "2026-11-11T00:20:39Z",
+            "state": "running"
+          },
+          {
+            "at": "2026-11-11T00:32:48Z",
+            "findings": 3,
+            "state": "completed"
+          }
+        ],
+        "state": "completed"
+      },
+      "memory": {
+        "namespace": "ephemeral/okf3-fullflow",
+        "note": "per-run scratch only; this repo stores no private or shareable memory",
+        "persistent": false
+      },
+      "permissions": {
+        "capabilities": [
+          "container_run",
+          "delete_local_files",
+          "network_egress_calendar",
+          "network_egress_llm_gateway",
+          "network_egress_repo",
+          "network_egress_target",
+          "network_egress_vantage",
+          "raw_sockets",
+          "read_local_files",
+          "read_secret_env",
+          "spawn_process",
+          "write_local_files"
+        ],
+        "enforced_by": "tool manifests + _scan_target path guard (not by an LLM)"
+      },
+      "profile_id": "okf-runner-936750a36bef",
+      "profile_version": "1.0",
+      "skills": {
+        "count": 13,
+        "tools": [
+          "betterleaks",
+          "curl",
+          "ffuf",
+          "git",
+          "msfconsole",
+          "nmap",
+          "nuclei",
+          "ots",
+          "rm",
+          "sqlmap",
+          "sstimap",
+          "strix",
+          "xsstrike"
+        ]
+      }
+    },
+    "strix_model": "strix-paid",
+    "strix_run_dir": "/opt/ares/strix/strix_runs/test-vuln-hard_4770"
+  },
+  "signature": "b8a9b379850221897811d8e6a8b11e8ed3809fc66b09a47df2c5d93368b17479",
+  "target": "http://127.0.0.1:8098"
+}
