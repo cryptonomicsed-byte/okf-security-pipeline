@@ -858,6 +858,89 @@
         "the agent's final report is folded into findings and hashed as evidence"
       ],
       "note": "OPT-IN (--decepticon). Fails closed: no RoE, no reachable graph, no run. Never runs by default because it is slow, non-deterministic and spends credits."
+    },
+    {
+      "name": "gitleaks",
+      "exec": [
+        "gitleaks",
+        "detect",
+        "--no-git",
+        "--source",
+        "<path>",
+        "--report-format",
+        "json",
+        "--report-path",
+        "<tmp>"
+      ],
+      "version_probe": "gitleaks version",
+      "input_schema": {
+        "type": "object",
+        "required": [
+          "path"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "clone or directory to scan for secrets"
+          }
+        }
+      },
+      "output_schema": {
+        "type": "object",
+        "required": [
+          "hits",
+          "rc"
+        ],
+        "properties": {
+          "hits": {
+            "type": "integer"
+          },
+          "rc": {
+            "type": "integer"
+          },
+          "leaks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rule": {
+                  "type": "string"
+                },
+                "file": {
+                  "type": "string"
+                },
+                "line": {
+                  "type": "integer"
+                },
+                "entropy": {
+                  "type": "number"
+                },
+                "match_prefix": {
+                  "type": "string",
+                  "maxLength": 4
+                }
+              }
+            }
+          }
+        }
+      },
+      "capabilities": [
+        "spawn_process",
+        "read_local_files"
+      ],
+      "side_effects": [
+        "reads the scanned path",
+        "writes a temporary JSON report that is deleted immediately"
+      ],
+      "timeout_s": 180,
+      "cancellable": true,
+      "idempotent": true,
+      "idempotency_note": "deterministic scan of a fixed tree; same input yields the same leaks",
+      "audit": [
+        "leak count and rc recorded in the receipt diagnostics",
+        "rule ids recorded per leak"
+      ],
+      "secret_handling": "the full secret value is never persisted; only RuleID, file, line, entropy and a 3-char match_prefix"
     }
   ]
 }

@@ -38,7 +38,7 @@ REQUIRED = {
 BINARY_ALIASES = {
     "sqlmap": "sqlmap", "nuclei": "nuclei", "ffuf": "ffuf", "nmap": "nmap",
     "msfconsole": "msfconsole", "docker": "betterleaks", "ots": "ots",
-    "curl": "curl", "git": "git", "rm": "rm",
+    "curl": "curl", "git": "git", "rm": "rm", "gitleaks": "gitleaks",
 }
 SCRIPT_ALIASES = {"sstimap.py": "sstimap", "xsstrike.py": "xsstrike"}
 VAR_ALIASES = {"STRIX_BIN": "strix", "OTS_BIN": "ots"}

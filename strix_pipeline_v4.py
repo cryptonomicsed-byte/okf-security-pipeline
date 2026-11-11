@@ -163,6 +163,48 @@ def run_betterleaks(path):
     return {"hits": hits, "rc": rc, "leaks": slim}, out
 
 
+def run_gitleaks(path):
+    """Second secret pass, complements betterleaks. A deterministic Go binary:
+    offline, git-history aware, a larger community rule corpus, and it skips
+    well-known example keys (AWS docs placeholders) that betterleaks may flag.
+    Because it is fast and deterministic it runs by default — unlike the
+    LLM-driven Decepticon stage, which stays opt-in."""
+    print(f"\n  gitleaks: {path}")
+    rep = f"/tmp/gitleaks_{os.getpid()}.json"
+    try:
+        rc, out = run(["gitleaks", "detect", "--no-git", "--source", path,
+                       "--report-format", "json", "--report-path", rep], 180)
+        leaks = []
+        if os.path.exists(rep):
+            try:
+                leaks = json.load(open(rep))
+            except Exception:  # noqa: BLE001
+                leaks = []
+        if not isinstance(leaks, list):
+            leaks = []
+        # Never persist the secret itself — RuleID/File/line/entropy locate and
+        # triage it; a 3-char prefix matches the betterleaks convention and is
+        # enough to de-duplicate without carrying the value.
+        slim = []
+        for l in leaks[:50]:
+            sec = str(l.get("Secret") or "")
+            slim.append({"rule": l.get("RuleID"), "file": l.get("File"),
+                         "line": l.get("StartLine"), "end_line": l.get("EndLine"),
+                         "entropy": round(float(l.get("Entropy") or 0), 2),
+                         "description": (l.get("Description") or "")[:140],
+                         "tags": l.get("Tags") or [],
+                         "match_prefix": (sec[:3] + "…") if sec else ""})
+        # gitleaks exits 1 when it finds leaks (CI convention), not on error.
+        print(f"  gitleaks: {len(slim)} leaks (rc={rc})")
+        for sl in slim[:6]:
+            print(f"    {sl['rule']} · {sl['file']}:{sl['line']} · {sl['match_prefix']}")
+        return {"hits": len(slim), "rc": rc, "leaks": slim}, out
+    finally:
+        # the report file carries full secret values — never leave it behind
+        if os.path.exists(rep):
+            os.remove(rep)
+
+
 # ── stage 1: Strix ─────────────────────────────────────────────────────────
 def run_strix(path, run_name, mode, timeout):
     print(f"\n{'='*64}\n  STRIX {mode} · model={STRIX_MODEL}\n{'='*64}")
@@ -1183,6 +1225,7 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
     target_path = target if Path(target).exists() else repo_url
 
     better, raws["betterleaks"] = run_betterleaks(target_path)
+    gitleaks, raws["gitleaks"] = run_gitleaks(target_path)
 
     findings, run_dir, sdur = [], None, 0
     if findings_from:
@@ -1299,7 +1342,7 @@ def pipeline(repo_url, repo_name=None, target_url=None, mode="quick",
                "target_class": tclass, "stealth": stealth, "started": started,
                "duration_s": int(time.time() - t0), "strix_run_dir": run_dir,
                "strix_model": STRIX_MODEL, "strix_seconds": sdur,
-               "betterleaks": better, "strix_findings": findings,
+               "betterleaks": better, "gitleaks": gitleaks, "strix_findings": findings,
                "endpoints": eps, "sqlmap": sqlmap, "sqlmap_post": sqlmap_post,
                "sstimap": sstimap,
                "xsstrike": xsstrike, "nmap": nmap, "ffuf": ffuf,
