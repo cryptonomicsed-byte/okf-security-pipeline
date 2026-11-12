@@ -36,6 +36,7 @@
 
 # pipeline history + profile (same repo's scope, was untracked)
 !/okf_profile.py
+!/okf_sid_anchor.py
 !/strix_pipeline.py
 !/strix_pipeline_v2.py
 !/strix_pipeline_v3.py
