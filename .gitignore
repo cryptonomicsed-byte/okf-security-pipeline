@@ -8,6 +8,7 @@
 !/.gitignore
 !/okf_agent_stamp.py
 !/okf_anchor.py
+!/okf_api.py
 !/okf_btc_chain.py
 !/okf_clock_mcp.py
 !/okf_evasion.py
